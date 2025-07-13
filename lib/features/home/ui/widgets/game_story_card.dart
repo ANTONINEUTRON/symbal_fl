@@ -24,7 +24,7 @@ class GameStoryCard extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Colors.purple.withOpacity(0.3),
-            Colors.black.withOpacity(0.8),
+             Theme.of(context).scaffoldBackgroundColor,
           ],
         ),
       ),
@@ -34,7 +34,6 @@ class GameStoryCard extends StatelessWidget {
           Container(
             width: double.infinity,
             height: double.infinity,
-            color: Colors.grey[800],
             child: const Icon(
               Icons.games,
               size: 100,

@@ -14,12 +14,14 @@ class MyApp extends StatelessWidget {
       title: AppConstants.appName,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.orange,
-          secondary: const Color(0xFFE6A479),
-          tertiary: const Color(0xFF723412),
-        ),
+          seedColor: Color(0xFFCC00FF),
+          secondary: Color(0xFF660080),
+          tertiary: const Color(0xFFFF8C00),
+        ).copyWith(),
         useMaterial3: true,
-        textTheme: GoogleFonts.meriendaTextTheme()
+        textTheme: GoogleFonts.dmMonoTextTheme().copyWith(),
+        scaffoldBackgroundColor: Color(0xFF1A1A2E),
+        
       ),
       debugShowCheckedModeBanner: false,
       home: HomePage(),
