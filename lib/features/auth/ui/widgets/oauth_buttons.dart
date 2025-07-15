@@ -14,8 +14,6 @@ class OAuthButtons extends StatelessWidget {
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 10.0),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
               side: BorderSide(color: Colors.grey),
@@ -30,7 +28,7 @@ class OAuthButtons extends StatelessWidget {
               ),
               SizedBox(width: 8.0), // Space between icon and text
               Text(
-                'Continue with Google',
+                'Sign in with Google',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -44,8 +42,6 @@ class OAuthButtons extends StatelessWidget {
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 10.0),
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
               side: BorderSide(color: Colors.grey),
@@ -60,7 +56,7 @@ class OAuthButtons extends StatelessWidget {
               ),
               SizedBox(width: 8.0), // Space between icon and text
               Text(
-                'Continue with Apple',
+                'Get magic link',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -69,6 +65,30 @@ class OAuthButtons extends StatelessWidget {
             ],
           ),
         ),
+         Row(
+          children: [
+            Expanded(
+              child: Divider(
+                thickness: 1,
+                color: Color(0XFFD7D7D7),
+              ),
+            ),
+            Text(
+              'Or use email',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Color(0XFF7A7979),
+                fontSize: 14,
+              ),
+            ).addSpacing(horizontal: 8.0),
+            Expanded(
+              child: Divider(
+                thickness: 1,
+                color: Color(0XFFD7D7D7),
+              ),
+            ),
+          ],
+        ).addSpacing(vertical: 16),
       ],
     );
   }

@@ -24,6 +24,18 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.dmMonoTextTheme(),
         scaffoldBackgroundColor: Color(0xFF1A1A2E),
+        listTileTheme: ListTileThemeData(
+          textColor: Colors.white,
+          iconColor: Colors.white,
+          tileColor: Color(0xFF16213E),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(16)
+          )
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: Color(0xFF16213E),
+        ),
+        dividerColor: Colors.grey.shade300
       ),
       debugShowCheckedModeBanner: false,
       routerConfig: _appRoute.config(),

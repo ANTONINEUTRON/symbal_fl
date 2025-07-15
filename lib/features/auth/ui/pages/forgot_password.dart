@@ -29,7 +29,7 @@ class ForgotPasswordPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black54,
+                color: Colors.white54,
               ),
             ),
             SizedBox(height: 16),

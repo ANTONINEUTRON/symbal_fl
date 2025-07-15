@@ -20,42 +20,42 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 45.0),
+                const SizedBox(height: 8.0),
                 // Logo Section
-                // Assets.images.logoBlue.image(
-                //   height: 37,
-                //   width: 40,
-                // ),
+                Assets.brand.symbalLogo.image(
+                  height: 60,
+                  width: 60,
+                ),
                 Text(
                   AppConstants.appName,
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.w700,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 const Text(
-                  'scroll through fun',
+                  'Have fun playing while scrolling',
                   style: TextStyle(
                     fontSize: 10.0,
                     fontWeight: FontWeight.w700,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
-                ),
+                ).addSpacing(bottom: 8),
             
                 // Toggle Between Login and Create Account
-                const TabBar(
-                  indicatorColor: Colors.black,
+                 TabBar(
+                  indicatorColor: Theme.of(context).colorScheme.tertiary,
                   indicatorWeight: 2,
                   indicatorSize: TabBarIndicatorSize.tab,
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: Color(0XFF1F1F1F),
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                   unselectedLabelStyle: TextStyle(
                     fontWeight: FontWeight.w500,
@@ -73,7 +73,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       ),
                     )
                   ],
-                ).addSpacing(vertical: 24),
+                ).addSpacing(bottom: 24),
             
                 //
                 Container(

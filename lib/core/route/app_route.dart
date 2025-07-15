@@ -9,6 +9,10 @@ class AppRouter extends RootStackRouter {
           page: HomeRoute.page,
           initial: true,
         ),
-        
+        AutoRoute(page: ForgotPasswordRoute.page),
+        AutoRoute(page: VerifyEmailRoute.page),
+        AutoRoute(page: ResetPasswordRoute.page),
+        AutoRoute(page: CreateGameRoute.page),
+        AutoRoute(page: PlayGameRoute.page),
   ];
 }

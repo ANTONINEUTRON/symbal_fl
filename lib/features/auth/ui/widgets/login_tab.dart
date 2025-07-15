@@ -5,9 +5,7 @@ import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/oauth_buttons.dart';
 
 class LoginTab extends StatefulWidget {
-  const LoginTab({
-    super.key,
-  });
+  const LoginTab({super.key});
 
   @override
   State<LoginTab> createState() => _LoginTabState();
@@ -46,33 +44,6 @@ class _LoginTabState extends State<LoginTab> {
       physics: const NeverScrollableScrollPhysics(),
       children: [
         const OAuthButtons(),
-        const Row(
-          children: [
-            Expanded(
-              child: Divider(
-                thickness: 1,
-                color: Color(0XFFD7D7D7),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                'Or set up with email',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color(0XFF7A7979),
-                  fontSize: 14,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Divider(
-                thickness: 1,
-                color: Color(0XFFD7D7D7),
-              ),
-            ),
-          ],
-        ).addSpacing(vertical: 16),
 
         // Email Text Field
         Column(
@@ -83,11 +54,12 @@ class _LoginTabState extends State<LoginTab> {
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: Color(0XFF1F1F1F),
+                color: Colors.white70,
               ),
             ).addSpacing(bottom: 8),
+            
             TextFormField(
-              onChanged: (value) => {},//authCubit.setEmail(value),
+              onChanged: (value) => {}, //authCubit.setEmail(value),
               decoration: InputDecoration(
                 hintText: 'Enter your email',
                 border: OutlineInputBorder(
@@ -107,21 +79,24 @@ class _LoginTabState extends State<LoginTab> {
           children: [
             const Text(
               "Password",
+              textAlign: TextAlign.start,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                color: Color(0XFF1F1F1F),
+                color: Colors.white70,
               ),
             ).addSpacing(bottom: 8),
             TextFormField(
-              onChanged: (value) => {},// authCubit.setPassword(value),
+              onChanged: (value) => {}, // authCubit.setPassword(value),
               obscureText: !showPasword,
               decoration: InputDecoration(
                 hintText: 'Enter your password',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 12.0,
+                ),
                 suffixIcon: InkWell(
                   onTap: () => setState(() {
                     showPasword = true;
@@ -136,70 +111,20 @@ class _LoginTabState extends State<LoginTab> {
         ),
         const SizedBox(height: 8.0),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Checkbox(
-                  value: false,
-                  onChanged: (value) {},
-                ),
-                const Text("Remember Me")
-              ],
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: () => context.router.push(const ForgotPasswordRoute()),
+            child: Text(
+              "Forgot Password?",
+              style: TextStyle(fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.tertiary,),
+              textAlign: TextAlign.end,
             ),
-            TextButton(
-              onPressed: () => context.router.push(const ForgotPasswordRoute()),
-              child: const Text(
-                "Forgot Password?",
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Color(0XFF8C8787),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
 
-        const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text.rich(
-            TextSpan(
-              text: 'By creating an account, you agree\nwith our ',
-              style: TextStyle(
-                  color: Colors.grey), // Default style for the rest of the text
-              children: [
-                TextSpan(
-                  text: 'Terms of Service',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    decoration: TextDecoration.underline,
-                    color: Color(0XFF444444),
-                  ),
-                ),
-                TextSpan(
-                  text: ' and ',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                TextSpan(
-                  text: 'Privacy \nPolicy',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    decoration: TextDecoration.underline,
-                    color: Color(0XFF444444),
-                  ),
-                ),
-                TextSpan(
-                  text: '.',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
-            ),
-            textAlign: TextAlign.center,
-          )
-        ]),
-        const SizedBox(height: 20.0),
+        const SizedBox(height: 8.0),
 
         ElevatedButton(
           onPressed: false
@@ -210,15 +135,9 @@ class _LoginTabState extends State<LoginTab> {
                 },
           child: const Text(
             'Log In',
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
           ),
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 50),
-            padding: const EdgeInsets.symmetric(vertical: 14.0),
-            backgroundColor: const Color.fromARGB(255, 0, 53, 102),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),

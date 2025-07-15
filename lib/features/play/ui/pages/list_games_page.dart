@@ -5,14 +5,14 @@ import 'package:symbal_fl/features/home/data/datasources/dummy_data.dart';
 import 'package:symbal_fl/features/home/ui/widgets/game_story_card.dart';
 
 @RoutePage()
-class PlayPage extends StatefulWidget {
-  const PlayPage({super.key});
+class ListGamesPage extends StatefulWidget {
+  const ListGamesPage({super.key});
 
   @override
-  State<PlayPage> createState() => _PlayPageState();
+  State<ListGamesPage> createState() => _ListGamesPageState();
 }
 
-class _PlayPageState extends State<PlayPage> {
+class _ListGamesPageState extends State<ListGamesPage> {
   final PageController _pageController = PageController();
   int _pageControllerIndex = 0;
 

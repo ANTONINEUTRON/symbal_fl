@@ -1,11 +1,10 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/auth/ui/pages/create_account_page.dart';
-import 'package:symbal_fl/features/home/data/datasources/dummy_data.dart';
-import 'package:symbal_fl/features/home/ui/widgets/game_story_card.dart';
-import 'package:symbal_fl/features/play/ui/pages/play_page.dart';
+import 'package:symbal_fl/features/play/ui/pages/list_games_page.dart';
 import 'package:symbal_fl/features/profile/ui/pages/profile_page.dart';
 
 @RoutePage()
@@ -23,11 +22,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: IndexedStack(
           index: _currentIndex,
           children: [
-            PlayPage(),
+            ListGamesPage(),
             //
             // Profile Page
             _isSignedIn?
@@ -36,7 +36,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.router.push(CreateGameRoute());
+        },
         child: Icon(Icons.add),
         shape: CircleBorder(),
       ),

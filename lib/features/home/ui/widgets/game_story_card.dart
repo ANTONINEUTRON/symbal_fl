@@ -1,6 +1,8 @@
-
 // Game Story Card Widget
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/play/domain/entities/game_story.dart';
 
 class GameStoryCard extends StatelessWidget {
@@ -24,7 +26,7 @@ class GameStoryCard extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Colors.purple.withOpacity(0.3),
-             Theme.of(context).scaffoldBackgroundColor,
+            Theme.of(context).scaffoldBackgroundColor,
           ],
         ),
       ),
@@ -34,13 +36,9 @@ class GameStoryCard extends StatelessWidget {
           Container(
             width: double.infinity,
             height: double.infinity,
-            child: const Icon(
-              Icons.games,
-              size: 100,
-              color: Colors.white24,
-            ),
+            child: const Icon(Icons.games, size: 100, color: Colors.white24),
           ),
-          
+
           // Game info overlay
           Positioned(
             left: 16,
@@ -60,10 +58,7 @@ class GameStoryCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   gameStory.description,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                  ),
+                  style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -77,6 +72,7 @@ class GameStoryCard extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: () {
                     // TODO: Navigate to game
+                    context.router.push(PlayGameRoute());
                   },
                   icon: const Icon(Icons.play_arrow),
                   label: const Text('Play Now'),
@@ -92,30 +88,112 @@ class GameStoryCard extends StatelessWidget {
             ),
           ),
           //
-            // Right side action buttons
-            Positioned(
-              right: 16,
-              bottom: 40,
-              child: Column(
-                children: [
-                  _buildActionButton(Icons.favorite_outline, '12.5K'),
-                  const SizedBox(height: 18),
-                  _buildActionButton(Icons.share_outlined, 'Share'),
-                  const SizedBox(height: 18),
-                  _buildActionButton(Icons.bookmark_outline, 'Save'),
-                ],
-              ),
+          // Right side action buttons
+          Positioned(
+            right: 16,
+            bottom: 40,
+            child: Column(
+              children: [
+                GameCardActionBtn(icon: Icons.favorite_outline, label: '12.5K'),
+                const SizedBox(height: 18),
+                GameCardActionBtn(
+                  icon: Icons.share_outlined,
+                  label: 'Share',
+                  onTap: () {
+                    SharePlus.instance.share(
+                      ShareParams(text: "Sharing from Symbal"),
+                    );
+                  },
+                ),
+                const SizedBox(height: 18),
+                GameCardActionBtn(
+                  icon: Icons.more_vert,
+                  label: 'More',
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      builder: (context) {
+                        return GameCardMoreOptions();
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
+          ),
         ],
       ),
     );
   }
-  
-  Widget _buildActionButton(IconData icon, String label) {
+}
+
+class GameCardMoreOptions extends StatelessWidget {
+  const GameCardMoreOptions({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile'),
+            onTap: () {
+              // TODO: Navigate to profile
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.bookmark_border),
+            title: const Text('Save'),
+            onTap: () {
+              // TODO: Save action
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.block_sharp),
+            title: const Text('Stop Showing'),
+            onTap: () {
+              // TODO: Stop showing action
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.flag_outlined),
+            title: Text('Report', style: TextStyle(color: Colors.red)),
+            onTap: () {
+              // TODO: Report action
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GameCardActionBtn extends StatelessWidget {
+  const GameCardActionBtn({
+    super.key,
+    required this.icon,
+    required this.label,
+    this.onTap,
+  });
+  final IconData icon;
+  final String label;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // Handle button tap
-      },
+      onTap: onTap,
       child: Column(
         children: [
           Container(
@@ -135,7 +213,6 @@ class GameStoryCard extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class GameTag extends StatelessWidget {
@@ -152,10 +229,7 @@ class GameTag extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-        ),
+        style: const TextStyle(color: Colors.white, fontSize: 12),
       ),
     );
   }
