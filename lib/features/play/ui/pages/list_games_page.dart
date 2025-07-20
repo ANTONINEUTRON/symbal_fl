@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/features/home/data/datasources/dummy_data.dart';
 import 'package:symbal_fl/features/home/ui/widgets/game_story_card.dart';
@@ -15,6 +16,23 @@ class ListGamesPage extends StatefulWidget {
 class _ListGamesPageState extends State<ListGamesPage> {
   final PageController _pageController = PageController();
   int _pageControllerIndex = 0;
+  bool _hasAnimated = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _startBounceAnimation();
+    });
+  }
+
+  void _startBounceAnimation() async {
+    if (_hasAnimated) return;
+    _hasAnimated = true;
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +44,7 @@ class _ListGamesPageState extends State<ListGamesPage> {
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
             foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -46,27 +64,43 @@ class _ListGamesPageState extends State<ListGamesPage> {
           ).addSpacing(right: 8.0),
         ],
       ),
+      body:
+          PageView.builder(
+            controller: _pageController,
+            itemCount: DummyGameStories.stories.length,
+            onPageChanged: (index) {
+              setState(() {
+                _pageControllerIndex = index;
+              });
+            },
+            pageSnapping: true,
+            scrollBehavior: MaterialScrollBehavior(),
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              final gameStory = DummyGameStories.stories[index];
+              return GameStoryCard(
+                gameStory: gameStory,
+                isActive: index == _pageControllerIndex,
+              );
+            },
+          ).animate().custom(
+            duration: 1800.ms, // Total duration for 3 bounces
+            builder: (context, value, child) {
+              // Create a bounce effect that goes up and down 3 times
+              double bounceValue = 0;
 
-      body: PageView.builder(
-        controller: _pageController,
-        itemCount: DummyGameStories.stories.length,
-        onPageChanged: (index) {
-          setState(() {
-            _pageControllerIndex = index;
-          });
-        },
-        pageSnapping: true,
-        reverse: true,
-        scrollBehavior: MaterialScrollBehavior(),
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) {
-          final gameStory = DummyGameStories.stories[index];
-          return GameStoryCard(
-            gameStory: gameStory,
-            isActive: index == _pageControllerIndex,
-          );
-        },
-      ),
+              if (value <= 1.0) {
+                // Create 3 complete bounce cycles
+                double cycleProgress = (value * 3) % 1.0;
+                bounceValue = -20 * (1 - (2 * cycleProgress - 1).abs());
+              }
+
+              return Transform.translate(
+                offset: Offset(0, bounceValue),
+                child: child,
+              );
+            },
+          ),
     );
   }
 }

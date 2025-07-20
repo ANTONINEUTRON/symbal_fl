@@ -73,7 +73,6 @@ class MessageBubble extends StatelessWidget {
                             // Play Button
                             ElevatedButton.icon(
                               onPressed: () {
-                                // TODO: Navigate to play the generated game
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: const Text('🎮 Starting game...'),
