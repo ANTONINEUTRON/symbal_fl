@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  bool _isSignedIn = false;
+  bool _isSignedIn = true;
 
   @override
   Widget build(BuildContext context) {
