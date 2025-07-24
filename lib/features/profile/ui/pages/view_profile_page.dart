@@ -33,49 +33,43 @@ class _ViewProfilePageState extends State<ViewProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      body: CustomScrollView(
-        slivers: [
-          // _buildSliverAppBar(),
-          ProfileSliverAppBar(isProfileView: true,),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                StatsSection().addSpacing(vertical: 16),
-                _buildTabSection(),
-              ],
-            ).addSpacing(bottom: 16),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabSection() {
-    return Column(
-      children: [
-        TabBar(
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
+            ProfileSliverAppBar(
+              isProfileView: true),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  StatsSection().addSpacing(vertical: 16),
+                  Container(
+                    color: Colors.grey[900],
+                    child: TabBar(
+                      controller: _tabController,
+                      tabs: const [
+                        Tab(text: 'Games'),
+                        Tab(text: 'Achievements'),
+                        Tab(text: 'Activity'),
+                      ],
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.grey[400],
+                      indicatorColor: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ];
+        },
+        body: TabBarView(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Games'),
-            Tab(text: 'Achievements'),
-            Tab(text: 'Activity'),
+          children: [
+            _buildGamesTab(),
+            _buildAchievementsTab(),
+            _buildActivityTab(),
           ],
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.grey[400],
-          indicatorColor: Colors.blue,
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.76,
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              _buildGamesTab(),
-              _buildAchievementsTab(),
-              _buildActivityTab(),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -94,7 +88,6 @@ class _ViewProfilePageState extends State<ViewProfilePage>
     return ListView.builder(
       padding: const EdgeInsets.all(20),
       itemCount: games.length,
-      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final game = games[index];
         return Container(
@@ -211,7 +204,7 @@ class _ViewProfilePageState extends State<ViewProfilePage>
         
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: Colors.grey[800],
             borderRadius: BorderRadius.circular(12),
@@ -219,73 +212,42 @@ class _ViewProfilePageState extends State<ViewProfilePage>
                 ? Border.all(color: rarityColor, width: 1)
                 : Border.all(color: Colors.grey[700]!),
           ),
-          child: Row(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: isEarned 
-                      ? rarityColor.withOpacity(0.3)
-                      : Colors.grey.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  Icons.emoji_events,
-                  color: isEarned ? rarityColor : Colors.grey,
-                ),
+          child: ListTile(
+            leading: Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: isEarned 
+                    ? rarityColor.withOpacity(0.3)
+                    : Colors.grey.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(8),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          achievement['title']! as String,
-                          style: TextStyle(
-                            color: isEarned ? Colors.white : Colors.grey[500],
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: rarityColor.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: rarityColor, width: 0.5),
-                          ),
-                          child: Text(
-                            rarity,
-                            style: TextStyle(
-                              color: rarityColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      achievement['desc']! as String,
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
+              child: Icon(
+                Icons.emoji_events,
+                color: isEarned ? rarityColor : Colors.grey,
               ),
-              if (isEarned)
-                Icon(
-                  Icons.check_circle,
-                  color: rarityColor,
-                ),
-            ],
+            ),
+            title:Text(
+                  achievement['title']! as String,
+                  style: TextStyle(
+                    color: isEarned ? Colors.white : Colors.grey[500],
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ) ,
+            subtitle: Text(
+              achievement['desc']! as String,
+              style: TextStyle(
+                color: Colors.grey[400],
+                fontSize: 14,
+              ),
+            ),
+            trailing: isEarned
+                ? Icon(
+                    Icons.check_circle,
+                    color: rarityColor,
+                  )
+                : null,
           ),
         );
       },
@@ -337,58 +299,47 @@ class _ViewProfilePageState extends State<ViewProfilePage>
         
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(
             color: Colors.grey[800],
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 20,
-                ),
+          child: ListTile(
+            leading: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: iconColor.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        style: const TextStyle(color: Colors.white, fontSize: 14),
-                        children: [
-                          TextSpan(text: '${activity['action']} '),
-                          TextSpan(
-                            text: activity['target'],
-                            style: TextStyle(
-                              color: iconColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      activity['time']!,
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: 20,
               ),
-            ],
+            ),
+            title: RichText(
+              text: TextSpan(
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                children: [
+                  TextSpan(text: '${activity['action']} '),
+                  TextSpan(
+                    text: activity['target'],
+                    style: TextStyle(
+                      color: iconColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            subtitle: Text(
+              activity['time']!,
+              style: TextStyle(
+                color: Colors.grey[400],
+                fontSize: 12,
+              ),
+            ),
           ),
         );
       },
