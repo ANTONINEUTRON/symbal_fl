@@ -145,7 +145,7 @@ class GameCardMoreOptions extends StatelessWidget {
             leading: const Icon(Icons.person),
             title: const Text('Profile'),
             onTap: () {
-              // TODO: Navigate to profile
+              context.router.push(const ViewProfileRoute());
               Navigator.pop(context);
             },
           ),
