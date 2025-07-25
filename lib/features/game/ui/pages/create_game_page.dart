@@ -1,10 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:symbal_fl/features/create/domain/models/create_message_model.dart';
-import 'package:symbal_fl/features/create/ui/widgets/chat_input_field.dart';
-import 'package:symbal_fl/features/create/ui/widgets/chat_view.dart';
-import 'package:symbal_fl/features/create/ui/widgets/retries_counter.dart';
-import 'package:symbal_fl/features/create/ui/widgets/welcome_view.dart';
+import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
+import 'package:symbal_fl/features/game/ui/widgets/chat_input_field.dart';
+import 'package:symbal_fl/features/game/ui/widgets/chat_view.dart';
+import 'package:symbal_fl/features/game/ui/widgets/retries_counter.dart';
+import 'package:symbal_fl/features/game/ui/widgets/welcome_view.dart';
 
 @RoutePage()
 class CreateGamePage extends StatefulWidget {
@@ -24,16 +24,16 @@ class _CreateGamePageState extends State<CreateGamePage> {
   bool _isGenerating = false;
   bool _hasStartedChat = false;
 
-  final List<String> _gameTypes = [
-    'Puzzle',
-    'Adventure',
-    'Action',
-    'Strategy',
-    'Casual',
-    'Mystery',
-    'Fantasy',
-    'Sci-Fi',
-  ];
+  // final List<String> _gameTypes = [
+  //   'Puzzle',
+  //   'Adventure',
+  //   'Action',
+  //   'Strategy',
+  //   'Casual',
+  //   'Mystery',
+  //   'Fantasy',
+  //   'Sci-Fi',
+  // ];
 
   final List<CreateMessageModel> _messages = [];
 

@@ -15,27 +15,13 @@ class MyApp extends StatelessWidget {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => AppCubit()),
-      ],
-      child: AppInit(),
-    );
-  }
-}
-
-class AppInit extends StatelessWidget {
-  const AppInit({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    
-    return MaterialApp.router(
-      title: AppConstants.appName,
-      theme: AppConstants.appTheme,
-      debugShowCheckedModeBanner: false,
-      routerConfig: _appRoute.config(),
+      providers: [BlocProvider(create: (context) => AppCubit())],
+      child: MaterialApp.router(
+        title: AppConstants.appName,
+        theme: AppConstants.appTheme,
+        debugShowCheckedModeBanner: false,
+        routerConfig: _appRoute.config(),
+      ),
     );
   }
 }

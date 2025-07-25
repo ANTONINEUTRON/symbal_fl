@@ -2,8 +2,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
-import 'package:symbal_fl/features/play/domain/entities/game_story.dart';
+import 'package:symbal_fl/features/game/data/models/game_story_model.dart';
 
 class GameStoryCard extends StatelessWidget {
   final GameStory gameStory;
@@ -63,15 +64,13 @@ class GameStoryCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    GameTag(text: gameStory.gameType),
-                    const SizedBox(width: 8),
-                    GameTag(text: gameStory.duration),
+                    GameTag(text: gameStory.duration).addSpacing(right: 8),
+                    GameTag(text: "${gameStory.plays} plays"),
                   ],
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // TODO: Navigate to game
                     context.router.push(PlayGameRoute());
                   },
                   icon: const Icon(Icons.play_arrow),
@@ -227,9 +226,11 @@ class GameTag extends StatelessWidget {
         color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(
-        text,
-        style: const TextStyle(color: Colors.white, fontSize: 12),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(text, style: const TextStyle(color: Colors.white, fontSize: 12)),
+        ],
       ),
     );
   }

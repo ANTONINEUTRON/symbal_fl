@@ -7,7 +7,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/pages/create_account_page.dart';
-import 'package:symbal_fl/features/play/ui/pages/list_games_page.dart';
+import 'package:symbal_fl/features/game/ui/pages/list_games_page.dart';
 import 'package:symbal_fl/features/profile/ui/pages/profile_page.dart';
 
 @RoutePage()

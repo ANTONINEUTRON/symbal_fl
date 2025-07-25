@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:symbal_fl/features/create/domain/models/create_message_model.dart';
-import 'package:symbal_fl/features/create/ui/widgets/message_bubble.dart';
-import 'package:symbal_fl/features/create/ui/widgets/typing_indicator.dart';
+import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
+import 'package:symbal_fl/features/game/ui/widgets/message_bubble.dart';
+import 'package:symbal_fl/features/game/ui/widgets/typing_indicator.dart';
 
 class CreateChatView extends StatelessWidget {
   const CreateChatView({

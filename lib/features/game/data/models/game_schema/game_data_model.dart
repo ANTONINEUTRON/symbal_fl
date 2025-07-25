@@ -1,12 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-// import 'package:symbal_fl/features/create/data/models/entity_components.dart';
 
 part 'game_data_model.freezed.dart';
 part 'game_data_model.g.dart';
 part 'entity_components.dart';
 
-
-// Main Game Model
+/// AI Generated data
 @freezed
 abstract class GameData with _$GameData {
   factory GameData({
@@ -21,7 +19,6 @@ abstract class GameData with _$GameData {
       _$GameDataFromJson(json);
 }
 
-// Metadata
 @freezed
 abstract class GameMetadata with _$GameMetadata {
   const factory GameMetadata({

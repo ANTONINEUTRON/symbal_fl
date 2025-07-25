@@ -16,11 +16,10 @@ import 'package:symbal_fl/features/auth/ui/pages/forgot_password.dart' as _i3;
 import 'package:symbal_fl/features/auth/ui/pages/reset_password_page.dart'
     as _i8;
 import 'package:symbal_fl/features/auth/ui/pages/verify_email_page.dart' as _i9;
-import 'package:symbal_fl/features/create/ui/pages/create_game_page.dart'
-    as _i2;
+import 'package:symbal_fl/features/game/ui/pages/create_game_page.dart' as _i2;
+import 'package:symbal_fl/features/game/ui/pages/list_games_page.dart' as _i5;
+import 'package:symbal_fl/features/game/ui/pages/play_game_page.dart' as _i6;
 import 'package:symbal_fl/features/home/ui/pages/home_page.dart' as _i4;
-import 'package:symbal_fl/features/play/ui/pages/list_games_page.dart' as _i5;
-import 'package:symbal_fl/features/play/ui/pages/play_game_page.dart' as _i6;
 import 'package:symbal_fl/features/profile/ui/pages/profile_page.dart' as _i7;
 import 'package:symbal_fl/features/profile/ui/pages/view_profile_page.dart'
     as _i10;

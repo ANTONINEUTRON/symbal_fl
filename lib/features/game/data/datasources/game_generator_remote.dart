@@ -1,5 +1,5 @@
-import 'package:symbal_fl/features/create/domain/models/create_message_model.dart';
-import 'package:symbal_fl/features/create/domain/models/game_data_model.dart';
+import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_schema/game_data_model.dart';
 
 class GameGeneratorRemote {
   Future<CreateMessageModel> generateGame(CreateMessageModel message) async {
