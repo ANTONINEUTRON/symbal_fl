@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/settings_section.dart';
 
 class ProfileSliverAppBar extends StatefulWidget {
@@ -63,24 +66,25 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
         },
       ),
       actions: [
-        widget.isProfileView ?
-        IconButton(
-          onPressed: () {
-            _showSettingsBottomSheet();
-          },
-          icon: Icon(
-            Icons.settings_sharp,
-            color: Theme.of(context).colorScheme.primaryContainer,
-          ),
-        ):IconButton(
-          onPressed: () {
-            // _showSettingsBottomSheet();
-          },
-          icon: Icon(
-            Icons.logout_outlined,
-            color: Theme.of(context).colorScheme.primaryContainer,
-          ),
-        ),
+        widget.isProfileView
+            ? IconButton(
+                onPressed: () {
+                  _showSettingsBottomSheet();
+                },
+                icon: Icon(
+                  Icons.settings_sharp,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+              )
+            : IconButton(
+                onPressed: () {
+                  // _showSettingsBottomSheet();
+                },
+                icon: Icon(
+                  Icons.logout_outlined,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+              ),
       ],
     );
   }
@@ -189,22 +193,33 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              widget.isProfileView ?_buildActionButton(
-                'Follow',
-                Icons.person_add,
-                Colors.purple,
-                () {},
-              ) : _buildActionButton(
-                'Edit Profile',
-                Icons.edit_outlined,
-                Colors.purple,
-                () {},
-              ),
+              widget.isProfileView
+                  ? _buildActionButton(
+                      'Follow',
+                      Icons.person_add,
+                      Colors.purple,
+                      () {
+                        context.read<AppCubit>().setAlertMessage('Following...');
+                      },
+                    )
+                  : _buildActionButton(
+                      'Edit Profile',
+                      Icons.edit_outlined,
+                      Colors.purple,
+                      () {
+                        
+                      },
+                    ),
               _buildActionButton(
                 'Share',
                 Icons.share_outlined,
                 Colors.grey[700]!,
-                () {},
+                () {
+                  SharePlus.instance.share(ShareParams(
+                    text: 'Check out my profile on Symbal!',
+                    subject: 'Symbal Profile',
+                  ));
+                },
               ),
             ],
           ),
@@ -253,7 +268,11 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
               ),
             ),
             const SizedBox(height: 20),
-            SettingsItem(icon: Icons.report, title: 'Report',isDestructive: true,),
+            SettingsItem(
+              icon: Icons.report,
+              title: 'Report',
+              isDestructive: true,
+            ),
             SettingsItem(
               icon: Icons.block,
               title: 'Log Out',

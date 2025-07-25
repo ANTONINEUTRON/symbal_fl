@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:symbal_fl/features/create/domain/entities/create_chat_message.dart';
+import 'package:symbal_fl/features/create/domain/models/create_message_model.dart';
 import 'package:symbal_fl/features/create/ui/widgets/message_bubble.dart';
 import 'package:symbal_fl/features/create/ui/widgets/typing_indicator.dart';
 
-class ChatView extends StatelessWidget {
-  const ChatView({
+class CreateChatView extends StatelessWidget {
+  const CreateChatView({
     super.key,
     required this.scrollController,
     required this.messages,
@@ -12,7 +12,7 @@ class ChatView extends StatelessWidget {
   });
 
   final ScrollController scrollController;
-  final List<CreateChatMessage> messages;
+  final List<CreateMessageModel> messages;
   final bool isGenerating;
 
   @override

@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:symbal_fl/features/create/data/models/entity_components.dart';
+// import 'package:symbal_fl/features/create/data/models/entity_components.dart';
 
-part 'game_data.freezed.dart';
-part 'game_data.g.dart';
+part 'game_data_model.freezed.dart';
+part 'game_data_model.g.dart';
+part 'entity_components.dart';
 
 
 // Main Game Model
@@ -38,7 +39,7 @@ abstract class GameMetadata with _$GameMetadata {
 abstract class GameWorld with _$GameWorld {
   const factory GameWorld({
     @Default(GameOrientation.landscape) GameOrientation orientation,
-    WorldBounds? bounds,
+    // WorldBounds? bounds,
     WorldGravity? gravity,
     WorldBackground? background,
     WorldCamera? camera,

@@ -1,8 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:symbal_fl/features/create/domain/entities/create_chat_message.dart';
+import 'package:symbal_fl/features/create/domain/models/create_message_model.dart';
 import 'package:symbal_fl/features/create/ui/widgets/chat_input_field.dart';
 import 'package:symbal_fl/features/create/ui/widgets/chat_view.dart';
+import 'package:symbal_fl/features/create/ui/widgets/retries_counter.dart';
 import 'package:symbal_fl/features/create/ui/widgets/welcome_view.dart';
 
 @RoutePage()
@@ -17,15 +18,15 @@ class _CreateGamePageState extends State<CreateGamePage> {
   final TextEditingController _promptController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final FocusNode _textFieldFocus = FocusNode();
-  
+
   String _selectedGameType = 'Puzzle';
   int _retriesCount = 3;
   bool _isGenerating = false;
   bool _hasStartedChat = false;
-  
+
   final List<String> _gameTypes = [
     'Puzzle',
-    'Adventure', 
+    'Adventure',
     'Action',
     'Strategy',
     'Casual',
@@ -34,7 +35,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     'Sci-Fi',
   ];
 
-  final List<CreateChatMessage> _messages = [];
+  final List<CreateMessageModel> _messages = [];
 
   @override
   void dispose() {
@@ -48,16 +49,18 @@ class _CreateGamePageState extends State<CreateGamePage> {
     if (_promptController.text.trim().isEmpty || _retriesCount <= 0) return;
 
     final userMessage = _promptController.text.trim();
-    
+
     setState(() {
       if (!_hasStartedChat) {
         _hasStartedChat = true;
       }
-      _messages.add(CreateChatMessage(
-        text: userMessage,
-        isUser: true,
-        timestamp: DateTime.now(),
-      ));
+      _messages.add(
+        CreateMessageModel(
+          prompt: userMessage,
+          isUser: true,
+          timestamp: DateTime.now(),
+        ),
+      );
       _isGenerating = true;
       _retriesCount--;
     });
@@ -68,11 +71,14 @@ class _CreateGamePageState extends State<CreateGamePage> {
     // Simulate AI response
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
-        _messages.add(CreateChatMessage(
-          text: "🎮 Fantastic! I'm creating your $_selectedGameType game: \"$userMessage\"\n\n✨ Generating unique gameplay mechanics...\n🎭 Crafting an AI-powered story...\n🎯 Setting up fun challenges...\n\nYour personalized game will be ready shortly!",
-          isUser: false,
-          timestamp: DateTime.now(),
-        ));
+        _messages.add(
+          CreateMessageModel(
+            prompt:
+                "🎮 Fantastic! I'm creating your $_selectedGameType game: \"$userMessage\"\n\n✨ Generating unique gameplay mechanics...\n🎭 Crafting an AI-powered story...\n🎯 Setting up fun challenges...\n\nYour personalized game will be ready shortly!",
+            isUser: false,
+            timestamp: DateTime.now(),
+          ),
+        );
         _isGenerating = false;
       });
       _scrollToBottom();
@@ -95,7 +101,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     setState(() {
       _retriesCount += 5;
     });
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('🎉 +5 retries added!'),
@@ -126,23 +132,26 @@ class _CreateGamePageState extends State<CreateGamePage> {
         elevation: 0,
         actions: [
           // Retries Counter
-          _buildRetriesCounter(),
+          RetriesCounter(
+            retriesCount: _retriesCount,
+            addRetries: _addRetries,
+          ),
         ],
       ),
       body: Column(
         children: [
           // Game Type Dropdown
-          _buildGameType(),
+          // _buildGameType(),
 
           // Main Content Area
           Expanded(
-            child: _hasStartedChat ? ChatView(
-              scrollController: _scrollController,
-              messages: _messages,
-              isGenerating: _isGenerating,
-            ) : WelcomeView(
-              startWithSuggestion: _startWithSuggestion,
-            ),
+            child: _hasStartedChat
+                ? CreateChatView(
+                    scrollController: _scrollController,
+                    messages: _messages,
+                    isGenerating: _isGenerating,
+                  )
+                : WelcomeView(startWithSuggestion: _startWithSuggestion),
           ),
 
           // Input Field
@@ -158,116 +167,65 @@ class _CreateGamePageState extends State<CreateGamePage> {
     );
   }
 
-  Container _buildRetriesCounter() {
-    return Container(
-          margin: const EdgeInsets.only(right: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: Colors.purple.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.purple.withOpacity(0.3)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.bolt,
-                color: Colors.amber,
-                size: 16,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '$_retriesCount',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
-              ),
-              const SizedBox(width: 4),
-              GestureDetector(
-                onTap: _addRetries,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: Colors.green,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 12,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-  }
+  // Container _buildGameType() {
+  //   return Container(
+  //     margin: const EdgeInsets.all(16),
+  //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+  //     decoration: BoxDecoration(
+  //       color: Colors.grey[800],
+  //       borderRadius: BorderRadius.circular(12),
+  //       border: Border.all(color: Colors.purple.withOpacity(0.3)),
+  //     ),
+  //     child: DropdownButtonHideUnderline(
+  //       child: DropdownButton<String>(
+  //         value: _selectedGameType,
+  //         isExpanded: true,
+  //         dropdownColor: Colors.grey[800],
+  //         icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
+  //         style: const TextStyle(color: Colors.white, fontSize: 16),
+  //         items: _gameTypes.map((type) {
+  //           return DropdownMenuItem(
+  //             value: type,
+  //             child: Row(
+  //               children: [
+  //                 Icon(_getGameTypeIcon(type), color: Colors.purple, size: 20),
+  //                 const SizedBox(width: 12),
+  //                 Text(type),
+  //               ],
+  //             ),
+  //           );
+  //         }).toList(),
+  //         onChanged: (value) {
+  //           setState(() {
+  //             _selectedGameType = value!;
+  //           });
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Container _buildGameType() {
-    return Container(
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          decoration: BoxDecoration(
-            color: Colors.grey[800],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.purple.withOpacity(0.3)),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: _selectedGameType,
-              isExpanded: true,
-              dropdownColor: Colors.grey[800],
-              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-              items: _gameTypes.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Row(
-                    children: [
-                      Icon(
-                        _getGameTypeIcon(type),
-                        color: Colors.purple,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 12),
-                      Text(type),
-                    ],
-                  ),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedGameType = value!;
-                });
-              },
-            ),
-          ),
-        );
-  }
-
-  IconData _getGameTypeIcon(String type) {
-    switch (type) {
-      case 'Puzzle':
-        return Icons.extension;
-      case 'Adventure':
-        return Icons.explore;
-      case 'Action':
-        return Icons.flash_on;
-      case 'Strategy':
-        return Icons.psychology;
-      case 'Casual':
-        return Icons.spa;
-      case 'Mystery':
-        return Icons.search;
-      case 'Fantasy':
-        return Icons.auto_awesome;
-      case 'Sci-Fi':
-        return Icons.rocket;
-      default:
-        return Icons.games;
-    }
-  }
-
+  // IconData _getGameTypeIcon(String type) {
+  //   switch (type) {
+  //     case 'Puzzle':
+  //       return Icons.extension;
+  //     case 'Adventure':
+  //       return Icons.explore;
+  //     case 'Action':
+  //       return Icons.flash_on;
+  //     case 'Strategy':
+  //       return Icons.psychology;
+  //     case 'Casual':
+  //       return Icons.spa;
+  //     case 'Mystery':
+  //       return Icons.search;
+  //     case 'Fantasy':
+  //       return Icons.auto_awesome;
+  //     case 'Sci-Fi':
+  //       return Icons.rocket;
+  //     default:
+  //       return Icons.games;
+  //   }
+  // }
 }
+

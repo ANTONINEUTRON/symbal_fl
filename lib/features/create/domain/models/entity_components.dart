@@ -1,7 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'entity_components.freezed.dart';
-part 'entity_components.g.dart';
+part of 'game_data_model.dart';
 
 @freezed
 abstract class EntityComponents with _$EntityComponents {

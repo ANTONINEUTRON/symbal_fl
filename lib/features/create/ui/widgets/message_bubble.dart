@@ -1,36 +1,31 @@
-
 import 'package:flutter/material.dart';
+import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/utils/utility_functions.dart';
-import 'package:symbal_fl/features/create/domain/entities/create_chat_message.dart';
+import 'package:symbal_fl/features/create/domain/models/create_message_model.dart';
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble({super.key, required this.message,});
+  const MessageBubble({super.key, required this.message});
 
-  final CreateChatMessage message;
+  final CreateMessageModel message;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(
-        mainAxisAlignment:
-            message.isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: message.isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!message.isUser) ...[
             Container(
               padding: const EdgeInsets.all(8),
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.purple, Colors.pink],
-                ),
+                gradient: LinearGradient(colors: [Colors.purple, Colors.pink]),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.smart_toy,
-                color: Colors.white,
-                size: 16,
-              ),
+              child: const Icon(Icons.smart_toy, color: Colors.white, size: 16),
             ),
             const SizedBox(width: 12),
           ],
@@ -45,28 +40,28 @@ class MessageBubble extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    message.text,
+                    message.prompt,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       height: 1.4,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  
+                  ).addSpacing(bottom: 8),
+
                   // AI Response Action Buttons (only for AI messages)
                   if (!message.isUser) ...[
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         // Timestamp
-                  Text(
-                    UtilityFunctions.formatTime(message.timestamp),
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 11,
-                    ),
-                  ),
-                
+                        Text(
+                          UtilityFunctions.formatTime(message.timestamp),
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 11,
+                          ),
+                        ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -108,7 +103,7 @@ class MessageBubble extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            
+
                             // More Menu
                             PopupMenuButton<String>(
                               onSelected: (value) {
@@ -116,11 +111,15 @@ class MessageBubble extends StatelessWidget {
                                   case 'set_main':
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: const Text('⭐ Set as main game'),
+                                        content: const Text(
+                                          '⭐ Set as main game',
+                                        ),
                                         backgroundColor: Colors.orange,
                                         behavior: SnackBarBehavior.floating,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
                                         ),
                                       ),
                                     );
@@ -179,8 +178,7 @@ class MessageBubble extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                   ],
-                  
-                  ],
+                ],
               ),
             ),
           ),
@@ -189,19 +187,13 @@ class MessageBubble extends StatelessWidget {
             CircleAvatar(
               radius: 12,
               backgroundColor: Colors.grey[700],
-              child: const Icon(
-                Icons.person,
-                color: Colors.white,
-                size: 16,
-              ),
+              child: const Icon(Icons.person, color: Colors.white, size: 16),
             ),
           ],
         ],
       ),
     );
-
   }
-
 
   void _showReportDialog(BuildContext context) {
     showDialog(
@@ -229,17 +221,12 @@ class MessageBubble extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: Colors.grey),
-            ),
+            child: const Text('Cancel', style: TextStyle(color: Colors.grey)),
           ),
         ],
       ),
     );
   }
-
-
 }
 
 class ReportOption extends StatelessWidget {
@@ -248,7 +235,7 @@ class ReportOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   return ListTile(
+    return ListTile(
       dense: true,
       title: Text(
         option,
@@ -268,6 +255,5 @@ class ReportOption extends StatelessWidget {
         );
       },
     );
-  
   }
 }
