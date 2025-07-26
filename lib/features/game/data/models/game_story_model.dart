@@ -30,3 +30,4 @@ abstract class GameStory with _$GameStory {
   factory GameStory.fromJson(Map<String, dynamic> json) =>
       _$GameStoryFromJson(json);
 }
+

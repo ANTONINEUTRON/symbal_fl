@@ -36,7 +36,7 @@ abstract class GameMetadata with _$GameMetadata {
 abstract class GameWorld with _$GameWorld {
   const factory GameWorld({
     @Default(GameOrientation.landscape) GameOrientation orientation,
-    // WorldBounds? bounds,
+    WorldBounds? bounds,
     WorldGravity? gravity,
     WorldBackground? background,
     WorldCamera? camera,

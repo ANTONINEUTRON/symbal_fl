@@ -4,7 +4,7 @@ part of 'game_data_model.dart';
 abstract class EntityComponents with _$EntityComponents {
   const factory EntityComponents({
     TransformComponent? transform,
-    SpriteComponent? sprite,
+    SSpriteComponent? sprite,
     AnimationComponent? animation,
     PhysicsComponent? physics,
     CollisionComponent? collision,
@@ -36,8 +36,8 @@ abstract class TransformComponent with _$TransformComponent {
 }
 
 @freezed
-abstract class SpriteComponent with _$SpriteComponent {
-  const factory SpriteComponent({
+abstract class SSpriteComponent with _$SpriteComponent {
+  const factory SSpriteComponent({
     required String asset,
     double? width,
     double? height,
@@ -45,7 +45,7 @@ abstract class SpriteComponent with _$SpriteComponent {
     @Default(false) bool flipY,
   }) = _SpriteComponent;
 
-  factory SpriteComponent.fromJson(Map<String, dynamic> json) =>
+  factory SSpriteComponent.fromJson(Map<String, dynamic> json) =>
       _$SpriteComponentFromJson(json);
 }
 

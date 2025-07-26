@@ -649,8 +649,7 @@ as String,
 /// @nodoc
 mixin _$GameWorld {
 
- GameOrientation get orientation;// WorldBounds? bounds,
- WorldGravity? get gravity; WorldBackground? get background; WorldCamera? get camera; String? get audio;
+ GameOrientation get orientation; WorldBounds? get bounds; WorldGravity? get gravity; WorldBackground? get background; WorldCamera? get camera; String? get audio;
 /// Create a copy of GameWorld
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -663,16 +662,16 @@ $GameWorldCopyWith<GameWorld> get copyWith => _$GameWorldCopyWithImpl<GameWorld>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GameWorld&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.gravity, gravity) || other.gravity == gravity)&&(identical(other.background, background) || other.background == background)&&(identical(other.camera, camera) || other.camera == camera)&&(identical(other.audio, audio) || other.audio == audio));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GameWorld&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.bounds, bounds) || other.bounds == bounds)&&(identical(other.gravity, gravity) || other.gravity == gravity)&&(identical(other.background, background) || other.background == background)&&(identical(other.camera, camera) || other.camera == camera)&&(identical(other.audio, audio) || other.audio == audio));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,orientation,gravity,background,camera,audio);
+int get hashCode => Object.hash(runtimeType,orientation,bounds,gravity,background,camera,audio);
 
 @override
 String toString() {
-  return 'GameWorld(orientation: $orientation, gravity: $gravity, background: $background, camera: $camera, audio: $audio)';
+  return 'GameWorld(orientation: $orientation, bounds: $bounds, gravity: $gravity, background: $background, camera: $camera, audio: $audio)';
 }
 
 
@@ -683,11 +682,11 @@ abstract mixin class $GameWorldCopyWith<$Res>  {
   factory $GameWorldCopyWith(GameWorld value, $Res Function(GameWorld) _then) = _$GameWorldCopyWithImpl;
 @useResult
 $Res call({
- GameOrientation orientation, WorldGravity? gravity, WorldBackground? background, WorldCamera? camera, String? audio
+ GameOrientation orientation, WorldBounds? bounds, WorldGravity? gravity, WorldBackground? background, WorldCamera? camera, String? audio
 });
 
 
-$WorldGravityCopyWith<$Res>? get gravity;$WorldBackgroundCopyWith<$Res>? get background;$WorldCameraCopyWith<$Res>? get camera;
+$WorldBoundsCopyWith<$Res>? get bounds;$WorldGravityCopyWith<$Res>? get gravity;$WorldBackgroundCopyWith<$Res>? get background;$WorldCameraCopyWith<$Res>? get camera;
 
 }
 /// @nodoc
@@ -700,10 +699,11 @@ class _$GameWorldCopyWithImpl<$Res>
 
 /// Create a copy of GameWorld
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? orientation = null,Object? gravity = freezed,Object? background = freezed,Object? camera = freezed,Object? audio = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? orientation = null,Object? bounds = freezed,Object? gravity = freezed,Object? background = freezed,Object? camera = freezed,Object? audio = freezed,}) {
   return _then(_self.copyWith(
 orientation: null == orientation ? _self.orientation : orientation // ignore: cast_nullable_to_non_nullable
-as GameOrientation,gravity: freezed == gravity ? _self.gravity : gravity // ignore: cast_nullable_to_non_nullable
+as GameOrientation,bounds: freezed == bounds ? _self.bounds : bounds // ignore: cast_nullable_to_non_nullable
+as WorldBounds?,gravity: freezed == gravity ? _self.gravity : gravity // ignore: cast_nullable_to_non_nullable
 as WorldGravity?,background: freezed == background ? _self.background : background // ignore: cast_nullable_to_non_nullable
 as WorldBackground?,camera: freezed == camera ? _self.camera : camera // ignore: cast_nullable_to_non_nullable
 as WorldCamera?,audio: freezed == audio ? _self.audio : audio // ignore: cast_nullable_to_non_nullable
@@ -711,6 +711,18 @@ as String?,
   ));
 }
 /// Create a copy of GameWorld
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WorldBoundsCopyWith<$Res>? get bounds {
+    if (_self.bounds == null) {
+    return null;
+  }
+
+  return $WorldBoundsCopyWith<$Res>(_self.bounds!, (value) {
+    return _then(_self.copyWith(bounds: value));
+  });
+}/// Create a copy of GameWorld
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -828,10 +840,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( GameOrientation orientation,  WorldGravity? gravity,  WorldBackground? background,  WorldCamera? camera,  String? audio)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( GameOrientation orientation,  WorldBounds? bounds,  WorldGravity? gravity,  WorldBackground? background,  WorldCamera? camera,  String? audio)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GameWorld() when $default != null:
-return $default(_that.orientation,_that.gravity,_that.background,_that.camera,_that.audio);case _:
+return $default(_that.orientation,_that.bounds,_that.gravity,_that.background,_that.camera,_that.audio);case _:
   return orElse();
 
 }
@@ -849,10 +861,10 @@ return $default(_that.orientation,_that.gravity,_that.background,_that.camera,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( GameOrientation orientation,  WorldGravity? gravity,  WorldBackground? background,  WorldCamera? camera,  String? audio)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( GameOrientation orientation,  WorldBounds? bounds,  WorldGravity? gravity,  WorldBackground? background,  WorldCamera? camera,  String? audio)  $default,) {final _that = this;
 switch (_that) {
 case _GameWorld():
-return $default(_that.orientation,_that.gravity,_that.background,_that.camera,_that.audio);case _:
+return $default(_that.orientation,_that.bounds,_that.gravity,_that.background,_that.camera,_that.audio);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -869,10 +881,10 @@ return $default(_that.orientation,_that.gravity,_that.background,_that.camera,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( GameOrientation orientation,  WorldGravity? gravity,  WorldBackground? background,  WorldCamera? camera,  String? audio)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( GameOrientation orientation,  WorldBounds? bounds,  WorldGravity? gravity,  WorldBackground? background,  WorldCamera? camera,  String? audio)?  $default,) {final _that = this;
 switch (_that) {
 case _GameWorld() when $default != null:
-return $default(_that.orientation,_that.gravity,_that.background,_that.camera,_that.audio);case _:
+return $default(_that.orientation,_that.bounds,_that.gravity,_that.background,_that.camera,_that.audio);case _:
   return null;
 
 }
@@ -884,11 +896,11 @@ return $default(_that.orientation,_that.gravity,_that.background,_that.camera,_t
 @JsonSerializable()
 
 class _GameWorld implements GameWorld {
-  const _GameWorld({this.orientation = GameOrientation.landscape, this.gravity, this.background, this.camera, this.audio});
+  const _GameWorld({this.orientation = GameOrientation.landscape, this.bounds, this.gravity, this.background, this.camera, this.audio});
   factory _GameWorld.fromJson(Map<String, dynamic> json) => _$GameWorldFromJson(json);
 
 @override@JsonKey() final  GameOrientation orientation;
-// WorldBounds? bounds,
+@override final  WorldBounds? bounds;
 @override final  WorldGravity? gravity;
 @override final  WorldBackground? background;
 @override final  WorldCamera? camera;
@@ -907,16 +919,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GameWorld&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.gravity, gravity) || other.gravity == gravity)&&(identical(other.background, background) || other.background == background)&&(identical(other.camera, camera) || other.camera == camera)&&(identical(other.audio, audio) || other.audio == audio));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GameWorld&&(identical(other.orientation, orientation) || other.orientation == orientation)&&(identical(other.bounds, bounds) || other.bounds == bounds)&&(identical(other.gravity, gravity) || other.gravity == gravity)&&(identical(other.background, background) || other.background == background)&&(identical(other.camera, camera) || other.camera == camera)&&(identical(other.audio, audio) || other.audio == audio));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,orientation,gravity,background,camera,audio);
+int get hashCode => Object.hash(runtimeType,orientation,bounds,gravity,background,camera,audio);
 
 @override
 String toString() {
-  return 'GameWorld(orientation: $orientation, gravity: $gravity, background: $background, camera: $camera, audio: $audio)';
+  return 'GameWorld(orientation: $orientation, bounds: $bounds, gravity: $gravity, background: $background, camera: $camera, audio: $audio)';
 }
 
 
@@ -927,11 +939,11 @@ abstract mixin class _$GameWorldCopyWith<$Res> implements $GameWorldCopyWith<$Re
   factory _$GameWorldCopyWith(_GameWorld value, $Res Function(_GameWorld) _then) = __$GameWorldCopyWithImpl;
 @override @useResult
 $Res call({
- GameOrientation orientation, WorldGravity? gravity, WorldBackground? background, WorldCamera? camera, String? audio
+ GameOrientation orientation, WorldBounds? bounds, WorldGravity? gravity, WorldBackground? background, WorldCamera? camera, String? audio
 });
 
 
-@override $WorldGravityCopyWith<$Res>? get gravity;@override $WorldBackgroundCopyWith<$Res>? get background;@override $WorldCameraCopyWith<$Res>? get camera;
+@override $WorldBoundsCopyWith<$Res>? get bounds;@override $WorldGravityCopyWith<$Res>? get gravity;@override $WorldBackgroundCopyWith<$Res>? get background;@override $WorldCameraCopyWith<$Res>? get camera;
 
 }
 /// @nodoc
@@ -944,10 +956,11 @@ class __$GameWorldCopyWithImpl<$Res>
 
 /// Create a copy of GameWorld
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? orientation = null,Object? gravity = freezed,Object? background = freezed,Object? camera = freezed,Object? audio = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? orientation = null,Object? bounds = freezed,Object? gravity = freezed,Object? background = freezed,Object? camera = freezed,Object? audio = freezed,}) {
   return _then(_GameWorld(
 orientation: null == orientation ? _self.orientation : orientation // ignore: cast_nullable_to_non_nullable
-as GameOrientation,gravity: freezed == gravity ? _self.gravity : gravity // ignore: cast_nullable_to_non_nullable
+as GameOrientation,bounds: freezed == bounds ? _self.bounds : bounds // ignore: cast_nullable_to_non_nullable
+as WorldBounds?,gravity: freezed == gravity ? _self.gravity : gravity // ignore: cast_nullable_to_non_nullable
 as WorldGravity?,background: freezed == background ? _self.background : background // ignore: cast_nullable_to_non_nullable
 as WorldBackground?,camera: freezed == camera ? _self.camera : camera // ignore: cast_nullable_to_non_nullable
 as WorldCamera?,audio: freezed == audio ? _self.audio : audio // ignore: cast_nullable_to_non_nullable
@@ -956,6 +969,18 @@ as String?,
 }
 
 /// Create a copy of GameWorld
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$WorldBoundsCopyWith<$Res>? get bounds {
+    if (_self.bounds == null) {
+    return null;
+  }
+
+  return $WorldBoundsCopyWith<$Res>(_self.bounds!, (value) {
+    return _then(_self.copyWith(bounds: value));
+  });
+}/// Create a copy of GameWorld
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4041,7 +4066,7 @@ as bool,
 /// @nodoc
 mixin _$EntityComponents {
 
- TransformComponent? get transform; SpriteComponent? get sprite; AnimationComponent? get animation; PhysicsComponent? get physics; CollisionComponent? get collision; MovementComponent? get movement; HealthComponent? get health; AIComponent? get ai; CollectibleComponent? get collectible; DamageComponent? get damage; PlatformComponent? get platform; TriggerComponent? get trigger;
+ TransformComponent? get transform; SSpriteComponent? get sprite; AnimationComponent? get animation; PhysicsComponent? get physics; CollisionComponent? get collision; MovementComponent? get movement; HealthComponent? get health; AIComponent? get ai; CollectibleComponent? get collectible; DamageComponent? get damage; PlatformComponent? get platform; TriggerComponent? get trigger;
 /// Create a copy of EntityComponents
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -4074,7 +4099,7 @@ abstract mixin class $EntityComponentsCopyWith<$Res>  {
   factory $EntityComponentsCopyWith(EntityComponents value, $Res Function(EntityComponents) _then) = _$EntityComponentsCopyWithImpl;
 @useResult
 $Res call({
- TransformComponent? transform, SpriteComponent? sprite, AnimationComponent? animation, PhysicsComponent? physics, CollisionComponent? collision, MovementComponent? movement, HealthComponent? health, AIComponent? ai, CollectibleComponent? collectible, DamageComponent? damage, PlatformComponent? platform, TriggerComponent? trigger
+ TransformComponent? transform, SSpriteComponent? sprite, AnimationComponent? animation, PhysicsComponent? physics, CollisionComponent? collision, MovementComponent? movement, HealthComponent? health, AIComponent? ai, CollectibleComponent? collectible, DamageComponent? damage, PlatformComponent? platform, TriggerComponent? trigger
 });
 
 
@@ -4095,7 +4120,7 @@ class _$EntityComponentsCopyWithImpl<$Res>
   return _then(_self.copyWith(
 transform: freezed == transform ? _self.transform : transform // ignore: cast_nullable_to_non_nullable
 as TransformComponent?,sprite: freezed == sprite ? _self.sprite : sprite // ignore: cast_nullable_to_non_nullable
-as SpriteComponent?,animation: freezed == animation ? _self.animation : animation // ignore: cast_nullable_to_non_nullable
+as SSpriteComponent?,animation: freezed == animation ? _self.animation : animation // ignore: cast_nullable_to_non_nullable
 as AnimationComponent?,physics: freezed == physics ? _self.physics : physics // ignore: cast_nullable_to_non_nullable
 as PhysicsComponent?,collision: freezed == collision ? _self.collision : collision // ignore: cast_nullable_to_non_nullable
 as CollisionComponent?,movement: freezed == movement ? _self.movement : movement // ignore: cast_nullable_to_non_nullable
@@ -4334,7 +4359,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( TransformComponent? transform,  SpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( TransformComponent? transform,  SSpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EntityComponents() when $default != null:
 return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that.collision,_that.movement,_that.health,_that.ai,_that.collectible,_that.damage,_that.platform,_that.trigger);case _:
@@ -4355,7 +4380,7 @@ return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( TransformComponent? transform,  SpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( TransformComponent? transform,  SSpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)  $default,) {final _that = this;
 switch (_that) {
 case _EntityComponents():
 return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that.collision,_that.movement,_that.health,_that.ai,_that.collectible,_that.damage,_that.platform,_that.trigger);case _:
@@ -4375,7 +4400,7 @@ return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( TransformComponent? transform,  SpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( TransformComponent? transform,  SSpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)?  $default,) {final _that = this;
 switch (_that) {
 case _EntityComponents() when $default != null:
 return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that.collision,_that.movement,_that.health,_that.ai,_that.collectible,_that.damage,_that.platform,_that.trigger);case _:
@@ -4394,7 +4419,7 @@ class _EntityComponents implements EntityComponents {
   factory _EntityComponents.fromJson(Map<String, dynamic> json) => _$EntityComponentsFromJson(json);
 
 @override final  TransformComponent? transform;
-@override final  SpriteComponent? sprite;
+@override final  SSpriteComponent? sprite;
 @override final  AnimationComponent? animation;
 @override final  PhysicsComponent? physics;
 @override final  CollisionComponent? collision;
@@ -4439,7 +4464,7 @@ abstract mixin class _$EntityComponentsCopyWith<$Res> implements $EntityComponen
   factory _$EntityComponentsCopyWith(_EntityComponents value, $Res Function(_EntityComponents) _then) = __$EntityComponentsCopyWithImpl;
 @override @useResult
 $Res call({
- TransformComponent? transform, SpriteComponent? sprite, AnimationComponent? animation, PhysicsComponent? physics, CollisionComponent? collision, MovementComponent? movement, HealthComponent? health, AIComponent? ai, CollectibleComponent? collectible, DamageComponent? damage, PlatformComponent? platform, TriggerComponent? trigger
+ TransformComponent? transform, SSpriteComponent? sprite, AnimationComponent? animation, PhysicsComponent? physics, CollisionComponent? collision, MovementComponent? movement, HealthComponent? health, AIComponent? ai, CollectibleComponent? collectible, DamageComponent? damage, PlatformComponent? platform, TriggerComponent? trigger
 });
 
 
@@ -4460,7 +4485,7 @@ class __$EntityComponentsCopyWithImpl<$Res>
   return _then(_EntityComponents(
 transform: freezed == transform ? _self.transform : transform // ignore: cast_nullable_to_non_nullable
 as TransformComponent?,sprite: freezed == sprite ? _self.sprite : sprite // ignore: cast_nullable_to_non_nullable
-as SpriteComponent?,animation: freezed == animation ? _self.animation : animation // ignore: cast_nullable_to_non_nullable
+as SSpriteComponent?,animation: freezed == animation ? _self.animation : animation // ignore: cast_nullable_to_non_nullable
 as AnimationComponent?,physics: freezed == physics ? _self.physics : physics // ignore: cast_nullable_to_non_nullable
 as PhysicsComponent?,collision: freezed == collision ? _self.collision : collision // ignore: cast_nullable_to_non_nullable
 as CollisionComponent?,movement: freezed == movement ? _self.movement : movement // ignore: cast_nullable_to_non_nullable
@@ -4902,7 +4927,7 @@ mixin _$SpriteComponent {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SpriteComponentCopyWith<SpriteComponent> get copyWith => _$SpriteComponentCopyWithImpl<SpriteComponent>(this as SpriteComponent, _$identity);
+$SpriteComponentCopyWith<SSpriteComponent> get copyWith => _$SpriteComponentCopyWithImpl<SSpriteComponent>(this as SSpriteComponent, _$identity);
 
   /// Serializes this SpriteComponent to a JSON map.
   Map<String, dynamic> toJson();
@@ -4910,7 +4935,7 @@ $SpriteComponentCopyWith<SpriteComponent> get copyWith => _$SpriteComponentCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpriteComponent&&(identical(other.asset, asset) || other.asset == asset)&&(identical(other.width, width) || other.width == width)&&(identical(other.height, height) || other.height == height)&&(identical(other.flipX, flipX) || other.flipX == flipX)&&(identical(other.flipY, flipY) || other.flipY == flipY));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SSpriteComponent&&(identical(other.asset, asset) || other.asset == asset)&&(identical(other.width, width) || other.width == width)&&(identical(other.height, height) || other.height == height)&&(identical(other.flipX, flipX) || other.flipX == flipX)&&(identical(other.flipY, flipY) || other.flipY == flipY));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -4927,7 +4952,7 @@ String toString() {
 
 /// @nodoc
 abstract mixin class $SpriteComponentCopyWith<$Res>  {
-  factory $SpriteComponentCopyWith(SpriteComponent value, $Res Function(SpriteComponent) _then) = _$SpriteComponentCopyWithImpl;
+  factory $SpriteComponentCopyWith(SSpriteComponent value, $Res Function(SSpriteComponent) _then) = _$SpriteComponentCopyWithImpl;
 @useResult
 $Res call({
  String asset, double? width, double? height, bool flipX, bool flipY
@@ -4942,8 +4967,8 @@ class _$SpriteComponentCopyWithImpl<$Res>
     implements $SpriteComponentCopyWith<$Res> {
   _$SpriteComponentCopyWithImpl(this._self, this._then);
 
-  final SpriteComponent _self;
-  final $Res Function(SpriteComponent) _then;
+  final SSpriteComponent _self;
+  final $Res Function(SSpriteComponent) _then;
 
 /// Create a copy of SpriteComponent
 /// with the given fields replaced by the non-null parameter values.
@@ -4961,8 +4986,8 @@ as bool,
 }
 
 
-/// Adds pattern-matching-related methods to [SpriteComponent].
-extension SpriteComponentPatterns on SpriteComponent {
+/// Adds pattern-matching-related methods to [SSpriteComponent].
+extension SpriteComponentPatterns on SSpriteComponent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -5094,7 +5119,7 @@ return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);ca
 /// @nodoc
 @JsonSerializable()
 
-class _SpriteComponent implements SpriteComponent {
+class _SpriteComponent implements SSpriteComponent {
   const _SpriteComponent({required this.asset, this.width, this.height, this.flipX = false, this.flipY = false});
   factory _SpriteComponent.fromJson(Map<String, dynamic> json) => _$SpriteComponentFromJson(json);
 

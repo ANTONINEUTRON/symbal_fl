@@ -46,6 +46,9 @@ _GameWorld _$GameWorldFromJson(Map<String, dynamic> json) => _GameWorld(
   orientation:
       $enumDecodeNullable(_$GameOrientationEnumMap, json['orientation']) ??
       GameOrientation.landscape,
+  bounds: json['bounds'] == null
+      ? null
+      : WorldBounds.fromJson(json['bounds'] as Map<String, dynamic>),
   gravity: json['gravity'] == null
       ? null
       : WorldGravity.fromJson(json['gravity'] as Map<String, dynamic>),
@@ -61,6 +64,7 @@ _GameWorld _$GameWorldFromJson(Map<String, dynamic> json) => _GameWorld(
 Map<String, dynamic> _$GameWorldToJson(_GameWorld instance) =>
     <String, dynamic>{
       'orientation': _$GameOrientationEnumMap[instance.orientation]!,
+      'bounds': instance.bounds,
       'gravity': instance.gravity,
       'background': instance.background,
       'camera': instance.camera,
@@ -255,7 +259,7 @@ _EntityComponents _$EntityComponentsFromJson(
       : TransformComponent.fromJson(json['transform'] as Map<String, dynamic>),
   sprite: json['sprite'] == null
       ? null
-      : SpriteComponent.fromJson(json['sprite'] as Map<String, dynamic>),
+      : SSpriteComponent.fromJson(json['sprite'] as Map<String, dynamic>),
   animation: json['animation'] == null
       ? null
       : AnimationComponent.fromJson(json['animation'] as Map<String, dynamic>),
