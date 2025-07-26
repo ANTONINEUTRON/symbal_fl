@@ -51,22 +51,21 @@ class _PlayGamePageState extends State<PlayGamePage> {
   SymbalGame? _game;
   bool isLoading = true;
 
-
   @override
   void initState() {
     super.initState();
-_initializeGame();
+    _initializeGame();
   }
 
   Future<void> _initializeGame() async {
-    _game = SymbalGame();
+    _game = SymbalGame(GameData.fromJson(_callLLMToGenerateGame()));
 
     // Set up game event listeners
     // _setupGameListeners();
-    
+
     // Initialize the game with LLM-generated data
-    await _game!.initializeGame(GameData.fromJson(_callLLMToGenerateGame()));
-    
+    // await _game!.initializeGame();
+
     setState(() {
       isLoading = false;
       // lives = widget.gameData.gameRules?.playerLives ?? 3;
@@ -76,33 +75,27 @@ _initializeGame();
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
-    
+
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                child: Text(
-                  "Gameplay to take place here",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+        child: Column(
+          children: [
+            Container(
+              child: Text(
+                "Gameplay to take place here",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
               ),
-              //
-              //
-              Container(
-                child: GameWidget(game: _game!),
-              ),
-            ],
-          ),
+            ),
+            //
+            //
+            Container(child: Container(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height* 0.8, child: GameWidget(game: _game!))),
+          ],
         ),
       ),
     );

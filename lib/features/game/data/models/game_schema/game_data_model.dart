@@ -50,7 +50,7 @@ abstract class GameWorld with _$GameWorld {
 @freezed
 abstract class WorldBounds with _$WorldBounds {
   const factory WorldBounds({
-    @Default(1200.0) double width,
+    @Default(800.0) double width,
     @Default(800.0) double height,
     @Default(true) bool autoScale,
   }) = _WorldBounds;
