@@ -1219,7 +1219,7 @@ return $default(_that.width,_that.height,_that.autoScale);case _:
 @JsonSerializable()
 
 class _WorldBounds implements WorldBounds {
-  const _WorldBounds({this.width = 1200.0, this.height = 800.0, this.autoScale = true});
+  const _WorldBounds({this.width = 800.0, this.height = 800.0, this.autoScale = true});
   factory _WorldBounds.fromJson(Map<String, dynamic> json) => _$WorldBoundsFromJson(json);
 
 @override@JsonKey() final  double width;
@@ -2389,7 +2389,7 @@ as double,
 /// @nodoc
 mixin _$GameEntity {
 
- String get id; List<String> get tags; EntityComponents get components;
+ String get id; List<String> get tags; EntityComponentsData get components;
 /// Create a copy of GameEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2422,11 +2422,11 @@ abstract mixin class $GameEntityCopyWith<$Res>  {
   factory $GameEntityCopyWith(GameEntity value, $Res Function(GameEntity) _then) = _$GameEntityCopyWithImpl;
 @useResult
 $Res call({
- String id, List<String> tags, EntityComponents components
+ String id, List<String> tags, EntityComponentsData components
 });
 
 
-$EntityComponentsCopyWith<$Res> get components;
+$EntityComponentsDataCopyWith<$Res> get components;
 
 }
 /// @nodoc
@@ -2444,16 +2444,16 @@ class _$GameEntityCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,components: null == components ? _self.components : components // ignore: cast_nullable_to_non_nullable
-as EntityComponents,
+as EntityComponentsData,
   ));
 }
 /// Create a copy of GameEntity
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$EntityComponentsCopyWith<$Res> get components {
+$EntityComponentsDataCopyWith<$Res> get components {
   
-  return $EntityComponentsCopyWith<$Res>(_self.components, (value) {
+  return $EntityComponentsDataCopyWith<$Res>(_self.components, (value) {
     return _then(_self.copyWith(components: value));
   });
 }
@@ -2538,7 +2538,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<String> tags,  EntityComponents components)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<String> tags,  EntityComponentsData components)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GameEntity() when $default != null:
 return $default(_that.id,_that.tags,_that.components);case _:
@@ -2559,7 +2559,7 @@ return $default(_that.id,_that.tags,_that.components);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<String> tags,  EntityComponents components)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<String> tags,  EntityComponentsData components)  $default,) {final _that = this;
 switch (_that) {
 case _GameEntity():
 return $default(_that.id,_that.tags,_that.components);case _:
@@ -2579,7 +2579,7 @@ return $default(_that.id,_that.tags,_that.components);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<String> tags,  EntityComponents components)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<String> tags,  EntityComponentsData components)?  $default,) {final _that = this;
 switch (_that) {
 case _GameEntity() when $default != null:
 return $default(_that.id,_that.tags,_that.components);case _:
@@ -2605,7 +2605,7 @@ class _GameEntity implements GameEntity {
   return EqualUnmodifiableListView(_tags);
 }
 
-@override final  EntityComponents components;
+@override final  EntityComponentsData components;
 
 /// Create a copy of GameEntity
 /// with the given fields replaced by the non-null parameter values.
@@ -2640,11 +2640,11 @@ abstract mixin class _$GameEntityCopyWith<$Res> implements $GameEntityCopyWith<$
   factory _$GameEntityCopyWith(_GameEntity value, $Res Function(_GameEntity) _then) = __$GameEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<String> tags, EntityComponents components
+ String id, List<String> tags, EntityComponentsData components
 });
 
 
-@override $EntityComponentsCopyWith<$Res> get components;
+@override $EntityComponentsDataCopyWith<$Res> get components;
 
 }
 /// @nodoc
@@ -2662,7 +2662,7 @@ class __$GameEntityCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
 as List<String>,components: null == components ? _self.components : components // ignore: cast_nullable_to_non_nullable
-as EntityComponents,
+as EntityComponentsData,
   ));
 }
 
@@ -2670,9 +2670,9 @@ as EntityComponents,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$EntityComponentsCopyWith<$Res> get components {
+$EntityComponentsDataCopyWith<$Res> get components {
   
-  return $EntityComponentsCopyWith<$Res>(_self.components, (value) {
+  return $EntityComponentsDataCopyWith<$Res>(_self.components, (value) {
     return _then(_self.copyWith(components: value));
   });
 }
@@ -4064,22 +4064,22 @@ as bool,
 
 
 /// @nodoc
-mixin _$EntityComponents {
+mixin _$EntityComponentsData {
 
  TransformComponent? get transform; SSpriteComponent? get sprite; AnimationComponent? get animation; PhysicsComponent? get physics; CollisionComponent? get collision; MovementComponent? get movement; HealthComponent? get health; AIComponent? get ai; CollectibleComponent? get collectible; DamageComponent? get damage; PlatformComponent? get platform; TriggerComponent? get trigger;
-/// Create a copy of EntityComponents
+/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$EntityComponentsCopyWith<EntityComponents> get copyWith => _$EntityComponentsCopyWithImpl<EntityComponents>(this as EntityComponents, _$identity);
+$EntityComponentsDataCopyWith<EntityComponentsData> get copyWith => _$EntityComponentsDataCopyWithImpl<EntityComponentsData>(this as EntityComponentsData, _$identity);
 
-  /// Serializes this EntityComponents to a JSON map.
+  /// Serializes this EntityComponentsData to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntityComponents&&(identical(other.transform, transform) || other.transform == transform)&&(identical(other.sprite, sprite) || other.sprite == sprite)&&(identical(other.animation, animation) || other.animation == animation)&&(identical(other.physics, physics) || other.physics == physics)&&(identical(other.collision, collision) || other.collision == collision)&&(identical(other.movement, movement) || other.movement == movement)&&(identical(other.health, health) || other.health == health)&&(identical(other.ai, ai) || other.ai == ai)&&(identical(other.collectible, collectible) || other.collectible == collectible)&&(identical(other.damage, damage) || other.damage == damage)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.trigger, trigger) || other.trigger == trigger));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EntityComponentsData&&(identical(other.transform, transform) || other.transform == transform)&&(identical(other.sprite, sprite) || other.sprite == sprite)&&(identical(other.animation, animation) || other.animation == animation)&&(identical(other.physics, physics) || other.physics == physics)&&(identical(other.collision, collision) || other.collision == collision)&&(identical(other.movement, movement) || other.movement == movement)&&(identical(other.health, health) || other.health == health)&&(identical(other.ai, ai) || other.ai == ai)&&(identical(other.collectible, collectible) || other.collectible == collectible)&&(identical(other.damage, damage) || other.damage == damage)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.trigger, trigger) || other.trigger == trigger));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -4088,33 +4088,33 @@ int get hashCode => Object.hash(runtimeType,transform,sprite,animation,physics,c
 
 @override
 String toString() {
-  return 'EntityComponents(transform: $transform, sprite: $sprite, animation: $animation, physics: $physics, collision: $collision, movement: $movement, health: $health, ai: $ai, collectible: $collectible, damage: $damage, platform: $platform, trigger: $trigger)';
+  return 'EntityComponentsData(transform: $transform, sprite: $sprite, animation: $animation, physics: $physics, collision: $collision, movement: $movement, health: $health, ai: $ai, collectible: $collectible, damage: $damage, platform: $platform, trigger: $trigger)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $EntityComponentsCopyWith<$Res>  {
-  factory $EntityComponentsCopyWith(EntityComponents value, $Res Function(EntityComponents) _then) = _$EntityComponentsCopyWithImpl;
+abstract mixin class $EntityComponentsDataCopyWith<$Res>  {
+  factory $EntityComponentsDataCopyWith(EntityComponentsData value, $Res Function(EntityComponentsData) _then) = _$EntityComponentsDataCopyWithImpl;
 @useResult
 $Res call({
  TransformComponent? transform, SSpriteComponent? sprite, AnimationComponent? animation, PhysicsComponent? physics, CollisionComponent? collision, MovementComponent? movement, HealthComponent? health, AIComponent? ai, CollectibleComponent? collectible, DamageComponent? damage, PlatformComponent? platform, TriggerComponent? trigger
 });
 
 
-$TransformComponentCopyWith<$Res>? get transform;$SpriteComponentCopyWith<$Res>? get sprite;$AnimationComponentCopyWith<$Res>? get animation;$PhysicsComponentCopyWith<$Res>? get physics;$CollisionComponentCopyWith<$Res>? get collision;$MovementComponentCopyWith<$Res>? get movement;$HealthComponentCopyWith<$Res>? get health;$AIComponentCopyWith<$Res>? get ai;$CollectibleComponentCopyWith<$Res>? get collectible;$DamageComponentCopyWith<$Res>? get damage;$PlatformComponentCopyWith<$Res>? get platform;$TriggerComponentCopyWith<$Res>? get trigger;
+$TransformComponentCopyWith<$Res>? get transform;$SSpriteComponentCopyWith<$Res>? get sprite;$AnimationComponentCopyWith<$Res>? get animation;$PhysicsComponentCopyWith<$Res>? get physics;$CollisionComponentCopyWith<$Res>? get collision;$MovementComponentCopyWith<$Res>? get movement;$HealthComponentCopyWith<$Res>? get health;$AIComponentCopyWith<$Res>? get ai;$CollectibleComponentCopyWith<$Res>? get collectible;$DamageComponentCopyWith<$Res>? get damage;$PlatformComponentCopyWith<$Res>? get platform;$TriggerComponentCopyWith<$Res>? get trigger;
 
 }
 /// @nodoc
-class _$EntityComponentsCopyWithImpl<$Res>
-    implements $EntityComponentsCopyWith<$Res> {
-  _$EntityComponentsCopyWithImpl(this._self, this._then);
+class _$EntityComponentsDataCopyWithImpl<$Res>
+    implements $EntityComponentsDataCopyWith<$Res> {
+  _$EntityComponentsDataCopyWithImpl(this._self, this._then);
 
-  final EntityComponents _self;
-  final $Res Function(EntityComponents) _then;
+  final EntityComponentsData _self;
+  final $Res Function(EntityComponentsData) _then;
 
-/// Create a copy of EntityComponents
+/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? transform = freezed,Object? sprite = freezed,Object? animation = freezed,Object? physics = freezed,Object? collision = freezed,Object? movement = freezed,Object? health = freezed,Object? ai = freezed,Object? collectible = freezed,Object? damage = freezed,Object? platform = freezed,Object? trigger = freezed,}) {
   return _then(_self.copyWith(
@@ -4133,7 +4133,7 @@ as PlatformComponent?,trigger: freezed == trigger ? _self.trigger : trigger // i
 as TriggerComponent?,
   ));
 }
-/// Create a copy of EntityComponents
+/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4145,19 +4145,19 @@ $TransformComponentCopyWith<$Res>? get transform {
   return $TransformComponentCopyWith<$Res>(_self.transform!, (value) {
     return _then(_self.copyWith(transform: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SpriteComponentCopyWith<$Res>? get sprite {
+$SSpriteComponentCopyWith<$Res>? get sprite {
     if (_self.sprite == null) {
     return null;
   }
 
-  return $SpriteComponentCopyWith<$Res>(_self.sprite!, (value) {
+  return $SSpriteComponentCopyWith<$Res>(_self.sprite!, (value) {
     return _then(_self.copyWith(sprite: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4169,7 +4169,7 @@ $AnimationComponentCopyWith<$Res>? get animation {
   return $AnimationComponentCopyWith<$Res>(_self.animation!, (value) {
     return _then(_self.copyWith(animation: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4181,7 +4181,7 @@ $PhysicsComponentCopyWith<$Res>? get physics {
   return $PhysicsComponentCopyWith<$Res>(_self.physics!, (value) {
     return _then(_self.copyWith(physics: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4193,7 +4193,7 @@ $CollisionComponentCopyWith<$Res>? get collision {
   return $CollisionComponentCopyWith<$Res>(_self.collision!, (value) {
     return _then(_self.copyWith(collision: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4205,7 +4205,7 @@ $MovementComponentCopyWith<$Res>? get movement {
   return $MovementComponentCopyWith<$Res>(_self.movement!, (value) {
     return _then(_self.copyWith(movement: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4217,7 +4217,7 @@ $HealthComponentCopyWith<$Res>? get health {
   return $HealthComponentCopyWith<$Res>(_self.health!, (value) {
     return _then(_self.copyWith(health: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4229,7 +4229,7 @@ $AIComponentCopyWith<$Res>? get ai {
   return $AIComponentCopyWith<$Res>(_self.ai!, (value) {
     return _then(_self.copyWith(ai: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4241,7 +4241,7 @@ $CollectibleComponentCopyWith<$Res>? get collectible {
   return $CollectibleComponentCopyWith<$Res>(_self.collectible!, (value) {
     return _then(_self.copyWith(collectible: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4253,7 +4253,7 @@ $DamageComponentCopyWith<$Res>? get damage {
   return $DamageComponentCopyWith<$Res>(_self.damage!, (value) {
     return _then(_self.copyWith(damage: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4265,7 +4265,7 @@ $PlatformComponentCopyWith<$Res>? get platform {
   return $PlatformComponentCopyWith<$Res>(_self.platform!, (value) {
     return _then(_self.copyWith(platform: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4281,8 +4281,8 @@ $TriggerComponentCopyWith<$Res>? get trigger {
 }
 
 
-/// Adds pattern-matching-related methods to [EntityComponents].
-extension EntityComponentsPatterns on EntityComponents {
+/// Adds pattern-matching-related methods to [EntityComponentsData].
+extension EntityComponentsDataPatterns on EntityComponentsData {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -4295,10 +4295,10 @@ extension EntityComponentsPatterns on EntityComponents {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _EntityComponents value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _EntityComponentsData value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _EntityComponents() when $default != null:
+case _EntityComponentsData() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -4317,10 +4317,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _EntityComponents value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _EntityComponentsData value)  $default,){
 final _that = this;
 switch (_that) {
-case _EntityComponents():
+case _EntityComponentsData():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -4338,10 +4338,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _EntityComponents value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _EntityComponentsData value)?  $default,){
 final _that = this;
 switch (_that) {
-case _EntityComponents() when $default != null:
+case _EntityComponentsData() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -4361,7 +4361,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( TransformComponent? transform,  SSpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _EntityComponents() when $default != null:
+case _EntityComponentsData() when $default != null:
 return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that.collision,_that.movement,_that.health,_that.ai,_that.collectible,_that.damage,_that.platform,_that.trigger);case _:
   return orElse();
 
@@ -4382,7 +4382,7 @@ return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( TransformComponent? transform,  SSpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)  $default,) {final _that = this;
 switch (_that) {
-case _EntityComponents():
+case _EntityComponentsData():
 return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that.collision,_that.movement,_that.health,_that.ai,_that.collectible,_that.damage,_that.platform,_that.trigger);case _:
   throw StateError('Unexpected subclass');
 
@@ -4402,7 +4402,7 @@ return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( TransformComponent? transform,  SSpriteComponent? sprite,  AnimationComponent? animation,  PhysicsComponent? physics,  CollisionComponent? collision,  MovementComponent? movement,  HealthComponent? health,  AIComponent? ai,  CollectibleComponent? collectible,  DamageComponent? damage,  PlatformComponent? platform,  TriggerComponent? trigger)?  $default,) {final _that = this;
 switch (_that) {
-case _EntityComponents() when $default != null:
+case _EntityComponentsData() when $default != null:
 return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that.collision,_that.movement,_that.health,_that.ai,_that.collectible,_that.damage,_that.platform,_that.trigger);case _:
   return null;
 
@@ -4414,9 +4414,9 @@ return $default(_that.transform,_that.sprite,_that.animation,_that.physics,_that
 /// @nodoc
 @JsonSerializable()
 
-class _EntityComponents implements EntityComponents {
-  const _EntityComponents({this.transform, this.sprite, this.animation, this.physics, this.collision, this.movement, this.health, this.ai, this.collectible, this.damage, this.platform, this.trigger});
-  factory _EntityComponents.fromJson(Map<String, dynamic> json) => _$EntityComponentsFromJson(json);
+class _EntityComponentsData implements EntityComponentsData {
+  const _EntityComponentsData({this.transform, this.sprite, this.animation, this.physics, this.collision, this.movement, this.health, this.ai, this.collectible, this.damage, this.platform, this.trigger});
+  factory _EntityComponentsData.fromJson(Map<String, dynamic> json) => _$EntityComponentsDataFromJson(json);
 
 @override final  TransformComponent? transform;
 @override final  SSpriteComponent? sprite;
@@ -4431,20 +4431,20 @@ class _EntityComponents implements EntityComponents {
 @override final  PlatformComponent? platform;
 @override final  TriggerComponent? trigger;
 
-/// Create a copy of EntityComponents
+/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$EntityComponentsCopyWith<_EntityComponents> get copyWith => __$EntityComponentsCopyWithImpl<_EntityComponents>(this, _$identity);
+_$EntityComponentsDataCopyWith<_EntityComponentsData> get copyWith => __$EntityComponentsDataCopyWithImpl<_EntityComponentsData>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$EntityComponentsToJson(this, );
+  return _$EntityComponentsDataToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EntityComponents&&(identical(other.transform, transform) || other.transform == transform)&&(identical(other.sprite, sprite) || other.sprite == sprite)&&(identical(other.animation, animation) || other.animation == animation)&&(identical(other.physics, physics) || other.physics == physics)&&(identical(other.collision, collision) || other.collision == collision)&&(identical(other.movement, movement) || other.movement == movement)&&(identical(other.health, health) || other.health == health)&&(identical(other.ai, ai) || other.ai == ai)&&(identical(other.collectible, collectible) || other.collectible == collectible)&&(identical(other.damage, damage) || other.damage == damage)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.trigger, trigger) || other.trigger == trigger));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EntityComponentsData&&(identical(other.transform, transform) || other.transform == transform)&&(identical(other.sprite, sprite) || other.sprite == sprite)&&(identical(other.animation, animation) || other.animation == animation)&&(identical(other.physics, physics) || other.physics == physics)&&(identical(other.collision, collision) || other.collision == collision)&&(identical(other.movement, movement) || other.movement == movement)&&(identical(other.health, health) || other.health == health)&&(identical(other.ai, ai) || other.ai == ai)&&(identical(other.collectible, collectible) || other.collectible == collectible)&&(identical(other.damage, damage) || other.damage == damage)&&(identical(other.platform, platform) || other.platform == platform)&&(identical(other.trigger, trigger) || other.trigger == trigger));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -4453,36 +4453,36 @@ int get hashCode => Object.hash(runtimeType,transform,sprite,animation,physics,c
 
 @override
 String toString() {
-  return 'EntityComponents(transform: $transform, sprite: $sprite, animation: $animation, physics: $physics, collision: $collision, movement: $movement, health: $health, ai: $ai, collectible: $collectible, damage: $damage, platform: $platform, trigger: $trigger)';
+  return 'EntityComponentsData(transform: $transform, sprite: $sprite, animation: $animation, physics: $physics, collision: $collision, movement: $movement, health: $health, ai: $ai, collectible: $collectible, damage: $damage, platform: $platform, trigger: $trigger)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$EntityComponentsCopyWith<$Res> implements $EntityComponentsCopyWith<$Res> {
-  factory _$EntityComponentsCopyWith(_EntityComponents value, $Res Function(_EntityComponents) _then) = __$EntityComponentsCopyWithImpl;
+abstract mixin class _$EntityComponentsDataCopyWith<$Res> implements $EntityComponentsDataCopyWith<$Res> {
+  factory _$EntityComponentsDataCopyWith(_EntityComponentsData value, $Res Function(_EntityComponentsData) _then) = __$EntityComponentsDataCopyWithImpl;
 @override @useResult
 $Res call({
  TransformComponent? transform, SSpriteComponent? sprite, AnimationComponent? animation, PhysicsComponent? physics, CollisionComponent? collision, MovementComponent? movement, HealthComponent? health, AIComponent? ai, CollectibleComponent? collectible, DamageComponent? damage, PlatformComponent? platform, TriggerComponent? trigger
 });
 
 
-@override $TransformComponentCopyWith<$Res>? get transform;@override $SpriteComponentCopyWith<$Res>? get sprite;@override $AnimationComponentCopyWith<$Res>? get animation;@override $PhysicsComponentCopyWith<$Res>? get physics;@override $CollisionComponentCopyWith<$Res>? get collision;@override $MovementComponentCopyWith<$Res>? get movement;@override $HealthComponentCopyWith<$Res>? get health;@override $AIComponentCopyWith<$Res>? get ai;@override $CollectibleComponentCopyWith<$Res>? get collectible;@override $DamageComponentCopyWith<$Res>? get damage;@override $PlatformComponentCopyWith<$Res>? get platform;@override $TriggerComponentCopyWith<$Res>? get trigger;
+@override $TransformComponentCopyWith<$Res>? get transform;@override $SSpriteComponentCopyWith<$Res>? get sprite;@override $AnimationComponentCopyWith<$Res>? get animation;@override $PhysicsComponentCopyWith<$Res>? get physics;@override $CollisionComponentCopyWith<$Res>? get collision;@override $MovementComponentCopyWith<$Res>? get movement;@override $HealthComponentCopyWith<$Res>? get health;@override $AIComponentCopyWith<$Res>? get ai;@override $CollectibleComponentCopyWith<$Res>? get collectible;@override $DamageComponentCopyWith<$Res>? get damage;@override $PlatformComponentCopyWith<$Res>? get platform;@override $TriggerComponentCopyWith<$Res>? get trigger;
 
 }
 /// @nodoc
-class __$EntityComponentsCopyWithImpl<$Res>
-    implements _$EntityComponentsCopyWith<$Res> {
-  __$EntityComponentsCopyWithImpl(this._self, this._then);
+class __$EntityComponentsDataCopyWithImpl<$Res>
+    implements _$EntityComponentsDataCopyWith<$Res> {
+  __$EntityComponentsDataCopyWithImpl(this._self, this._then);
 
-  final _EntityComponents _self;
-  final $Res Function(_EntityComponents) _then;
+  final _EntityComponentsData _self;
+  final $Res Function(_EntityComponentsData) _then;
 
-/// Create a copy of EntityComponents
+/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? transform = freezed,Object? sprite = freezed,Object? animation = freezed,Object? physics = freezed,Object? collision = freezed,Object? movement = freezed,Object? health = freezed,Object? ai = freezed,Object? collectible = freezed,Object? damage = freezed,Object? platform = freezed,Object? trigger = freezed,}) {
-  return _then(_EntityComponents(
+  return _then(_EntityComponentsData(
 transform: freezed == transform ? _self.transform : transform // ignore: cast_nullable_to_non_nullable
 as TransformComponent?,sprite: freezed == sprite ? _self.sprite : sprite // ignore: cast_nullable_to_non_nullable
 as SSpriteComponent?,animation: freezed == animation ? _self.animation : animation // ignore: cast_nullable_to_non_nullable
@@ -4499,7 +4499,7 @@ as TriggerComponent?,
   ));
 }
 
-/// Create a copy of EntityComponents
+/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4511,19 +4511,19 @@ $TransformComponentCopyWith<$Res>? get transform {
   return $TransformComponentCopyWith<$Res>(_self.transform!, (value) {
     return _then(_self.copyWith(transform: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$SpriteComponentCopyWith<$Res>? get sprite {
+$SSpriteComponentCopyWith<$Res>? get sprite {
     if (_self.sprite == null) {
     return null;
   }
 
-  return $SpriteComponentCopyWith<$Res>(_self.sprite!, (value) {
+  return $SSpriteComponentCopyWith<$Res>(_self.sprite!, (value) {
     return _then(_self.copyWith(sprite: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4535,7 +4535,7 @@ $AnimationComponentCopyWith<$Res>? get animation {
   return $AnimationComponentCopyWith<$Res>(_self.animation!, (value) {
     return _then(_self.copyWith(animation: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4547,7 +4547,7 @@ $PhysicsComponentCopyWith<$Res>? get physics {
   return $PhysicsComponentCopyWith<$Res>(_self.physics!, (value) {
     return _then(_self.copyWith(physics: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4559,7 +4559,7 @@ $CollisionComponentCopyWith<$Res>? get collision {
   return $CollisionComponentCopyWith<$Res>(_self.collision!, (value) {
     return _then(_self.copyWith(collision: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4571,7 +4571,7 @@ $MovementComponentCopyWith<$Res>? get movement {
   return $MovementComponentCopyWith<$Res>(_self.movement!, (value) {
     return _then(_self.copyWith(movement: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4583,7 +4583,7 @@ $HealthComponentCopyWith<$Res>? get health {
   return $HealthComponentCopyWith<$Res>(_self.health!, (value) {
     return _then(_self.copyWith(health: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4595,7 +4595,7 @@ $AIComponentCopyWith<$Res>? get ai {
   return $AIComponentCopyWith<$Res>(_self.ai!, (value) {
     return _then(_self.copyWith(ai: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4607,7 +4607,7 @@ $CollectibleComponentCopyWith<$Res>? get collectible {
   return $CollectibleComponentCopyWith<$Res>(_self.collectible!, (value) {
     return _then(_self.copyWith(collectible: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4619,7 +4619,7 @@ $DamageComponentCopyWith<$Res>? get damage {
   return $DamageComponentCopyWith<$Res>(_self.damage!, (value) {
     return _then(_self.copyWith(damage: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4631,7 +4631,7 @@ $PlatformComponentCopyWith<$Res>? get platform {
   return $PlatformComponentCopyWith<$Res>(_self.platform!, (value) {
     return _then(_self.copyWith(platform: value));
   });
-}/// Create a copy of EntityComponents
+}/// Create a copy of EntityComponentsData
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -4920,16 +4920,16 @@ as double,
 
 
 /// @nodoc
-mixin _$SpriteComponent {
+mixin _$SSpriteComponent {
 
  String get asset; double? get width; double? get height; bool get flipX; bool get flipY;
-/// Create a copy of SpriteComponent
+/// Create a copy of SSpriteComponent
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SpriteComponentCopyWith<SSpriteComponent> get copyWith => _$SpriteComponentCopyWithImpl<SSpriteComponent>(this as SSpriteComponent, _$identity);
+$SSpriteComponentCopyWith<SSpriteComponent> get copyWith => _$SSpriteComponentCopyWithImpl<SSpriteComponent>(this as SSpriteComponent, _$identity);
 
-  /// Serializes this SpriteComponent to a JSON map.
+  /// Serializes this SSpriteComponent to a JSON map.
   Map<String, dynamic> toJson();
 
 
@@ -4944,15 +4944,15 @@ int get hashCode => Object.hash(runtimeType,asset,width,height,flipX,flipY);
 
 @override
 String toString() {
-  return 'SpriteComponent(asset: $asset, width: $width, height: $height, flipX: $flipX, flipY: $flipY)';
+  return 'SSpriteComponent(asset: $asset, width: $width, height: $height, flipX: $flipX, flipY: $flipY)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SpriteComponentCopyWith<$Res>  {
-  factory $SpriteComponentCopyWith(SSpriteComponent value, $Res Function(SSpriteComponent) _then) = _$SpriteComponentCopyWithImpl;
+abstract mixin class $SSpriteComponentCopyWith<$Res>  {
+  factory $SSpriteComponentCopyWith(SSpriteComponent value, $Res Function(SSpriteComponent) _then) = _$SSpriteComponentCopyWithImpl;
 @useResult
 $Res call({
  String asset, double? width, double? height, bool flipX, bool flipY
@@ -4963,14 +4963,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$SpriteComponentCopyWithImpl<$Res>
-    implements $SpriteComponentCopyWith<$Res> {
-  _$SpriteComponentCopyWithImpl(this._self, this._then);
+class _$SSpriteComponentCopyWithImpl<$Res>
+    implements $SSpriteComponentCopyWith<$Res> {
+  _$SSpriteComponentCopyWithImpl(this._self, this._then);
 
   final SSpriteComponent _self;
   final $Res Function(SSpriteComponent) _then;
 
-/// Create a copy of SpriteComponent
+/// Create a copy of SSpriteComponent
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? asset = null,Object? width = freezed,Object? height = freezed,Object? flipX = null,Object? flipY = null,}) {
   return _then(_self.copyWith(
@@ -4987,7 +4987,7 @@ as bool,
 
 
 /// Adds pattern-matching-related methods to [SSpriteComponent].
-extension SpriteComponentPatterns on SSpriteComponent {
+extension SSpriteComponentPatterns on SSpriteComponent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -5000,10 +5000,10 @@ extension SpriteComponentPatterns on SSpriteComponent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SpriteComponent value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SSpriteComponent value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _SpriteComponent() when $default != null:
+case _SSpriteComponent() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -5022,10 +5022,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SpriteComponent value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SSpriteComponent value)  $default,){
 final _that = this;
 switch (_that) {
-case _SpriteComponent():
+case _SSpriteComponent():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -5043,10 +5043,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SpriteComponent value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SSpriteComponent value)?  $default,){
 final _that = this;
 switch (_that) {
-case _SpriteComponent() when $default != null:
+case _SSpriteComponent() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -5066,7 +5066,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String asset,  double? width,  double? height,  bool flipX,  bool flipY)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _SpriteComponent() when $default != null:
+case _SSpriteComponent() when $default != null:
 return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);case _:
   return orElse();
 
@@ -5087,7 +5087,7 @@ return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);ca
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String asset,  double? width,  double? height,  bool flipX,  bool flipY)  $default,) {final _that = this;
 switch (_that) {
-case _SpriteComponent():
+case _SSpriteComponent():
 return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);case _:
   throw StateError('Unexpected subclass');
 
@@ -5107,7 +5107,7 @@ return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);ca
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String asset,  double? width,  double? height,  bool flipX,  bool flipY)?  $default,) {final _that = this;
 switch (_that) {
-case _SpriteComponent() when $default != null:
+case _SSpriteComponent() when $default != null:
 return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);case _:
   return null;
 
@@ -5119,9 +5119,9 @@ return $default(_that.asset,_that.width,_that.height,_that.flipX,_that.flipY);ca
 /// @nodoc
 @JsonSerializable()
 
-class _SpriteComponent implements SSpriteComponent {
-  const _SpriteComponent({required this.asset, this.width, this.height, this.flipX = false, this.flipY = false});
-  factory _SpriteComponent.fromJson(Map<String, dynamic> json) => _$SpriteComponentFromJson(json);
+class _SSpriteComponent implements SSpriteComponent {
+  const _SSpriteComponent({required this.asset, this.width, this.height, this.flipX = false, this.flipY = false});
+  factory _SSpriteComponent.fromJson(Map<String, dynamic> json) => _$SSpriteComponentFromJson(json);
 
 @override final  String asset;
 @override final  double? width;
@@ -5129,20 +5129,20 @@ class _SpriteComponent implements SSpriteComponent {
 @override@JsonKey() final  bool flipX;
 @override@JsonKey() final  bool flipY;
 
-/// Create a copy of SpriteComponent
+/// Create a copy of SSpriteComponent
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SpriteComponentCopyWith<_SpriteComponent> get copyWith => __$SpriteComponentCopyWithImpl<_SpriteComponent>(this, _$identity);
+_$SSpriteComponentCopyWith<_SSpriteComponent> get copyWith => __$SSpriteComponentCopyWithImpl<_SSpriteComponent>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$SpriteComponentToJson(this, );
+  return _$SSpriteComponentToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpriteComponent&&(identical(other.asset, asset) || other.asset == asset)&&(identical(other.width, width) || other.width == width)&&(identical(other.height, height) || other.height == height)&&(identical(other.flipX, flipX) || other.flipX == flipX)&&(identical(other.flipY, flipY) || other.flipY == flipY));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SSpriteComponent&&(identical(other.asset, asset) || other.asset == asset)&&(identical(other.width, width) || other.width == width)&&(identical(other.height, height) || other.height == height)&&(identical(other.flipX, flipX) || other.flipX == flipX)&&(identical(other.flipY, flipY) || other.flipY == flipY));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -5151,15 +5151,15 @@ int get hashCode => Object.hash(runtimeType,asset,width,height,flipX,flipY);
 
 @override
 String toString() {
-  return 'SpriteComponent(asset: $asset, width: $width, height: $height, flipX: $flipX, flipY: $flipY)';
+  return 'SSpriteComponent(asset: $asset, width: $width, height: $height, flipX: $flipX, flipY: $flipY)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$SpriteComponentCopyWith<$Res> implements $SpriteComponentCopyWith<$Res> {
-  factory _$SpriteComponentCopyWith(_SpriteComponent value, $Res Function(_SpriteComponent) _then) = __$SpriteComponentCopyWithImpl;
+abstract mixin class _$SSpriteComponentCopyWith<$Res> implements $SSpriteComponentCopyWith<$Res> {
+  factory _$SSpriteComponentCopyWith(_SSpriteComponent value, $Res Function(_SSpriteComponent) _then) = __$SSpriteComponentCopyWithImpl;
 @override @useResult
 $Res call({
  String asset, double? width, double? height, bool flipX, bool flipY
@@ -5170,17 +5170,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SpriteComponentCopyWithImpl<$Res>
-    implements _$SpriteComponentCopyWith<$Res> {
-  __$SpriteComponentCopyWithImpl(this._self, this._then);
+class __$SSpriteComponentCopyWithImpl<$Res>
+    implements _$SSpriteComponentCopyWith<$Res> {
+  __$SSpriteComponentCopyWithImpl(this._self, this._then);
 
-  final _SpriteComponent _self;
-  final $Res Function(_SpriteComponent) _then;
+  final _SSpriteComponent _self;
+  final $Res Function(_SSpriteComponent) _then;
 
-/// Create a copy of SpriteComponent
+/// Create a copy of SSpriteComponent
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? asset = null,Object? width = freezed,Object? height = freezed,Object? flipX = null,Object? flipY = null,}) {
-  return _then(_SpriteComponent(
+  return _then(_SSpriteComponent(
 asset: null == asset ? _self.asset : asset // ignore: cast_nullable_to_non_nullable
 as String,width: freezed == width ? _self.width : width // ignore: cast_nullable_to_non_nullable
 as double?,height: freezed == height ? _self.height : height // ignore: cast_nullable_to_non_nullable

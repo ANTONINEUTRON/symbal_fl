@@ -1,8 +1,8 @@
 part of 'game_data_model.dart';
 
 @freezed
-abstract class EntityComponents with _$EntityComponents {
-  const factory EntityComponents({
+abstract class EntityComponentsData with _$EntityComponentsData {
+  const factory EntityComponentsData({
     TransformComponent? transform,
     SSpriteComponent? sprite,
     AnimationComponent? animation,
@@ -15,10 +15,10 @@ abstract class EntityComponents with _$EntityComponents {
     DamageComponent? damage,
     PlatformComponent? platform,
     TriggerComponent? trigger,
-  }) = _EntityComponents;
+  }) = _EntityComponentsData;
 
-  factory EntityComponents.fromJson(Map<String, dynamic> json) =>
-      _$EntityComponentsFromJson(json);
+  factory EntityComponentsData.fromJson(Map<String, dynamic> json) =>
+      _$EntityComponentsDataFromJson(json);
 }
 
 // Individual Components
@@ -36,17 +36,17 @@ abstract class TransformComponent with _$TransformComponent {
 }
 
 @freezed
-abstract class SSpriteComponent with _$SpriteComponent {
+abstract class SSpriteComponent with _$SSpriteComponent {
   const factory SSpriteComponent({
     required String asset,
     double? width,
     double? height,
     @Default(false) bool flipX,
     @Default(false) bool flipY,
-  }) = _SpriteComponent;
+  }) = _SSpriteComponent;
 
   factory SSpriteComponent.fromJson(Map<String, dynamic> json) =>
-      _$SpriteComponentFromJson(json);
+      _$SSpriteComponentFromJson(json);
 }
 
 @freezed
@@ -88,7 +88,7 @@ abstract class CollisionComponent with _$CollisionComponent {
       _$CollisionComponentFromJson(json);
 }
 
-@freezed
+@freezed 
 abstract class MovementComponent with _$MovementComponent {
   const factory MovementComponent({
     @Default(100.0) double speed,

@@ -18,9 +18,9 @@ class _PlayGamePageState extends State<PlayGamePage> {
       "metadata": {"title": "Sample Platformer"},
       "world": {
         "orientation": "landscape",
-        "bounds": {"width": 1200, "height": 600, "autoScale": true},
+        "bounds": {"width": 1200, "height": 1000, "autoScale": true},
         "gravity": {"x": 0, "y": 980},
-        "background": {"color": "#87CEEB"},
+        "background": {"asset": "platform.jpg"},
       },
       "entities": [
         {
@@ -35,6 +35,17 @@ class _PlayGamePageState extends State<PlayGamePage> {
             "health": {"max": 3, "current": 3},
           },
         },
+        {
+          "id": "ground",
+          "tags": ["platform"],
+          "components": {
+            "transform": {"x": 0, "y": 550},
+            "sprite": {"asset": "platform.jpg", "width": 1200, "height": 50},
+            "physics": {"bodyType": "static"},
+            "collision": {"shape": "rectangle"},
+            "platform": {"oneWay": false},
+          },
+        },
       ],
 
       "gameRules": {
@@ -44,6 +55,11 @@ class _PlayGamePageState extends State<PlayGamePage> {
         "loseConditions": [
           {"type": "playerDeath"},
         ],
+      },
+      "ui": {
+        "showScore": true,
+        "showHealth": true,
+        "controls": {"touchControls": true, "keyboardControls": true},
       },
     };
   }
@@ -94,7 +110,13 @@ class _PlayGamePageState extends State<PlayGamePage> {
             ),
             //
             //
-            Container(child: Container(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height* 0.8, child: GameWidget(game: _game!))),
+            Container(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: GameWidget(game: _game!),
+              ),
+            ),
           ],
         ),
       ),

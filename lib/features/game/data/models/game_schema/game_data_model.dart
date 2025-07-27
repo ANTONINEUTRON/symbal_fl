@@ -112,7 +112,7 @@ abstract class GameEntity with _$GameEntity {
   const factory GameEntity({
     required String id,
     @Default([]) List<String> tags,
-    required EntityComponents components,
+    required EntityComponentsData components,
   }) = _GameEntity;
 
   factory GameEntity.fromJson(Map<String, dynamic> json) =>

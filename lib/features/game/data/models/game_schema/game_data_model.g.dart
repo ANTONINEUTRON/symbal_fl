@@ -78,7 +78,7 @@ const _$GameOrientationEnumMap = {
 };
 
 _WorldBounds _$WorldBoundsFromJson(Map<String, dynamic> json) => _WorldBounds(
-  width: (json['width'] as num?)?.toDouble() ?? 1200.0,
+  width: (json['width'] as num?)?.toDouble() ?? 800.0,
   height: (json['height'] as num?)?.toDouble() ?? 800.0,
   autoScale: json['autoScale'] as bool? ?? true,
 );
@@ -147,7 +147,7 @@ _GameEntity _$GameEntityFromJson(Map<String, dynamic> json) => _GameEntity(
   tags:
       (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
-  components: EntityComponents.fromJson(
+  components: EntityComponentsData.fromJson(
     json['components'] as Map<String, dynamic>,
   ),
 );
@@ -251,9 +251,9 @@ Map<String, dynamic> _$GameControlsToJson(_GameControls instance) =>
       'keyboardControls': instance.keyboardControls,
     };
 
-_EntityComponents _$EntityComponentsFromJson(
+_EntityComponentsData _$EntityComponentsDataFromJson(
   Map<String, dynamic> json,
-) => _EntityComponents(
+) => _EntityComponentsData(
   transform: json['transform'] == null
       ? null
       : TransformComponent.fromJson(json['transform'] as Map<String, dynamic>),
@@ -294,21 +294,22 @@ _EntityComponents _$EntityComponentsFromJson(
       : TriggerComponent.fromJson(json['trigger'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$EntityComponentsToJson(_EntityComponents instance) =>
-    <String, dynamic>{
-      'transform': instance.transform,
-      'sprite': instance.sprite,
-      'animation': instance.animation,
-      'physics': instance.physics,
-      'collision': instance.collision,
-      'movement': instance.movement,
-      'health': instance.health,
-      'ai': instance.ai,
-      'collectible': instance.collectible,
-      'damage': instance.damage,
-      'platform': instance.platform,
-      'trigger': instance.trigger,
-    };
+Map<String, dynamic> _$EntityComponentsDataToJson(
+  _EntityComponentsData instance,
+) => <String, dynamic>{
+  'transform': instance.transform,
+  'sprite': instance.sprite,
+  'animation': instance.animation,
+  'physics': instance.physics,
+  'collision': instance.collision,
+  'movement': instance.movement,
+  'health': instance.health,
+  'ai': instance.ai,
+  'collectible': instance.collectible,
+  'damage': instance.damage,
+  'platform': instance.platform,
+  'trigger': instance.trigger,
+};
 
 _TransformComponent _$TransformComponentFromJson(Map<String, dynamic> json) =>
     _TransformComponent(
@@ -326,8 +327,8 @@ Map<String, dynamic> _$TransformComponentToJson(_TransformComponent instance) =>
       'scale': instance.scale,
     };
 
-_SpriteComponent _$SpriteComponentFromJson(Map<String, dynamic> json) =>
-    _SpriteComponent(
+_SSpriteComponent _$SSpriteComponentFromJson(Map<String, dynamic> json) =>
+    _SSpriteComponent(
       asset: json['asset'] as String,
       width: (json['width'] as num?)?.toDouble(),
       height: (json['height'] as num?)?.toDouble(),
@@ -335,7 +336,7 @@ _SpriteComponent _$SpriteComponentFromJson(Map<String, dynamic> json) =>
       flipY: json['flipY'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$SpriteComponentToJson(_SpriteComponent instance) =>
+Map<String, dynamic> _$SSpriteComponentToJson(_SSpriteComponent instance) =>
     <String, dynamic>{
       'asset': instance.asset,
       'width': instance.width,

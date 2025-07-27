@@ -30,9 +30,10 @@ class SymbalGame extends FlameGame
     KeyEvent event,
     Set<LogicalKeyboardKey> keysPressed,
   ) {
-    super.onKeyEvent(event, keysPressed);
+    print("CLICKD FELT");
     _currentlyPressed.clear();
     _currentlyPressed.addAll(keysPressed);
+    super.onKeyEvent(event, keysPressed);
     return KeyEventResult.handled;
   }
 
