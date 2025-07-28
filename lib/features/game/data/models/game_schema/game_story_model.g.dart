@@ -12,7 +12,7 @@ _GameStory _$GameStoryFromJson(Map<String, dynamic> json) => _GameStory(
   description: json['description'] as String,
   imageUrl: json['imageUrl'] as String,
   duration: json['duration'] as String,
-  story: json['story'] as String,
+  story: json['story'] as String?,
   gameType: json['gameType'] as String,
   creatorId: json['creatorId'] as String?,
   gameDataId: json['gameDataId'] as String?,

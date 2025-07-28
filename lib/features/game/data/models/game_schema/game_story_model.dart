@@ -12,7 +12,7 @@ abstract class GameStory with _$GameStory {
     required String description,//
     required String imageUrl,
     required String duration,//
-    required String story,//
+    required String? story,//
     required String gameType,
     String? creatorId,
     String? gameDataId, //reference to the ai generated data

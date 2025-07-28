@@ -18,7 +18,7 @@ mixin _$GameStory {
  String get id; String get title;//
  String get description;//
  String get imageUrl; String get duration;//
- String get story;//
+ String? get story;//
  String get gameType; String? get creatorId; String? get gameDataId;//reference to the ai generated data
  int get likes; int get plays; int get shares; int get comments; bool get isFavorite; bool get isVerified; List<String> get tags; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of GameStory
@@ -53,7 +53,7 @@ abstract mixin class $GameStoryCopyWith<$Res>  {
   factory $GameStoryCopyWith(GameStory value, $Res Function(GameStory) _then) = _$GameStoryCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description, String imageUrl, String duration, String story, String gameType, String? creatorId, String? gameDataId, int likes, int plays, int shares, int comments, bool isFavorite, bool isVerified, List<String> tags, DateTime? createdAt, DateTime? updatedAt
+ String id, String title, String description, String imageUrl, String duration, String? story, String gameType, String? creatorId, String? gameDataId, int likes, int plays, int shares, int comments, bool isFavorite, bool isVerified, List<String> tags, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -70,15 +70,15 @@ class _$GameStoryCopyWithImpl<$Res>
 
 /// Create a copy of GameStory
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? imageUrl = null,Object? duration = null,Object? story = null,Object? gameType = null,Object? creatorId = freezed,Object? gameDataId = freezed,Object? likes = null,Object? plays = null,Object? shares = null,Object? comments = null,Object? isFavorite = null,Object? isVerified = null,Object? tags = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? imageUrl = null,Object? duration = null,Object? story = freezed,Object? gameType = null,Object? creatorId = freezed,Object? gameDataId = freezed,Object? likes = null,Object? plays = null,Object? shares = null,Object? comments = null,Object? isFavorite = null,Object? isVerified = null,Object? tags = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as String,story: null == story ? _self.story : story // ignore: cast_nullable_to_non_nullable
-as String,gameType: null == gameType ? _self.gameType : gameType // ignore: cast_nullable_to_non_nullable
+as String,story: freezed == story ? _self.story : story // ignore: cast_nullable_to_non_nullable
+as String?,gameType: null == gameType ? _self.gameType : gameType // ignore: cast_nullable_to_non_nullable
 as String,creatorId: freezed == creatorId ? _self.creatorId : creatorId // ignore: cast_nullable_to_non_nullable
 as String?,gameDataId: freezed == gameDataId ? _self.gameDataId : gameDataId // ignore: cast_nullable_to_non_nullable
 as String?,likes: null == likes ? _self.likes : likes // ignore: cast_nullable_to_non_nullable
@@ -175,7 +175,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String imageUrl,  String duration,  String story,  String gameType,  String? creatorId,  String? gameDataId,  int likes,  int plays,  int shares,  int comments,  bool isFavorite,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String imageUrl,  String duration,  String? story,  String gameType,  String? creatorId,  String? gameDataId,  int likes,  int plays,  int shares,  int comments,  bool isFavorite,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GameStory() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.duration,_that.story,_that.gameType,_that.creatorId,_that.gameDataId,_that.likes,_that.plays,_that.shares,_that.comments,_that.isFavorite,_that.isVerified,_that.tags,_that.createdAt,_that.updatedAt);case _:
@@ -196,7 +196,7 @@ return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.dura
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String imageUrl,  String duration,  String story,  String gameType,  String? creatorId,  String? gameDataId,  int likes,  int plays,  int shares,  int comments,  bool isFavorite,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String imageUrl,  String duration,  String? story,  String gameType,  String? creatorId,  String? gameDataId,  int likes,  int plays,  int shares,  int comments,  bool isFavorite,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _GameStory():
 return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.duration,_that.story,_that.gameType,_that.creatorId,_that.gameDataId,_that.likes,_that.plays,_that.shares,_that.comments,_that.isFavorite,_that.isVerified,_that.tags,_that.createdAt,_that.updatedAt);case _:
@@ -216,7 +216,7 @@ return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.dura
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String imageUrl,  String duration,  String story,  String gameType,  String? creatorId,  String? gameDataId,  int likes,  int plays,  int shares,  int comments,  bool isFavorite,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String imageUrl,  String duration,  String? story,  String gameType,  String? creatorId,  String? gameDataId,  int likes,  int plays,  int shares,  int comments,  bool isFavorite,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _GameStory() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.duration,_that.story,_that.gameType,_that.creatorId,_that.gameDataId,_that.likes,_that.plays,_that.shares,_that.comments,_that.isFavorite,_that.isVerified,_that.tags,_that.createdAt,_that.updatedAt);case _:
@@ -242,7 +242,7 @@ class _GameStory implements GameStory {
 @override final  String imageUrl;
 @override final  String duration;
 //
-@override final  String story;
+@override final  String? story;
 //
 @override final  String gameType;
 @override final  String? creatorId;
@@ -297,7 +297,7 @@ abstract mixin class _$GameStoryCopyWith<$Res> implements $GameStoryCopyWith<$Re
   factory _$GameStoryCopyWith(_GameStory value, $Res Function(_GameStory) _then) = __$GameStoryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description, String imageUrl, String duration, String story, String gameType, String? creatorId, String? gameDataId, int likes, int plays, int shares, int comments, bool isFavorite, bool isVerified, List<String> tags, DateTime? createdAt, DateTime? updatedAt
+ String id, String title, String description, String imageUrl, String duration, String? story, String gameType, String? creatorId, String? gameDataId, int likes, int plays, int shares, int comments, bool isFavorite, bool isVerified, List<String> tags, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -314,15 +314,15 @@ class __$GameStoryCopyWithImpl<$Res>
 
 /// Create a copy of GameStory
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? imageUrl = null,Object? duration = null,Object? story = null,Object? gameType = null,Object? creatorId = freezed,Object? gameDataId = freezed,Object? likes = null,Object? plays = null,Object? shares = null,Object? comments = null,Object? isFavorite = null,Object? isVerified = null,Object? tags = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? imageUrl = null,Object? duration = null,Object? story = freezed,Object? gameType = null,Object? creatorId = freezed,Object? gameDataId = freezed,Object? likes = null,Object? plays = null,Object? shares = null,Object? comments = null,Object? isFavorite = null,Object? isVerified = null,Object? tags = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_GameStory(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
-as String,story: null == story ? _self.story : story // ignore: cast_nullable_to_non_nullable
-as String,gameType: null == gameType ? _self.gameType : gameType // ignore: cast_nullable_to_non_nullable
+as String,story: freezed == story ? _self.story : story // ignore: cast_nullable_to_non_nullable
+as String?,gameType: null == gameType ? _self.gameType : gameType // ignore: cast_nullable_to_non_nullable
 as String,creatorId: freezed == creatorId ? _self.creatorId : creatorId // ignore: cast_nullable_to_non_nullable
 as String?,gameDataId: freezed == gameDataId ? _self.gameDataId : gameDataId // ignore: cast_nullable_to_non_nullable
 as String?,likes: null == likes ? _self.likes : likes // ignore: cast_nullable_to_non_nullable

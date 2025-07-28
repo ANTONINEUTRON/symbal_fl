@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -25,10 +26,14 @@ class _SymbalRenderingEngineState extends State<SymbalRenderingEngine> {
         NavigationDelegate(
           onProgress: (int progress) {
             // Update loading bar.
-            print("Progressing $progress%");
+            if (kDebugMode) {
+              print("Progressing $progress%");
+            }
           },
           onPageStarted: (String url) {
-            print("Page started loading: $url");
+            if (kDebugMode) {
+              print("Page started loading: $url");
+            }
           },
           onPageFinished: (String url) {
             setState(() {
@@ -37,7 +42,6 @@ class _SymbalRenderingEngineState extends State<SymbalRenderingEngine> {
               errorMessage = null;
               // lives = widget.gameData.gameRules?.playerLives ?? 3;
             });
-            print("Page finished loading: $url");
           },
           onHttpError: (HttpResponseError error) {
             setState(() {

@@ -1,12 +1,12 @@
 
 import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
-import 'package:symbal_fl/features/game/data/models/game_schema/game_data_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 
 /// Repository interface for game generation
 /// This repository is responsible for generating game data based on user input
 abstract class GameGenerationRepository {
   Future<CreateMessageModel> generateGame(CreateMessageModel message);
 
-  Future<void> saveGame(GameData gameData);
+  Future<void> saveGame(GameDataModel gameData);
 
 }

@@ -1,5 +1,5 @@
 
-import 'package:symbal_fl/features/game/data/models/game_story_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_schema/game_story_model.dart';
 
 class DummyGameStories{
   static final List<GameStory> stories = [
