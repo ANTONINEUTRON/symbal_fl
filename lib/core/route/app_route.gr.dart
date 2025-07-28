@@ -10,8 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:symbal_fl/features/auth/ui/pages/create_account_page.dart'
-    as _i1;
+import 'package:symbal_fl/features/auth/ui/pages/auth_page.dart' as _i1;
 import 'package:symbal_fl/features/auth/ui/pages/forgot_password.dart' as _i3;
 import 'package:symbal_fl/features/auth/ui/pages/reset_password_page.dart'
     as _i8;

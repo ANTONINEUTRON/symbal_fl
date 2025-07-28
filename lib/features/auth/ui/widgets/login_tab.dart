@@ -133,14 +133,14 @@ class _LoginTabState extends State<LoginTab> {
                   // authCubit.loginWithEmailandPassowrd();
                   context.router.push(const ProfileRoute());
                 },
-          child: const Text(
-            'Log In',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
-          ),
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
+          ),
+          child: const Text(
+            'Log In',
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
           ),
         ),
         const SizedBox(height: 20.0),

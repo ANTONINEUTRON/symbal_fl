@@ -12,7 +12,17 @@ class AppConstants {
           tertiary: const Color(0xFFFF8C00)
         ).copyWith(),
         useMaterial3: true,
-        textTheme: GoogleFonts.dmMonoTextTheme(),
+        textTheme: GoogleFonts.dmMonoTextTheme().copyWith(
+          bodyLarge: TextStyle(
+            color: Colors.white,
+          ),
+          bodyMedium: TextStyle(
+            color: Colors.white70,
+          ),
+          bodySmall: TextStyle(
+            color: Colors.white60,
+          ),
+        ),
         scaffoldBackgroundColor: Color(0xFF1A1A2E),
         listTileTheme: ListTileThemeData(
           textColor: Colors.white,

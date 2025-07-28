@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
+import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/oauth_buttons.dart';
 
 class CreateAccountTab extends StatefulWidget {
@@ -15,11 +17,49 @@ class CreateAccountTab extends StatefulWidget {
 class _CreateAccountTabState extends State<CreateAccountTab> {
   String? errorMessage;
   bool showPasword = false;
+  final _formKey = GlobalKey<FormState>();
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    
+    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+    
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+    
+    // if (!RegExp(r'[A-Z]').hasMatch(value)) {
+    //   return 'Password must contain at least one uppercase letter';
+    // }
+    
+    // if (!RegExp(r'[a-z]').hasMatch(value)) {
+    //   return 'Password must contain at least one lowercase letter';
+    // }
+    
+    // if (!RegExp(r'[0-9]').hasMatch(value)) {
+    //   return 'Password must contain at least one number';
+    // }
+    
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isProcessing = false;
-    // var authCubit = context.watch<AuthCubits>();
+    var authCubit = context.watch<AuthCubit>();
 
     // switch (authCubit.state.registerStatus) {
     //   case RegisterStatus.Processing:
@@ -41,10 +81,12 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
     //     break;
     // }
 
-    return ListView(
-      physics: const NeverScrollableScrollPhysics(),
+    return Form(
+      key: _formKey,
+      child: ListView(
+        physics: const NeverScrollableScrollPhysics(),
 
-      children: [
+        children: [
         const OAuthButtons(),
         // Email Text Field
         Column(
@@ -60,7 +102,8 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
             ).addSpacing(bottom: 8),
             TextFormField(
               // controller: _emailController,
-              onChanged: (value) => {}, //authCubit.setEmail(value),
+              onChanged: (value) => authCubit.setEmail(value),
+              validator: _validateEmail,
               decoration: InputDecoration(
                 hintText: 'Enter your email',
                 border: OutlineInputBorder(
@@ -88,7 +131,8 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
             ).addSpacing(bottom: 8),
             TextFormField(
               // controller: _passwordController,
-              onChanged: (value) => {}, //authCubit.setPassword(value),
+              onChanged: (value) => authCubit.setPassword(value),
+              validator: _validatePassword,
               obscureText: !showPasword,
               decoration: InputDecoration(
                 hintText: 'Enter your password',
@@ -101,7 +145,7 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
                 ),
                 suffixIcon: InkWell(
                   onTap: () => setState(() {
-                    showPasword = true;
+                    showPasword = !showPasword;
                   }),
                   child: Icon(
                     showPasword ? Icons.visibility : Icons.visibility_off,
@@ -167,10 +211,15 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
           onPressed: isProcessing
               ? null
               : () {
-                  // authCubit.onCreateAccount();
-
-                  context.router.push(ProfileRoute());
+                  if (_formKey.currentState?.validate() ?? false) {
+                    authCubit.createAccount();
+                  }
                 },
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
           child: const Text(
             'Create Account',
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
@@ -178,6 +227,7 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
         ),
         const SizedBox(height: 20.0),
       ],
+    ),
     );
   }
 }

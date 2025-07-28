@@ -1,26 +1,50 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/constants/app_constants.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
+import 'package:symbal_fl/features/auth/ui/cubits/auth_state.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/create_account_tab.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/login_tab.dart';
 import 'package:symbal_fl/gen/assets.gen.dart';
 @RoutePage()
-class CreateAccountPage extends StatefulWidget {
+class CreateAccountPage extends StatelessWidget {
   const CreateAccountPage({super.key});
 
   @override
-  State<CreateAccountPage> createState() => _CreateAccountPageState();
-}
-
-class _CreateAccountPageState extends State<CreateAccountPage> {
-  @override
   Widget build(BuildContext context) {
+    var authCubit = context.watch<AuthCubit>();
+    var appCubit = context.watch<AppCubit>();
+
+    switch (authCubit.state.status) {
+      case AuthStatus.loading:
+        return const Center(child: CircularProgressIndicator());
+      case AuthStatus.error:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          appCubit.setErrorMessage(authCubit.state.errorMessage);
+        });
+        return const SizedBox.shrink();
+      case AuthStatus.authenticated:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          // context.router.replaceNamed(AppConstants.homeRoute);
+          appCubit.setAlertMessage("Welcome Back, ${authCubit.state.user?.name ?? authCubit.state.user?.email}");
+        });
+        return const SizedBox.shrink();
+      case AuthStatus.passwordReset:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          appCubit.setErrorMessage("Password reset email sent");
+        });
+        return const SizedBox.shrink();
+      default:
+        break;
+    }
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -76,7 +100,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ).addSpacing(bottom: 24),
             
                 //
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: const TabBarView(
                     children: [

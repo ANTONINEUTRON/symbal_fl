@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:symbal_fl/core/constants/app_constants.dart';
 import 'package:symbal_fl/core/route/app_route.dart';
 import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/auth/data/repository/supabase_auth_repository.dart';
+import 'package:symbal_fl/features/auth/domain/repositories/auth_repository.dart';
+import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/game/ui/cubits/create_game_cubit.dart';
 import 'package:symbal_fl/features/game/ui/cubits/play_game_cubit.dart';
 
@@ -16,17 +18,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(create: (context) => AppCubit()),
-        BlocProvider(create: (context) => GameCubit()),
-        BlocProvider(create: (context) => CreateGameCubit()),
+        RepositoryProvider(create: (context) => SupabaseAuthRepository()),
       ],
-      child: MaterialApp.router(
-        title: AppConstants.appName,
-        theme: AppConstants.appTheme,
-        debugShowCheckedModeBanner: false,
-        routerConfig: _appRoute.config(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => AppCubit()),
+          BlocProvider(
+            create: (context) =>
+                AuthCubit(authRepository: context.read<SupabaseAuthRepository>()),
+          ),
+          BlocProvider(create: (context) => GameCubit()),
+          BlocProvider(create: (context) => CreateGameCubit()),
+        ],
+        child: MaterialApp.router(
+          title: AppConstants.appName,
+          theme: AppConstants.appTheme,
+          debugShowCheckedModeBanner: false,
+          routerConfig: _appRoute.config(),
+        ),
       ),
     );
   }
