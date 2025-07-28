@@ -4,7 +4,8 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:symbal_fl/core/constants/app_constants.dart';
 import 'package:symbal_fl/core/route/app_route.dart';
 import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
-import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
+import 'package:symbal_fl/features/game/ui/cubits/create_game_cubit.dart';
+import 'package:symbal_fl/features/game/ui/cubits/play_game_cubit.dart';
 
 final _appRoute = AppRouter();
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AppCubit()),
         BlocProvider(create: (context) => GameCubit()),
+        BlocProvider(create: (context) => CreateGameCubit()),
       ],
       child: MaterialApp.router(
         title: AppConstants.appName,
