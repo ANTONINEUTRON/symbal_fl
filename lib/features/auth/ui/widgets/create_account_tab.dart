@@ -70,28 +70,8 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
 
   @override
   Widget build(BuildContext context) {
-    bool isProcessing = false;
-    var authCubit = context.watch<AuthCubit>();
+    var authCubit = context.read<AuthCubit>();
 
-    // switch (authCubit.state.registerStatus) {
-    //   case RegisterStatus.Processing:
-    //     isProcessing = true;
-    //     break;
-    //   case RegisterStatus.Error:
-    //     WidgetsBinding.instance.addPostFrameCallback((duration) {
-    //       alertUser(
-    //         context: context,
-    //         message: "An error occur while creating user account",
-    //       );
-    //       authCubit.resetErrorStatus();
-    //     });
-    //     break;
-    //   case RegisterStatus.Success:
-    //     context.router.push(const VerifyEmailRoute());
-    //     break;
-    //   default:
-    //     break;
-    // }
 
     return Form(
       key: _formKey,
@@ -249,13 +229,11 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
         const SizedBox(height: 20.0),
 
         ElevatedButton(
-          onPressed: isProcessing
-              ? null
-              : () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    authCubit.createAccount();
-                  }
-                },
+          onPressed: () {
+            if (_formKey.currentState?.validate() ?? false) {
+              authCubit.createAccount();
+            }
+          },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),

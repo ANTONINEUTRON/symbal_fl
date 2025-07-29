@@ -52,7 +52,7 @@ class ResetPasswordPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0,),
                     suffixIcon: Icon(Icons.visibility_off),
                   ),
                 ),

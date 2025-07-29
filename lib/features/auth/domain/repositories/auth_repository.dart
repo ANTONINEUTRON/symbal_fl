@@ -61,4 +61,20 @@ abstract class AuthRepository {
   /// is logged in. This method should check the validity of the current
   /// session and return fresh user data.
   Future<AppUser?> getCurrentUser();
+
+  /// Checks if email verification is required for the current user.
+  /// 
+  /// Returns `true` if the user needs to verify their email before
+  /// being fully authenticated.
+  Future<bool> requiresEmailVerification();
+
+  /// Resends the verification email to the user.
+  /// 
+  /// Parameters:
+  /// - [email]: The email address to send verification to
+  /// 
+  /// Throws an exception if resend fails.
+  Future<void> resendVerificationEmail(String email);
+
+  Future<bool> checkEmailVerification();
 }

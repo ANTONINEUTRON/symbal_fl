@@ -45,7 +45,19 @@ class SupabaseAuthRepository implements AuthRepository {
   
   @override
   Future<bool> isAuthenticated()async {
-    return _supabase.auth.currentSession != null;
+    final session = _supabase.auth.currentSession;
+  
+  if (session == null) {
+    return false;
+  }
+  
+  // Check if session is still valid (not expired)
+  if (session.expiresAt != null && 
+      DateTime.now().millisecondsSinceEpoch > session.expiresAt! * 1000) {
+    return false;
+  }
+  
+  return true;
   }
   
   @override
@@ -81,6 +93,43 @@ class SupabaseAuthRepository implements AuthRepository {
       throw Exception('Failed to reset password: ${e.message}');
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
+    }
+  }
+
+  @override
+  Future<bool> requiresEmailVerification() async {
+    final user = _supabase.auth.currentUser;
+    return user != null && user.emailConfirmedAt == null;
+  }
+@override
+Future<bool> checkEmailVerification() async {
+  try {
+    // Refresh the session to get the latest user data
+    await _supabase.auth.refreshSession();
+    
+    final user = _supabase.auth.currentUser;
+    
+    // Return true if user exists and email is confirmed
+    return user != null && user.emailConfirmedAt != null;
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error checking email verification: $e');
+    }
+    return false;
+  }
+}
+
+  @override
+  Future<void> resendVerificationEmail(String email) async {
+    try {
+      await _supabase.auth.resend(
+        type: OtpType.signup,
+        email: email,
+      );
+    } on AuthException catch (e) {
+      throw _handleAuthException(e);
+    } catch (e) {
+      throw Exception('Failed to resend verification email: $e');
     }
   }
 

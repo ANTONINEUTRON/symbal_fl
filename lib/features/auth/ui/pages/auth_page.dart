@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/constants/app_constants.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
-import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_state.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/create_account_tab.dart';
@@ -14,13 +14,18 @@ import 'package:symbal_fl/features/auth/ui/widgets/verification_email_sent_page.
 import 'package:symbal_fl/gen/assets.gen.dart';
 
 @RoutePage()
-class CreateAccountPage extends StatelessWidget {
-  const CreateAccountPage({super.key});
+class AuthPage extends StatefulWidget {
+  const AuthPage({super.key});
 
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     var authCubit = context.watch<AuthCubit>();
-    var appCubit = context.watch<AppCubit>();
+    var appCubit = context.read<AppCubit>();
 
     switch (authCubit.state.status) {
       case AuthStatus.loading:
@@ -29,21 +34,18 @@ class CreateAccountPage extends StatelessWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           appCubit.setErrorMessage(authCubit.state.errorMessage);
         });
+
+        authCubit.resetState();
         break;
       case AuthStatus.authenticated:
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          // context.router.replaceNamed(AppConstants.homeRoute);
           appCubit.setAlertMessage(
             "Welcome Back, ${authCubit.state.user?.name ?? authCubit.state.user?.email}",
           );
         });
         break;
-      case AuthStatus.accountCreated:
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          appCubit.setAlertMessage(
-            "Account created successfully for ${authCubit.state.user?.email}",
-          );
-        });
+      case AuthStatus.emailVerificationRequired:
+        
         return VerificationEmailSentPage();
       case AuthStatus.passwordReset:
         WidgetsBinding.instance.addPostFrameCallback((_) {

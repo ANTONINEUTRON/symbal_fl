@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/constants/app_constants.dart';
 import 'package:symbal_fl/core/route/app_route.dart';
-import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/auth/data/repository/supabase_auth_repository.dart';
 import 'package:symbal_fl/features/auth/domain/repositories/auth_repository.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';

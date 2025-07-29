@@ -28,17 +28,17 @@ import 'package:symbal_fl/features/profile/ui/pages/view_profile_page.dart'
     as _i11;
 
 /// generated route for
-/// [_i1.CreateAccountPage]
-class CreateAccountRoute extends _i12.PageRouteInfo<void> {
-  const CreateAccountRoute({List<_i12.PageRouteInfo>? children})
-    : super(CreateAccountRoute.name, initialChildren: children);
+/// [_i1.AuthPage]
+class AuthRoute extends _i12.PageRouteInfo<void> {
+  const AuthRoute({List<_i12.PageRouteInfo>? children})
+    : super(AuthRoute.name, initialChildren: children);
 
-  static const String name = 'CreateAccountRoute';
+  static const String name = 'AuthRoute';
 
   static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return const _i1.CreateAccountPage();
+      return const _i1.AuthPage();
     },
   );
 }

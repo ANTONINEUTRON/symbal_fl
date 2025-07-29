@@ -8,7 +8,7 @@ enum AuthStatus {
   loading,
   error,
   passwordReset,
-  accountCreated,
+  emailVerificationRequired,
 }
 
 class AuthState extends Equatable {

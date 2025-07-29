@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/settings_section.dart';
 
 class ProfileSliverAppBar extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
-import 'package:symbal_fl/features/app/ui/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_state.dart';
 import 'package:symbal_fl/features/auth/ui/pages/auth_page.dart';
@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     AppCubit appCubit = context.watch<AppCubit>();
@@ -30,26 +30,30 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       if (appState.errorMessage.isNotEmpty) {
         var message = appState.errorMessage;
-
         showToast(
           message,
           context: context,
+          position: StyledToastPosition.top,
           duration: Duration(seconds: 10),
           backgroundColor: Colors.red.shade900,
+          onDismiss: () {
+            appCubit.reset();
+          },
         );
 
-        appCubit.reset();
       } else if (appState.alertMessage.isNotEmpty) {
         var message = appState.alertMessage;
-
+        
         showToast(
           message,
           context: context,
+          position: StyledToastPosition.top,
           duration: Duration(seconds: 10),
           backgroundColor: Theme.of(context).colorScheme.tertiary,
+          onDismiss: () {
+            appCubit.reset();
+          },
         );
-
-        appCubit.reset();
       }
     });
 
@@ -64,7 +68,7 @@ class _HomePageState extends State<HomePage> {
             // Profile Page
             context.watch<AuthCubit>().state.status == AuthStatus.authenticated
                 ? ProfilePage()
-                : CreateAccountPage(),
+                : AuthPage(),
           ],
         ),
       ),
@@ -84,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           Icon(Icons.home, color: Colors.white),
           Icon(Icons.person_4_rounded, color: Colors.white),
         ],
-        height: 55,
+        height: 45,
         index: _currentIndex,
         onTap: (index) {
           setState(() {

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
-import 'package:symbal_fl/features/profile/ui/pages/profile_page.dart';
 
 @RoutePage()
 class VerifyEmailPage extends StatefulWidget {
