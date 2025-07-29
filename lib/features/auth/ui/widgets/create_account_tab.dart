@@ -32,6 +32,18 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
     return null;
   }
 
+  String? _validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Name is required';
+    }
+    
+    if (value.length < 4) {
+      return 'Name must be at least 4 characters long';
+    }
+    
+    return null;
+  }
+
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password is required';
@@ -87,7 +99,36 @@ class _CreateAccountTabState extends State<CreateAccountTab> {
         physics: const NeverScrollableScrollPhysics(),
 
         children: [
-        const OAuthButtons(),
+        // Name Text Field
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Name",
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.white70,
+              ),
+            ).addSpacing(bottom: 8),
+            TextFormField(
+              // controller: _nameController,
+              onChanged: (value) => authCubit.setName(value),
+              validator: _validateName,
+              decoration: InputDecoration(
+                hintText: 'Enter your name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 8.0,
+                  horizontal: 12.0,
+                ),
+              ),
+            ),
+          ],
+        ).addSpacing(bottom: 16),
+
         // Email Text Field
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

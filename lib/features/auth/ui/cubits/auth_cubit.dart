@@ -29,6 +29,11 @@ late AuthRepository _authRepository;
     emit(state.copyWith(email: email));
   }
 
+
+  void setName(String name) {
+    emit(state.copyWith(name: name));
+  }
+
   void setPassword(String password) {
     emit(state.copyWith(password: password));
   }
@@ -40,11 +45,12 @@ late AuthRepository _authRepository;
       final appUser = await _authRepository.createAccount(
         email: state.email!,
         password: state.password!,
+        name: state.name,
       );
       print("Created account for user: ${appUser.email}");
       emit(state.copyWith(
         user: appUser,
-        status: AuthStatus.authenticated,
+        status: AuthStatus.accountCreated,
         errorMessage: "",
       ));
     } catch (e) {

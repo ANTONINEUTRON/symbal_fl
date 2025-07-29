@@ -43,8 +43,6 @@ class _LoginTabState extends State<LoginTab> {
     return ListView(
       physics: const NeverScrollableScrollPhysics(),
       children: [
-        const OAuthButtons(),
-
         // Email Text Field
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

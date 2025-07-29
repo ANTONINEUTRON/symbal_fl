@@ -9,7 +9,10 @@ import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_state.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/create_account_tab.dart';
 import 'package:symbal_fl/features/auth/ui/widgets/login_tab.dart';
+import 'package:symbal_fl/features/auth/ui/widgets/oauth_buttons.dart';
+import 'package:symbal_fl/features/auth/ui/widgets/verification_email_sent_page.dart';
 import 'package:symbal_fl/gen/assets.gen.dart';
+
 @RoutePage()
 class CreateAccountPage extends StatelessWidget {
   const CreateAccountPage({super.key});
@@ -26,18 +29,27 @@ class CreateAccountPage extends StatelessWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           appCubit.setErrorMessage(authCubit.state.errorMessage);
         });
-        return const SizedBox.shrink();
+        break;
       case AuthStatus.authenticated:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           // context.router.replaceNamed(AppConstants.homeRoute);
-          appCubit.setAlertMessage("Welcome Back, ${authCubit.state.user?.name ?? authCubit.state.user?.email}");
+          appCubit.setAlertMessage(
+            "Welcome Back, ${authCubit.state.user?.name ?? authCubit.state.user?.email}",
+          );
         });
-        return const SizedBox.shrink();
+        break;
+      case AuthStatus.accountCreated:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          appCubit.setAlertMessage(
+            "Account created successfully for ${authCubit.state.user?.email}",
+          );
+        });
+        return VerificationEmailSentPage();
       case AuthStatus.passwordReset:
         WidgetsBinding.instance.addPostFrameCallback((_) {
           appCubit.setErrorMessage("Password reset email sent");
         });
-        return const SizedBox.shrink();
+        break;
       default:
         break;
     }
@@ -51,10 +63,7 @@ class CreateAccountPage extends StatelessWidget {
               children: [
                 const SizedBox(height: 8.0),
                 // Logo Section
-                Assets.brand.symbalLogo.image(
-                  height: 60,
-                  width: 60,
-                ),
+                Assets.brand.symbalLogo.image(height: 60, width: 60),
                 Text(
                   AppConstants.appName,
                   style: TextStyle(
@@ -71,9 +80,9 @@ class CreateAccountPage extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ).addSpacing(bottom: 8),
-            
+
                 // Toggle Between Login and Create Account
-                 TabBar(
+                TabBar(
                   indicatorColor: Theme.of(context).colorScheme.tertiary,
                   indicatorWeight: 2,
                   indicatorSize: TabBarIndicatorSize.tab,
@@ -86,29 +95,19 @@ class CreateAccountPage extends StatelessWidget {
                     color: Color(0XFFB2B2B2),
                   ),
                   tabs: [
-                    Tab(
-                      child: Text(
-                        'Log in',
-                      ),
-                    ),
-                    Tab(
-                      child: Text(
-                        'Create Account',
-                      ),
-                    )
+                    Tab(child: Text('Log in')),
+                    Tab(child: Text('Create Account')),
                   ],
                 ).addSpacing(bottom: 24),
-            
+
+                OAuthButtons(),
                 //
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: const TabBarView(
-                    children: [
-                      LoginTab(),
-                      CreateAccountTab(),
-                    ],
+                    children: [LoginTab(), CreateAccountTab()],
                   ),
-                )
+                ),
               ],
             ).addSpacing(horizontal: 16),
           ),

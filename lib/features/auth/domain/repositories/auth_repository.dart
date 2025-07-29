@@ -20,11 +20,11 @@ abstract class AuthRepository {
   /// Parameters:
   /// - [email]: The user's email address (must be valid format)
   /// - [password]: The user's password (should meet security requirements)
-  /// 
+  /// - [name]: The user's name (optional, can be used for display purposes)
   /// Returns the created [AppUser] object on success.
   /// Throws an exception if account creation fails (e.g., email already exists,
   /// weak password, network error).
-  Future<AppUser> createAccount({required String email, required String password});
+  Future<AppUser> createAccount({required String name, required String email, required String password});
 
   /// Authenticates a user with email and password.
   /// 

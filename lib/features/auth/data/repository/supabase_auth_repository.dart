@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:symbal_fl/features/auth/data/models/app_user.dart';
 import 'package:symbal_fl/features/auth/domain/repositories/auth_repository.dart';
@@ -11,11 +12,15 @@ class SupabaseAuthRepository implements AuthRepository {
   Future<AppUser> createAccount({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
       final response = await _supabase.auth.signUp(
         email: email,
         password: password,
+        data: {
+          name: name
+        }
       );
 
       if (response.user == null) {
@@ -91,6 +96,10 @@ class SupabaseAuthRepository implements AuthRepository {
   
     /// Maps Supabase AuthException to more user-friendly exceptions
   Exception _handleAuthException(AuthException e) {
+    if(kDebugMode) {
+      print("Supabase AuthException: ${e.message}");
+    }
+    
     switch (e.statusCode) {
       case '400':
         if (e.message.contains('User already registered')) {

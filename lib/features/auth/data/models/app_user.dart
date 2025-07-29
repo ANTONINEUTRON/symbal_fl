@@ -16,7 +16,6 @@ abstract class AppUser with _$AppUser {
   }) = _AppUser;
 
   factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
-
 }
 
 enum UserStatus {

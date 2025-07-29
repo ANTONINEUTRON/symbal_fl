@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:symbal_fl/features/auth/data/models/app_user.dart';
 
-
 enum AuthStatus {
   initial,
   authenticated,
   unauthenticated,
   loading,
-  error, passwordReset,
+  error,
+  passwordReset,
+  accountCreated,
 }
 
 class AuthState extends Equatable {
@@ -16,9 +17,11 @@ class AuthState extends Equatable {
   final AppUser? user;
   final AuthStatus status;
   final String errorMessage;
+  final String name;
 
   const AuthState({
     this.user,
+    this.name = '',
     this.email,
     this.password,
     this.status = AuthStatus.initial,
@@ -26,11 +29,19 @@ class AuthState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [user, email, password, status, errorMessage];
+  List<Object?> get props => [
+    user,
+    name,
+    email,
+    password,
+    status,
+    errorMessage,
+  ];
 
   AuthState copyWith({
     AppUser? user,
     String? email,
+    String? name,
     String? password,
     AuthStatus? status,
     String? errorMessage,
@@ -38,6 +49,7 @@ class AuthState extends Equatable {
     return AuthState(
       user: user ?? this.user,
       email: email ?? this.email,
+      name: name ?? this.name,
       password: password ?? this.password,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
