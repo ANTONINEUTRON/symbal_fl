@@ -22,6 +22,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  bool _errorShown = false;
+
   @override
   Widget build(BuildContext context) {
     var authCubit = context.watch<AuthCubit>();
@@ -34,8 +36,9 @@ class _AuthPageState extends State<AuthPage> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           appCubit.setErrorMessage(authCubit.state.errorMessage);
         });
-
-        authCubit.resetState();
+  
+        authCubit.clearError();
+        _errorShown = false;
         break;
       case AuthStatus.authenticated:
         WidgetsBinding.instance.addPostFrameCallback((_) {

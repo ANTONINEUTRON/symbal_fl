@@ -7,12 +7,11 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: HomeRoute.page, initial: true),
     AutoRoute(page: ForgotPasswordRoute.page),
-    AutoRoute(page: VerifyEmailRoute.page),
     AutoRoute(page: ResetPasswordRoute.page),
     AutoRoute(page: CreateGameRoute.page),
     AutoRoute(page: PlayGameRoute.page),
     AutoRoute(page: ListGamesRoute.page),
-    AutoRoute(page: CreateAccountRoute.page),
+    AutoRoute(page: AuthRoute.page),
     AutoRoute(page: ViewProfileRoute.page),
     AutoRoute(page: VerificationEmailSentRoute.page),
   ];

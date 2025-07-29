@@ -33,10 +33,15 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(status: AuthStatus.loading));
 
       // Refresh session to get latest user data
+      final user =await _authRepository.login(
+        email: state.email!,
+        password: state.password!,
+      );
+
       final isverified = await _authRepository.checkEmailVerification();
 
       if (isverified) {
-        final user = await _authRepository.getCurrentUser();
+        //  = await _authRepository.getCurrentUser();
         emit(
           state.copyWith(
             status: AuthStatus.authenticated,
@@ -200,10 +205,17 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void clearError() {
-    emit(state.copyWith(errorMessage: ""));
+    emit(
+      state.copyWith(
+        errorMessage: "",
+        status: state.status == AuthStatus.error
+            ? AuthStatus.unauthenticated
+            : state.status,
+      ),
+    );
   }
 
-  Future<void> resetState() async {
-    emit(AuthState());
+  void resetToInitial() {
+    emit(const AuthState(status: AuthStatus.initial));
   }
 }
