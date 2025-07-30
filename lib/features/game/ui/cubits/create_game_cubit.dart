@@ -7,7 +7,7 @@ import 'package:symbal_fl/features/game/ui/cubits/create_game_state.dart';
 class CreateGameCubit extends Cubit<CreateGameState> {
   CreateGameCubit() : super(const CreateGameState());
 
-  void updateTypedPrompt(String? typedPrompt) {
+  void setTypedPrompt(String? typedPrompt) {
     emit(state.copyWith(typedPrompt: typedPrompt));
   }
 

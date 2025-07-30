@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/gen/assets.gen.dart';
 
 class WelcomeView extends StatelessWidget {
@@ -18,7 +20,6 @@ class WelcomeView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          
           // Game History Button
           _buildGameHistory(context).addSpacing(bottom: 24),
           
@@ -27,7 +28,7 @@ class WelcomeView extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               
-              shape: BoxShape.circle,
+              // shape: BoxShape.circle,
               
             ),
             child: Assets.brand.symbalLogo.image(
@@ -35,21 +36,22 @@ class WelcomeView extends StatelessWidget {
               height: 110,
               fit: BoxFit.cover,
             ),
-            ).addSpacing(bottom: 16),
+            ).addSpacing(bottom: 24),
           
           // Welcome Title
           const Text(
-            'AI Game Creator',
+            'Your Game Ideas\nCome to Life Here 🎮',
             style: TextStyle(
               color: Colors.white,
               fontSize: 32,
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ).addSpacing(bottom: 8),
           
           // Subtitle
           Text(
-            'Describe your dream game and I\'ll create it with a unique AI-generated story',
+            'Describe any game concept and I\'ll build it for you',
             style: TextStyle(
               color: Colors.grey[400],
               fontSize: 16,
@@ -58,51 +60,51 @@ class WelcomeView extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           
-          const SizedBox(height: 40),
+          // const SizedBox(height: 40),
           
-          // Suggestion Cards
-          const Text(
-            'Try these examples:',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          // // Suggestion Cards
+          // const Text(
+          //   'Try these examples:',
+          //   style: TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          // ),
           
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
           
-          _buildSuggestionCard(
-            '🏰 Medieval Adventure',
-            'A knight\'s quest to save a magical kingdom from an ancient curse',
-            Icons.castle,
-          ),
+          // _buildSuggestionCard(
+          //   '🏰 Medieval Adventure',
+          //   'A knight\'s quest to save a magical kingdom from an ancient curse',
+          //   Icons.castle,
+          // ),
           
-          const SizedBox(height: 12),
+          // const SizedBox(height: 12),
           
-          _buildSuggestionCard(
-            '🚀 Space Exploration',
-            'Discover alien worlds and solve cosmic mysteries in deep space',
-            Icons.rocket_launch,
-          ),
+          // _buildSuggestionCard(
+          //   '🚀 Space Exploration',
+          //   'Discover alien worlds and solve cosmic mysteries in deep space',
+          //   Icons.rocket_launch,
+          // ),
           
-          const SizedBox(height: 12),
+          // const SizedBox(height: 12),
           
-          _buildSuggestionCard(
-            '🧩 Mystery Puzzle',
-            'Uncover clues and solve riddles in a mysterious haunted mansion',
-            Icons.search,
-          ),
+          // _buildSuggestionCard(
+          //   '🧩 Mystery Puzzle',
+          //   'Uncover clues and solve riddles in a mysterious haunted mansion',
+          //   Icons.search,
+          // ),
           
-          const SizedBox(height: 12),
+          // const SizedBox(height: 12),
           
-          _buildSuggestionCard(
-            '🌊 Ocean Adventure',
-            'Explore underwater worlds and discover hidden treasures',
-            Icons.waves,
-          ),
+          // _buildSuggestionCard(
+          //   '🌊 Ocean Adventure',
+          //   'Explore underwater worlds and discover hidden treasures',
+          //   Icons.waves,
+          // ),
           
-          const SizedBox(height: 40),
+          // const SizedBox(height: 40),
           
         ],
       ),
@@ -113,14 +115,7 @@ class WelcomeView extends StatelessWidget {
     return TextButton.icon(
           onPressed: () {
             // Navigate to game history
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('🎮 Game History - Coming Soon!'),
-                backgroundColor: Colors.blue,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              ),
-            );
+            context.read<AppCubit>().setAlertMessage("🎮 Game History - Coming Soon!");
           },
           icon: const Icon(Icons.history, color: Colors.blue),
           label: const Text(

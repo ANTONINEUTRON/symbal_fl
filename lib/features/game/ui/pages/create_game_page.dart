@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_input_field.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_view.dart';
@@ -23,6 +24,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   int _retriesCount = 3;
   bool _isGenerating = false;
   bool _hasStartedChat = false;
+  List<PlatformFile> _selectedFiles = [];
 
   // final List<String> _gameTypes = [
   //   'Puzzle',
@@ -48,7 +50,16 @@ class _CreateGamePageState extends State<CreateGamePage> {
   void _sendMessage() {
     if (_promptController.text.trim().isEmpty || _retriesCount <= 0) return;
 
-    final userMessage = _promptController.text.trim();
+    String userMessage = _promptController.text.trim();
+    
+    // Add file information to the message if files are selected
+    if (_selectedFiles.isNotEmpty) {
+      String fileInfo = '\n\nSelected assets:\n';
+      for (var file in _selectedFiles) {
+        fileInfo += '- ${file.name} (${file.extension?.toUpperCase()})\n';
+      }
+      userMessage += fileInfo;
+    }
 
     setState(() {
       if (!_hasStartedChat) {
@@ -66,6 +77,10 @@ class _CreateGamePageState extends State<CreateGamePage> {
     });
 
     _promptController.clear();
+    
+    // Clear selected files after sending
+    _selectedFiles.clear();
+    
     _scrollToBottom();
 
     // Simulate AI response
@@ -82,6 +97,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
         _isGenerating = false;
       });
       _scrollToBottom();
+    });
+  }
+
+  void _onFilesSelected(List<PlatformFile> files) {
+    setState(() {
+      _selectedFiles = files;
     });
   }
 
@@ -125,7 +146,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
         backgroundColor: Colors.grey[900],
         foregroundColor: Colors.white,
         title: const Text(
-          'Create Game',
+          '',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -161,6 +182,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
             isGenerating: _isGenerating,
             promptController: _promptController,
             textFieldFocus: _textFieldFocus,
+            onFilesSelected: _onFilesSelected,
           ),
         ],
       ),
