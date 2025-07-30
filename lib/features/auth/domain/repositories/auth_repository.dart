@@ -1,6 +1,6 @@
 
 
-import 'package:symbal_fl/features/auth/data/models/app_user.dart';
+import 'package:symbal_fl/features/profile/data/models/app_user.dart';
 
 /// Abstract repository interface for handling authentication operations.
 /// 

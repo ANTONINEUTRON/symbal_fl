@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:symbal_fl/features/auth/data/models/app_user.dart';
+import 'package:symbal_fl/features/profile/data/models/app_user.dart';
 import 'package:symbal_fl/features/auth/domain/repositories/auth_repository.dart';
 
 class SupabaseAuthRepository implements AuthRepository {
@@ -136,8 +136,8 @@ class SupabaseAuthRepository implements AuthRepository {
     return AppUser(
       id: user.id,
       email: user.email!,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      createdAt: DateTime.parse(user.createdAt),
+      updatedAt: DateTime.parse(user.updatedAt ?? user.createdAt),
       name: user.userMetadata!['name'] ?? "",
     );
   }

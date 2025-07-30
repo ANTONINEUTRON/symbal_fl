@@ -57,20 +57,19 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
+    var authCubit = context.watch<AuthCubit>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: [
-            ListGamesPage(),
-            //
-            // Profile Page
-            context.watch<AuthCubit>().state.status == AuthStatus.authenticated
-                ? ProfilePage()
-                : AuthPage(),
-          ],
-        ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          ListGamesPage(),
+          //
+          // Profile Page
+          authCubit.state.status == AuthStatus.authenticated
+              ? ProfilePage()
+              : AuthPage(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

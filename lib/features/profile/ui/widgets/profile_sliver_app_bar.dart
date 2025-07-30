@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/core/utils/utility_functions.dart';
 import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
+import 'package:symbal_fl/features/profile/data/models/app_user.dart';
+import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/settings_section.dart';
 
 class ProfileSliverAppBar extends StatefulWidget {
@@ -15,6 +21,7 @@ class ProfileSliverAppBar extends StatefulWidget {
 class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
   @override
   Widget build(BuildContext context) {
+    AppUser? profile = context.read<ProfileCubit>().state.userProfile;
     return SliverAppBar(
       expandedHeight: 250,
       pinned: true,
@@ -38,8 +45,8 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
             title: AnimatedOpacity(
               opacity: collapseRatio < 0.3 ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 200),
-              child: const Text(
-                'GameMaster42',
+              child: Text(
+                '${profile!.name}',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
@@ -58,7 +65,7 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: _buildProfileHeader(),
+                  child: _buildProfileHeader(profile: profile),
                 ),
               ),
             ),
@@ -79,6 +86,7 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
             : IconButton(
                 onPressed: () {
                   // _showSettingsBottomSheet();
+                  context.read<AuthCubit>().logout();
                 },
                 icon: Icon(
                   Icons.logout_outlined,
@@ -89,7 +97,8 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
     );
   }
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader({required AppUser profile}) {
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -142,8 +151,8 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.grey[900]!, width: 2),
                       ),
-                      child: const Text(
-                        'LV 15',
+                      child: Text(
+                        'LV ${UtilityFunctions.formatNumber(profile.plays)}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -161,8 +170,8 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Username and Handle
-                    const Text(
-                      'GameMaster42',
+                    Text(
+                      '${profile.name}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -170,15 +179,36 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                       ),
                       textAlign: TextAlign.start,
                     ),
-                    Text(
-                      '@gamemaster42',
-                      style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                    Wrap(
+                      children: [
+                        Text(
+                          '${profile.walletAddress ?? 'no wallet yet'}',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 12,
+                          ),
+                        ).addSpacing(bottom: 12),
+                        GestureDetector(
+                          onTap: () {
+                            Clipboard.setData(
+                              ClipboardData(text: 'qa12a...1aaw'),
+                            );
+                            context.read<AppCubit>().setAlertMessage(
+                              "Wallet address copied!",
+                            );
+                          },
+                          child: Icon(
+                            Icons.copy_all_outlined,
+                            size: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 12),
 
                     // Bio
                     Text(
-                      '🎮 Gaming enthusiast | 🏆 Trophy hunter\n✨ Creating epic game stories since 2024',
+                      profile.bio,
                       textAlign: TextAlign.left,
                       style: TextStyle(color: Colors.grey[300], fontSize: 14),
                     ),
@@ -195,11 +225,13 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
             children: [
               widget.isProfileView
                   ? _buildActionButton(
-                      'Follow',
+                      'Follow ${UtilityFunctions.formatNumber(profile.followersCount)}',
                       Icons.person_add,
                       Colors.purple,
                       () {
-                        context.read<AppCubit>().setAlertMessage('Following...');
+                        context.read<AppCubit>().setAlertMessage(
+                          'Following...',
+                        );
                       },
                     )
                   : _buildActionButton(
@@ -207,7 +239,9 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                       Icons.edit_outlined,
                       Colors.purple,
                       () {
-                        
+                        context.read<AppCubit>().setAlertMessage(
+                          'Editing profile...',
+                        );
                       },
                     ),
               _buildActionButton(
@@ -215,10 +249,12 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                 Icons.share_outlined,
                 Colors.grey[700]!,
                 () {
-                  SharePlus.instance.share(ShareParams(
-                    text: 'Check out my profile on Symbal!',
-                    subject: 'Symbal Profile',
-                  ));
+                  SharePlus.instance.share(
+                    ShareParams(
+                      text: 'Check out my profile on Symbal! https://symbal.fun/${profile.id}',
+                      subject: '${profile.name}\'s Symbal Profile',
+                    ),
+                  );
                 },
               ),
             ],

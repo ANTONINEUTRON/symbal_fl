@@ -13,13 +13,13 @@ class AppConstants {
         ).copyWith(),
         useMaterial3: true,
         textTheme: GoogleFonts.dmMonoTextTheme().copyWith(
-          bodyLarge: TextStyle(
+          bodyLarge: GoogleFonts.dmMono(
             color: Colors.white,
           ),
-          bodyMedium: TextStyle(
+          bodyMedium: GoogleFonts.dmMono(
             color: Colors.white70,
           ),
-          bodySmall: TextStyle(
+          bodySmall: GoogleFonts.dmMono(
             color: Colors.white60,
           ),
         ),

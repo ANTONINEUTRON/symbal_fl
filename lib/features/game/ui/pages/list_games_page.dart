@@ -1,9 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/features/home/data/datasources/dummy_data.dart';
 import 'package:symbal_fl/features/home/ui/widgets/game_story_card.dart';
+import 'package:symbal_fl/features/profile/data/models/app_user.dart';
+import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
 
 @RoutePage()
 class ListGamesPage extends StatefulWidget {
@@ -36,6 +39,8 @@ class _ListGamesPageState extends State<ListGamesPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppUser? profile = context.read<ProfileCubit>().state.userProfile;
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -50,7 +55,7 @@ class _ListGamesPageState extends State<ListGamesPage> {
             ),
           ),
           onPressed: () {},
-          label: const Text('| 20 SYM'),
+          label: Text('| ${profile?.symBalance} SYM'),
           icon: const Icon(Icons.games_rounded),
         ),
         actions: [

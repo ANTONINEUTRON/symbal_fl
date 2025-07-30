@@ -36,9 +36,13 @@ class _AuthPageState extends State<AuthPage> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           appCubit.setErrorMessage(authCubit.state.errorMessage);
         });
-  
-        authCubit.clearError();
-        _errorShown = false;
+
+        Future.delayed(const Duration(seconds: 6), () {
+          if (!_errorShown) {
+            authCubit.clearError();
+            _errorShown = false;
+          }
+        });
         break;
       case AuthStatus.authenticated:
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,7 +52,6 @@ class _AuthPageState extends State<AuthPage> {
         });
         break;
       case AuthStatus.emailVerificationRequired:
-        
         return VerificationEmailSentPage();
       case AuthStatus.passwordReset:
         WidgetsBinding.instance.addPostFrameCallback((_) {

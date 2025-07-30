@@ -13,13 +13,14 @@ class SettingsSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SettingsItem(icon: Icons.favorite_outline, title: 'Favourites'),
-          SettingsItem(icon: Icons.history_rounded, title: 'History'),
-          SettingsItem(icon: Icons.currency_exchange, title: 'Payments'),
+          SettingsItem(icon: Icons.wallet, title: 'Manage wallet'),
           SettingsItem(
             icon: Icons.notifications_outlined,
             title: 'Notifications',
           ),
+          SettingsItem(icon: Icons.favorite_outline, title: 'Favourites'),
+          SettingsItem(icon: Icons.currency_exchange, title: 'Payments'),
+          SettingsItem(icon: Icons.history_rounded, title: 'History'),
           SettingsItem(icon: Icons.help_outline, title: 'Help & Support'),
           SettingsItem(icon: Icons.menu_book, title: 'Terms'),
           SettingsItem(icon: Icons.privacy_tip_outlined, title: 'Privacy'),

@@ -16,14 +16,15 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> _initialize() async {
     // await checkEmailVerification();
     if (await _authRepository.isAuthenticated()) {
-      print("Authentucaja");
       final user = await _authRepository.getCurrentUser();
       emit(state.copyWith(user: user, status: AuthStatus.authenticated));
 
       // Optionally, you can start checking verification status here
-      checkEmailVerification();
+      if (state.email != null) checkEmailVerification();
     } else {
-      print("Unauthenticated");
+      if (kDebugMode) {
+        print("Unauthenticated");
+      }
       emit(state.copyWith(status: AuthStatus.unauthenticated));
     }
   }
@@ -33,7 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.copyWith(status: AuthStatus.loading));
 
       // Refresh session to get latest user data
-      final user =await _authRepository.login(
+      final user = await _authRepository.login(
         email: state.email!,
         password: state.password!,
       );
@@ -61,7 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(
         state.copyWith(
           status: AuthStatus.error,
-          errorMessage: "Failed to check verification: ${e.toString()}",
+          errorMessage: "Failed to check verification:ff ${e.toString()}",
         ),
       );
     }
