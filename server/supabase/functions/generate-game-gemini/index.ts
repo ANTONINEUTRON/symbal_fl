@@ -13,7 +13,10 @@ const corsHeaders = {
 interface GameGenerationRequest {
   prompt: string;
   userId?: string;
+  assets?: string[];
 }
+
+
 
 interface GeminiResponse {
   candidates: Array<{
@@ -69,7 +72,7 @@ Deno.serve(async (req) => {
 
     // Parse request body
     const requestBody: GameGenerationRequest = await req.json();
-    const { prompt } = requestBody;
+    const { prompt, assets } = requestBody;
 
     if (!prompt || prompt.trim().length === 0) {
       return new Response(
@@ -79,6 +82,21 @@ Deno.serve(async (req) => {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
       );
+    }
+
+    // Validate assets if provided
+    if (assets && assets.length > 0) {
+      const maxAssets = 10;
+
+      if (assets.length > maxAssets) {
+        return new Response(
+          JSON.stringify({ error: `Maximum ${maxAssets} assets allowed` }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      }
     }
 
     // Rate limiting check (optional)
@@ -97,7 +115,7 @@ Deno.serve(async (req) => {
     }
 
     // Generate enhanced prompt for Gemini
-    const enhancedPrompt = buildGeminiPrompt(prompt, gameType, difficulty, theme);
+    const enhancedPrompt = buildGeminiPrompt(prompt, assets);
 
     const systemPrompt = buildSystemPrompt();
 
@@ -123,6 +141,7 @@ Deno.serve(async (req) => {
           message_to_user: generatedGame.messageToUser, // Store message directly
           tags: generatedGame.tags, // Store as array directly
           original_prompt: prompt,
+          assets: assets || [], 
           status: 'generated',
         }
       ])
@@ -150,7 +169,7 @@ Deno.serve(async (req) => {
       }
     );
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Function error:', error);
 
     return new Response(
@@ -198,20 +217,37 @@ The HTML must be a complete, valid HTML5 document that can be rendered directly 
 // Helper function to build enhanced prompt for Gemini
 function buildGeminiPrompt(
   userPrompt: string,
-  // gameType: string, 
-  // difficulty: string, 
-  // theme?: string
+  assets: string[] = []
 ): string {
+  let assetSection: string = '';
+  
+  if (assets && assets.length > 0) {
+    assetSection = `
+
+**Available Assets:**
+${assets.map((assetUrl, index) => `${index + 1}. ${assetUrl}`).join('\n')}
+
+**Asset Instructions:**
+- Use these exact URLs for loading images/audio in your game
+- Reference them directly in your HTML/CSS/JavaScript
+- Ensure proper error handling for asset loading
+- If an asset fails to load, provide a fallback (colored div/shape)
+`;
+  }
+
+
   const basePrompt = `
 Generate a complete 2D web game based on this user request:
 
 **User's Game Request:** ${userPrompt}
+${assetSection}
 
 **Requirements:**
 - Create a fully playable 2D game using only HTML, CSS, and JavaScript
-- Use ONLY asset URLs that the user has explicitly provided in their request above
-- If no asset URLs are provided, use colored divs/shapes instead of images
-- Implement intuitive controls (arrow keys, WASD, or mouse/touch)
+- Use ONLY the asset URLs provided above (if any)
+- colored divs/shapes can also be used 
+- Implement intuitive controls (arrow keys, WASD, or mouse/touch) where applicable
+- The game is strictly mobile based and a single HTML document
 - Include clear win/lose conditions
 - Add a reset/restart mechanism
 - Make the game visually appealing with the specified theme/style
@@ -227,8 +263,8 @@ Generate a complete 2D web game based on this user request:
 Respond with a valid JSON object containing the complete game as specified in the system instructions.
 
 **Asset Usage:**
-- Only use image/audio URLs explicitly mentioned in the user's request
-- If user mentions visual elements without URLs, implement them as CSS-styled elements
+- Only use the image/audio URLs provided in the Available Assets section above
+- If user mentions visual elements without providing URLs, implement them as CSS-styled elements
 - Ensure all referenced assets are loaded properly with error handling
 `;
 

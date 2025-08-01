@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/constants/app_constants.dart';
 import 'package:symbal_fl/core/route/app_route.dart';
+import 'package:symbal_fl/core/theme/theme.dart';
 import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/auth/data/repository/supabase_auth_repository.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
+import 'package:symbal_fl/features/game/data/repository/supabase_game_generation.dart';
 import 'package:symbal_fl/features/game/ui/cubits/create_game_cubit.dart';
 import 'package:symbal_fl/features/game/ui/cubits/play_game_cubit.dart';
 import 'package:symbal_fl/features/profile/data/repositories/supabase_profile_repository.dart';
@@ -22,7 +24,8 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => SupabaseAuthRepository()),
-        RepositoryProvider(create: (context) => SupabaseProfileRepository(),)
+        RepositoryProvider(create: (context) => SupabaseProfileRepository()),
+        RepositoryProvider(create: (context) => SupabaseGameGeneration()),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -39,11 +42,15 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(create: (context) => AppCubit()),
           BlocProvider(create: (context) => GameCubit()),
-          BlocProvider(create: (context) => CreateGameCubit()),
+          BlocProvider(
+            create: (context) => CreateGameCubit(
+              gameGenerationRepository: context.read<SupabaseGameGeneration>(),
+            ),
+          ),
         ],
         child: MaterialApp.router(
           title: AppConstants.appName,
-          theme: AppConstants.appTheme,
+          theme: AppTheme.primaryTheme,
           debugShowCheckedModeBanner: false,
           routerConfig: _appRoute.config(),
         ),

@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:symbal_fl/features/game/ui/cubits/create_game_cubit.dart';
+import 'package:symbal_fl/features/game/ui/cubits/create_game_state.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_input_field.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_view.dart';
 import 'package:symbal_fl/features/game/ui/widgets/retries_counter.dart';
@@ -20,16 +24,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode _textFieldFocus = FocusNode();
 
-  String _selectedGameType = 'Puzzle';
-  int _retriesCount = 3;
-  bool _isGenerating = false;
-  bool _hasStartedChat = false;
+  // String _selectedGameType = 'Puzzle';
+  // int _retriesCount = 3;
+  // bool _isGenerating = false;
+  // bool _hasStartedChat = false;
   List<PlatformFile> _selectedFiles = [];
 
-  // final List<String> _gameTypes = [
-  //   'Puzzle',
-  //   'Adventure',
-  //   'Action',
   //   'Strategy',
   //   'Casual',
   //   'Mystery',
@@ -37,7 +37,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   //   'Sci-Fi',
   // ];
 
-  final List<CreateMessageModel> _messages = [];
+  // final List<MessageModel> _messages = [];
 
   @override
   void dispose() {
@@ -48,56 +48,63 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _sendMessage() {
-    if (_promptController.text.trim().isEmpty || _retriesCount <= 0) return;
+    CreateGameState createGameState = context.read<CreateGameCubit>().state;
+    if (_promptController.text.trim().isEmpty || createGameState.retriesCount <= 0) return;
 
     String userMessage = _promptController.text.trim();
-    
+
     // Add file information to the message if files are selected
-    if (_selectedFiles.isNotEmpty) {
-      String fileInfo = '\n\nSelected assets:\n';
-      for (var file in _selectedFiles) {
-        fileInfo += '- ${file.name} (${file.extension?.toUpperCase()})\n';
-      }
-      userMessage += fileInfo;
-    }
+    // if (_selectedFiles.isNotEmpty) {
+    //   String fileInfo = '\n\nSelected assets:\n';
+    //   for (var file in _selectedFiles) {
+    //     fileInfo += '- ${file.name} (${file.extension?.toUpperCase()})\n';
+    //   }
+    //   userMessage += fileInfo;
+    // }
 
-    setState(() {
-      if (!_hasStartedChat) {
-        _hasStartedChat = true;
-      }
-      _messages.add(
-        CreateMessageModel(
-          prompt: userMessage,
-          isUser: true,
-          timestamp: DateTime.now(),
-        ),
-      );
-      _isGenerating = true;
-      _retriesCount--;
-    });
+    // setState(() {
+    //   if (!_hasStartedChat) {
+    //     _hasStartedChat = true;
+    //   }
+    //   _messages.add(
+    //     MessageModel(
+    //       prompt: userMessage,
+    //       isUser: true,
+    //       timestamp: DateTime.now(),
+    //       attachedFiles: [],
+    //     ),
+    //   );
+    //   _isGenerating = true;
+    //   _retriesCount--;
+    // });
 
+    context.read<CreateGameCubit>().createGame(
+      prompt: userMessage,
+      selectedFiles: _selectedFiles.map((file) => File(file.path!)).toList(),
+    );
     _promptController.clear();
-    
+
     // Clear selected files after sending
     _selectedFiles.clear();
-    
+
     _scrollToBottom();
 
     // Simulate AI response
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        _messages.add(
-          CreateMessageModel(
-            prompt:
-                "🎮 Fantastic! I'm creating your $_selectedGameType game: \"$userMessage\"\n\n✨ Generating unique gameplay mechanics...\n🎭 Crafting an AI-powered story...\n🎯 Setting up fun challenges...\n\nYour personalized game will be ready shortly!",
-            isUser: false,
-            timestamp: DateTime.now(),
-          ),
-        );
-        _isGenerating = false;
-      });
-      _scrollToBottom();
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   setState(() {
+    //     _messages.add(
+    //       MessageModel(
+    //         prompt:
+    //             "🎮 Fantastic! I'm creating your $_selectedGameType game: \"$userMessage\"\n\n✨ Generating unique gameplay mechanics...\n🎭 Crafting an AI-powered story...\n🎯 Setting up fun challenges...\n\nYour personalized game will be ready shortly!",
+    //         isUser: false,
+    //         timestamp: DateTime.now(),
+    //         attachedFiles: [],
+    //       ),
+    //     );
+    //     _isGenerating = false;
+    //   });
+    //   _scrollToBottom();
+    // });
   }
 
   void _onFilesSelected(List<PlatformFile> files) {
@@ -119,9 +126,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _addRetries() {
-    setState(() {
-      _retriesCount += 5;
-    });
+    // call cubit method to add retries
+    context.read<CreateGameCubit>().addRetries(5);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -134,29 +140,26 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _startWithSuggestion(String suggestion) {
-    _promptController.text = suggestion;
-    _sendMessage();
+    // _promptController.text = suggestion;
+    // _sendMessage();
   }
 
   @override
   Widget build(BuildContext context) {
+    var createGameCubit = context.watch<CreateGameCubit>();
+    CreateGameState createGameState = createGameCubit.state;
+    
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         foregroundColor: Colors.white,
-        title: const Text(
-          '',
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
+        title: const Text('', style: TextStyle(fontWeight: FontWeight.w600)),
         centerTitle: true,
         elevation: 0,
         actions: [
           // Retries Counter
-          RetriesCounter(
-            retriesCount: _retriesCount,
-            addRetries: _addRetries,
-          ),
+          RetriesCounter(retriesCount: createGameState.retriesCount, addRetries: _addRetries),
         ],
       ),
       body: Column(
@@ -166,23 +169,22 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
           // Main Content Area
           Expanded(
-            child: _hasStartedChat
+            child: createGameState.chatList.isNotEmpty
                 ? CreateChatView(
                     scrollController: _scrollController,
-                    messages: _messages,
-                    isGenerating: _isGenerating,
+                    messages: createGameState.chatList,
+                    isGenerating: createGameState.isGenerating,
                   )
                 : WelcomeView(startWithSuggestion: _startWithSuggestion),
           ),
 
           // Input Field
           ChatInputField(
-            onSendMessage: _sendMessage,
-            retriesCount: _retriesCount,
-            isGenerating: _isGenerating,
+            retriesCount: createGameState.retriesCount,
+            isGenerating: createGameState.isGenerating,
             promptController: _promptController,
-            textFieldFocus: _textFieldFocus,
             onFilesSelected: _onFilesSelected,
+            onSendMessage: _sendMessage,
           ),
         ],
       ),
@@ -250,4 +252,3 @@ class _CreateGamePageState extends State<CreateGamePage> {
   //   }
   // }
 }
-

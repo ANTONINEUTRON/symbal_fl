@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 
 class ChatInputField extends StatefulWidget {
   const ChatInputField({
@@ -9,12 +11,10 @@ class ChatInputField extends StatefulWidget {
     required this.retriesCount,
     required this.isGenerating,
     required this.promptController,
-    required this.textFieldFocus,
     this.onFilesSelected,
   });
 
   final TextEditingController promptController;
-  final FocusNode textFieldFocus;
   final Function onSendMessage;
   final int retriesCount;
   final bool isGenerating;
@@ -46,9 +46,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
       }
     } catch (e) {
       // Handle error
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error picking files: $e')));
+      context.read<AppCubit>().setErrorMessage("Failed to pick files: $e");
     }
   }
 
@@ -150,7 +148,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
                                           ),
                                           const SizedBox(height: 2),
                                           Text(
-                                            file.name?.toUpperCase() ?? '',
+                                            file.name.toUpperCase(),
                                             style: TextStyle(
                                               color: Colors.grey[400],
                                               fontSize: 8,
@@ -224,7 +222,6 @@ class _ChatInputFieldState extends State<ChatInputField> {
                       // height: MediaQuery.of(context).size.height * 0.7, // Limit height to 8% of screen height
                       child: TextField(
                         controller: widget.promptController,
-                        focusNode: widget.textFieldFocus,
                         style: const TextStyle(color: Colors.white),
                         maxLines: 10,
                         minLines: 1,

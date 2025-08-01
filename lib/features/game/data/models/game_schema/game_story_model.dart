@@ -16,6 +16,7 @@ abstract class GameStory with _$GameStory {
     required String gameType,
     String? creatorId,
     String? gameDataId, //reference to the ai generated data
+    //TODO add a list of gameIDs
     @Default(0) int likes,
     @Default(0) int plays,
     @Default(0) int shares,

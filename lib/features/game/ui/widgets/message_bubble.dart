@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/utils/utility_functions.dart';
-import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
+import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({super.key, required this.message});
 
-  final CreateMessageModel message;
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {

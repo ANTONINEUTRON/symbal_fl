@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:symbal_fl/features/game/data/models/create_message_model.dart';
+import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/ui/widgets/message_bubble.dart';
 import 'package:symbal_fl/features/game/ui/widgets/typing_indicator.dart';
 
@@ -12,7 +12,7 @@ class CreateChatView extends StatelessWidget {
   });
 
   final ScrollController scrollController;
-  final List<CreateMessageModel> messages;
+  final List<MessageModel> messages;
   final bool isGenerating;
 
   @override

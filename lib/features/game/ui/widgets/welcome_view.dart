@@ -126,64 +126,66 @@ class WelcomeView extends StatelessWidget {
   }
 
   
-  Widget _buildSuggestionCard(String title, String description, IconData icon) {
-    return GestureDetector(
-      onTap: () => startWithSuggestion(description),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.grey[800],
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey[700]!),
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.purple.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(
-                icon,
-                color: Colors.purple,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    description,
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.grey[600],
-              size: 16,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildSuggestionCard(String title, String description, IconData icon) {
+  //   return GestureDetector(
+  //     onTap: () => startWithSuggestion(description),
+  //     child: Container(
+  //       width: double.infinity,
+  //       padding: const EdgeInsets.all(16),
+  //       decoration: BoxDecoration(
+  //         color: Colors.grey[800],
+  //         borderRadius: BorderRadius.circular(12),
+  //         border: Border.all(color: Colors.grey[700]!),
+  //       ),
+  //       child: Row(
+  //         children: [
+  //           Container(
+  //             padding: const EdgeInsets.all(8),
+  //             decoration: BoxDecoration(
+  //               color: Colors.purple.withOpacity(0.2),
+  //               borderRadius: BorderRadius.circular(8),
+  //             ),
+  //             child: Icon(
+  //               icon,
+  //               color: Colors.purple,
+  //               size: 20,
+  //             ),
+  //           ),
+  //           const SizedBox(width: 12),
+  //           Expanded(
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Text(
+  //                   title,
+  //                   style: const TextStyle(
+  //                     color: Colors.white,
+  //                     fontWeight: FontWeight.w600,
+  //                     fontSize: 14,
+  //                   ),
+  //                 ),
+  //                 const SizedBox(height: 4),
+  //                 Text(
+  //                   description,
+  //                   style: TextStyle(
+  //                     color: Colors.grey[400],
+  //                     fontSize: 12,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           Icon(
+  //             Icons.arrow_forward_ios,
+  //             color: Colors.grey[600],
+  //             size: 16,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
+
 }
 
