@@ -66,7 +66,7 @@ class MessageBubble extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             // Play Button
-                            ElevatedButton.icon(
+                            if(message.game != null) ElevatedButton.icon(
                               onPressed: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(

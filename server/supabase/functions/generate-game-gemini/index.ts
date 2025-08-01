@@ -141,7 +141,7 @@ Deno.serve(async (req) => {
           message_to_user: generatedGame.messageToUser, // Store message directly
           tags: generatedGame.tags, // Store as array directly
           original_prompt: prompt,
-          assets: assets || [], 
+          assets: assets || [],
           status: 'generated',
         }
       ])
@@ -199,8 +199,17 @@ Strictly adhere to the following security and asset constraints:
 - DO NOT generate any HTML tags or attributes that load external resources from any domain not explicitly provided in the user prompt.
 - DO NOT generate any code that could lead to excessive CPU/memory consumption or infinite loops.
 
-Your entire response MUST be a single, valid JSON object that strictly adheres to this schema:
 
+CRITICAL JSON FORMATTING REQUIREMENTS:
+- Your entire response MUST be a single, valid JSON object
+- ALL quotes inside HTML content MUST be escaped as \"
+- ALL backslashes inside HTML content MUST be escaped as \\\\
+- ALL newlines inside HTML content MUST be escaped as \\n
+- Use double quotes for JSON properties only
+- NO trailing commas in JSON
+- NO comments in JSON
+
+Response format:
 {
   "title": "Game Title",
   "description": "Brief description of the game",
@@ -220,7 +229,7 @@ function buildGeminiPrompt(
   assets: string[] = []
 ): string {
   let assetSection: string = '';
-  
+
   if (assets && assets.length > 0) {
     assetSection = `
 
@@ -281,7 +290,7 @@ async function callGeminiAPI(sysPrompt: string, prompt: string): Promise<string 
     throw new Error('GEMINI_API_KEY environment variable not set');
   }
 
-  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-latest:generateContent?key=${geminiApiKey}`;
+  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
 
   try {
     const response = await fetch(geminiUrl, {
@@ -346,13 +355,32 @@ async function callGeminiAPI(sysPrompt: string, prompt: string): Promise<string 
 // Function to parse Gemini response
 function parseGeminiResponse(response: string): GeneratedGame {
   try {
-    // Clean the response (remove any markdown formatting)
-    const cleanedResponse = response
-      .replace(/```json\n?/g, '')
-      .replace(/```\n?/g, '')
+    // Clean the response more thoroughly
+    let cleanedResponse = response.trim();
+
+    // Remove markdown code blocks
+    cleanedResponse = cleanedResponse
+      .replace(/```json\s*/g, '')
+      .replace(/```\s*/g, '')
       .trim();
 
-    const parsedGame: GeneratedGame = JSON.parse(cleanedResponse);
+    // Try to find JSON object boundaries
+    const jsonStart = cleanedResponse.indexOf('{');
+    const jsonEnd = cleanedResponse.lastIndexOf('}');
+
+    if (jsonStart === -1 || jsonEnd === -1) {
+      throw new Error('No valid JSON object found in response');
+    }
+
+    let jsonString = cleanedResponse.substring(jsonStart, jsonEnd + 1);
+
+    jsonString = fixJsonEscaping(jsonString);
+
+    // Log the JSON string for debugging (first 200 chars)
+    console.log('Attempting to parse JSON:', jsonString.substring(0, 200) + '...');
+
+
+    const parsedGame: GeneratedGame = JSON.parse(jsonString);
 
     // Validate required fields
     if (!parsedGame.title || !parsedGame.html) {
@@ -369,6 +397,13 @@ function parseGeminiResponse(response: string): GeneratedGame {
     };
   } catch (error) {
     console.error('Error parsing Gemini response:', error);
+    console.error('Raw response length:', response.length);
+
+    // ✅ NEW: Try alternative parsing approach
+    const fallbackGame = tryFallbackParsing(response);
+    if (fallbackGame) {
+      return fallbackGame;
+    }
 
     // Return a fallback game structure
     return {
@@ -378,6 +413,65 @@ function parseGeminiResponse(response: string): GeneratedGame {
       messageToUser: 'Game generation encountered an error. Please try again.',
       tags: ['error']
     };
+  }
+}
+
+function fixJsonEscaping(jsonString: string): string {
+  try {
+    // First, let's try to fix common escaping issues
+    let fixed = jsonString;
+
+    // Fix unescaped quotes within HTML content
+    // Look for patterns like: "html": "...content with "quotes"..."
+    fixed = fixed.replace(/"html":\s*"([^"]*(?:\\.[^"]*)*)"/, (match, htmlContent) => {
+      // Properly escape quotes within the HTML content
+      const escapedHtml = htmlContent
+        .replace(/\\/g, '\\\\')  // Escape backslashes
+        .replace(/"/g, '\\"')    // Escape quotes
+        .replace(/\n/g, '\\n')   // Escape newlines
+        .replace(/\r/g, '\\r')   // Escape carriage returns
+        .replace(/\t/g, '\\t');  // Escape tabs
+      
+      return `"html": "${escapedHtml}"`;
+    });
+
+    return fixed;
+  } catch (error) {
+    console.error('Error fixing JSON escaping:', error);
+    return jsonString;
+  }
+}
+
+// ✅ NEW: Fallback parsing approach
+function tryFallbackParsing(response: string): GeneratedGame | null {
+  try {
+    // Extract individual fields using regex patterns
+    const titleMatch = response.match(/"title":\s*"([^"]+)"/);
+    const descriptionMatch = response.match(/"description":\s*"([^"]+)"/);
+    const messageMatch = response.match(/"messageToUser":\s*"([^"]+)"/);
+    const tagsMatch = response.match(/"tags":\s*\[([^\]]+)\]/);
+    
+    // Extract HTML content more carefully
+    const htmlMatch = response.match(/"html":\s*"(.*?)"\s*,\s*"messageToUser"/s);
+    
+    if (titleMatch && htmlMatch) {
+      const tags = tagsMatch ? 
+        tagsMatch[1].split(',').map(tag => tag.trim().replace(/"/g, '')) : 
+        ['generated'];
+
+      return {
+        title: titleMatch[1] || 'Generated Game',
+        description: descriptionMatch?.[1] || 'A game generated from your prompt',
+        html: htmlMatch[1].replace(/\\"/g, '"').replace(/\\n/g, '\n') || '',
+        messageToUser: messageMatch?.[1] || 'Enjoy your new game!',
+        tags: tags
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Fallback parsing failed:', error);
+    return null;
   }
 }
 

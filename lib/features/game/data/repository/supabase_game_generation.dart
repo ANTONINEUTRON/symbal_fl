@@ -1,35 +1,31 @@
-
 import 'dart:io';
 
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/domain/repositories/game_generation_repository.dart';
+import 'package:symbal_fl/features/game/data/datasources/game_generator_remote.dart';
 
 class SupabaseGameGeneration implements GameGenerationRepository {
-  @override
-  Future<MessageModel> generateGame(MessageModel message) async{
-    // make request to Supabase to generate the game
-    // parse response from ai
-    // return response to the user
+  final GameGeneratorRemote _remoteDataSource;
 
-    return MessageModel(
-      prompt: 'Generated game based on: ${message.prompt}',
-      isUser: false,
-      timestamp: DateTime.now(),
-      attachedFiles: message.attachedFiles,
-    );
+  SupabaseGameGeneration({GameGeneratorRemote? remoteDataSource})
+      : _remoteDataSource = remoteDataSource ?? GameGeneratorRemote();
+
+  @override
+  Future<MessageModel> generateGame(MessageModel message) async {
+    // Delegate to remote data source
+    return await _remoteDataSource.generateGame(message);
   }
 
   @override
-  Future<void> saveGame(GameDataModel gameData) {
-    // TODO: implement saveGame
-    throw UnimplementedError();
+  Future<void> saveGame(GameDataModel gameData) async {
+    // Delegate to remote data source
+    return await _remoteDataSource.saveGame(gameData);
   }
 
   @override
-  Future<List<String>> uploadFiles(List<File> files) {
-    // TODO: Implement file upload logic
-    // This should upload files to Supabase storage and return their URLs
-    return Future.value(files.map((file) => 'https://supabase.storage.url/${file.path}').toList());
+  Future<List<String>> uploadFiles(List<File> files) async {
+    // Delegate to remote data source
+    return await _remoteDataSource.uploadFiles(files);
   }
 }
