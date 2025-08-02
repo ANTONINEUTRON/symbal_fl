@@ -15,7 +15,6 @@ class ViewProfilePage extends StatefulWidget {
 class _ViewProfilePageState extends State<ViewProfilePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool _isFollowing = false;
 
   @override
   void initState() {

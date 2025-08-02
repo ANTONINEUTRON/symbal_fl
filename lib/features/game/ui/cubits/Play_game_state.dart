@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:symbal_fl/features/game/data/models/game_schema/game_story_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
 
 enum GameStoriesLoadingStatus { initial, loading, success, failure, refreshing, loadingMore }
 
@@ -13,7 +13,7 @@ class GameState extends Equatable {
     this.currentPage = 1,
   });
 
-  final List<GameStory> gameStories;
+  final List<GameModel> gameStories;
   final int currentGameStoryIndex;
   final GameStoriesLoadingStatus gameStoriesLoadingStatus;
   final String? errorMessage;
@@ -21,7 +21,7 @@ class GameState extends Equatable {
   final int currentPage;
 
   // Get current game story being viewed
-  GameStory? get currentGameStory {
+  GameModel? get currentGameStory {
     if (gameStories.isEmpty || currentGameStoryIndex >= gameStories.length) {
       return null;
     }
@@ -48,7 +48,7 @@ class GameState extends Equatable {
       ];
 
   GameState copyWith({
-    List<GameStory>? gameStories,
+    List<GameModel>? gameStories,
     int? currentGameStoryIndex,
     GameStoriesLoadingStatus? gameStoriesLoadingStatus,
     String? errorMessage,
@@ -71,7 +71,7 @@ class GameState extends Equatable {
   }
 
   // Helper method to add new game stories (for pagination)
-  GameState addGameStories(List<GameStory> newStories) {
+  GameState addGameStories(List<GameModel> newStories) {
     return copyWith(
       gameStories: [...gameStories, ...newStories],
       hasReachedMax: newStories.isEmpty,
@@ -80,7 +80,7 @@ class GameState extends Equatable {
   }
 
   // Helper method to refresh game stories
-  GameState refreshGameStories(List<GameStory> newStories) {
+  GameState refreshGameStories(List<GameModel> newStories) {
     return copyWith(
       gameStories: newStories,
       currentGameStoryIndex: 0,
@@ -91,7 +91,7 @@ class GameState extends Equatable {
   }
 
   // Helper method to update a specific game story (for likes, plays, etc.)
-  GameState updateGameStory(String gameId, GameStory updatedStory) {
+  GameState updateGameStory(String gameId, GameModel updatedStory) {
     final updatedStories = gameStories.map((story) {
       if (story.id == gameId) {
         return updatedStory;

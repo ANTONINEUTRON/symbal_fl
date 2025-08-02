@@ -3,10 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path/path.dart' as path;
-
+import 'package:symbal_fl/env/env.dart';
+import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_analytics/game_analytics.dart';
+import 'package:symbal_fl/features/game/data/models/user_game_preference/user_game_preference.dart';
+import 'package:symbal_fl/features/game/domain/entities/game_details/game_details.dart';
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
-import 'package:symbal_fl/env/env.dart';
 
 class GameGeneratorRemote {
   late final Dio _dio;
@@ -36,7 +39,7 @@ class GameGeneratorRemote {
       
       // Make HTTP request to Supabase Edge Function using Dio
       final response = await _dio.post(
-        'https://jglqhvzlszxeveudvcly.supabase.co/functions/v1/generate-game-gemini',
+        '${Env.dbUrl}/functions/v1/generate-game-gemini',
         data: requestBody,
         options: Options(
           headers: {
@@ -109,13 +112,6 @@ class GameGeneratorRemote {
       );
     }
   }
-
-  Future<void> saveGame(GameDataModel gameData) async {
-    // TODO: Implement save game to remote storage
-    // This could save to Supabase database
-    await Future.delayed(const Duration(seconds: 1));
-  }
-
   Future<List<String>> uploadFiles(List<File> files) async {
     try {
       final supabase = Supabase.instance.client;
@@ -157,6 +153,156 @@ class GameGeneratorRemote {
       throw Exception('Failed to upload files to Supabase Storage: ${e.message}');
     } catch (e) {
       throw Exception('Failed to upload files: ${e.toString()}');
+    }
+  }
+
+  Future<void> saveGame(GameDataModel gameData) async {
+    try {
+      final supabase = Supabase.instance.client;
+      
+      await supabase.from('game_data').insert(gameData.toJson());
+    } catch (e) {
+      throw Exception('Failed to save game: ${e.toString()}');
+    }
+  }
+
+  Future<GameDetails> getGameDetails(String gameId, {String? userId}) async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      // Fetch game model
+      final gameModelResponse = await supabase
+          .from('games')
+          .select()
+          .eq('id', gameId)
+          .single();
+
+      // Fetch game data (AI generated content)
+      final gameDataResponse = await supabase
+          .from('game_data')
+          .select()
+          .eq('game_id', gameId)
+          .single();
+
+      // Fetch analytics (may not exist)
+      final analyticsResponse = await supabase
+          .from('game_analytics')
+          .select()
+          .eq('game_id', gameId)
+          .maybeSingle();
+
+      // Fetch user preferences (only if userId provided)
+      Map<String, dynamic>? userPrefResponse;
+      if (userId != null) {
+        userPrefResponse = await supabase
+            .from('user_game_preferences')
+            .select()
+            .eq('user_id', userId)
+            .eq('game_id', gameId)
+            .maybeSingle();
+      }
+
+      return GameDetails(
+        gameModel: GameModel.fromJson(gameModelResponse),
+        gameData: GameDataModel.fromJson(gameDataResponse),
+        analytics: analyticsResponse != null 
+            ? GameAnalytics.fromJson(analyticsResponse)
+            : GameAnalytics(gameId: gameId), // Default empty analytics
+        userPreference: userPrefResponse != null 
+            ? UserGamePreference.fromJson(userPrefResponse)
+            : null,
+      );
+    } catch (e) {
+      throw Exception('Failed to fetch game details: ${e.toString()}');
+    }
+  }
+
+  Future<List<GameDetails>> getGamesList({String? userId, required int page, required int limit}) async {
+    try {
+      // Get basic games first
+      final games = await getGames(page: page, limit: limit);
+      
+      // Convert each to GameDetails
+      List<GameDetails> gameDetailsList = [];
+      for (final game in games) {
+        final gameDetails = await getGameDetails(game.id, userId: userId);
+        gameDetailsList.add(gameDetails);
+      }
+
+      return gameDetailsList;
+    } catch (e) {
+      throw Exception('Failed to fetch games list: ${e.toString()}');
+    }
+  }
+
+  Future<GameModel> getGame(String gameId) async {
+    try {
+      final supabase = Supabase.instance.client;
+      
+      final response = await supabase
+          .from('games')
+          .select()
+          .eq('id', gameId)
+          .single();
+
+      return GameModel.fromJson(response);
+    } catch (e) {
+      throw Exception('Failed to fetch game: ${e.toString()}');
+    }
+  }
+
+  Future<List<GameModel>> getGames({required int page, required int limit}) async {
+    try {
+      final supabase = Supabase.instance.client;
+      final offset = page * limit;
+
+      final response = await supabase
+          .from('games')
+          .select()
+          .range(offset, offset + limit - 1)
+          .order('created_at', ascending: false);
+
+      return response.map((data) => GameModel.fromJson(data)).toList().cast<GameModel>();
+    } catch (e) {
+      throw Exception('Failed to fetch games: ${e.toString()}');
+    }
+  }
+
+  Future<void> incrementPlayCount(String gameId) async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      await supabase.rpc('increment_play_count', params: {
+        'p_game_id': gameId,
+      });
+    } catch (e) {
+      throw Exception('Failed to increment play count: ${e.toString()}');
+    }
+  }
+
+  Future<void> toggleFavorite(String gameId, String userId) async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      await supabase.rpc('toggle_favorite', params: {
+        'p_user_id': userId,
+        'p_game_id': gameId,
+      });
+    } catch (e) {
+      throw Exception('Failed to toggle favorite: ${e.toString()}');
+    }
+  }
+
+  Future<void> likeGame(String gameId, String userId) async {
+    try {
+      final supabase = Supabase.instance.client;
+
+      await supabase.rpc('toggle_like', params: {
+        'p_user_id': userId,
+        'p_game_id': gameId,
+      });
+    } catch (e) {
+      throw Exception('Failed to like game: ${e.toString()}');
     }
   }
 }

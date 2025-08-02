@@ -5,10 +5,10 @@ import 'package:share_plus/share_plus.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
-import 'package:symbal_fl/features/game/data/models/game_schema/game_story_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
 
 class GameStoryCard extends StatelessWidget {
-  final GameStory gameStory;
+  final GameModel gameStory;
   final bool isActive;
 
   const GameStoryCard({

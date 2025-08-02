@@ -1,9 +1,9 @@
 
-import 'package:symbal_fl/features/game/data/models/game_schema/game_story_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
 
 class DummyGameStories{
-  static final List<GameStory> stories = [
-    GameStory(
+  static final List<GameModel> stories = [
+    GameModel(
       id: '1',
       title: 'Mystic Forest Adventure',
       description: 'A magical journey through an enchanted forest',
@@ -12,7 +12,7 @@ class DummyGameStories{
       story: 'In a world where magic flows through ancient trees...',
       gameType: 'Puzzle',
     ),
-    GameStory(
+    GameModel(
       id: '2',
       title: 'Space Rescue Mission',
       description: 'Save the galaxy in this thrilling space adventure',
@@ -21,7 +21,7 @@ class DummyGameStories{
       story: 'The year is 2387, and humanity\'s last hope...',
       gameType: 'Action',
     ),
-    GameStory(
+    GameModel(
       id: '3',
       title: 'Lost City Explorer',
       description: 'Uncover secrets in the ruins of a forgotten city',
@@ -30,7 +30,7 @@ class DummyGameStories{
       story: 'Legends speak of a city lost beneath the sands...',
       gameType: 'Adventure',
     ),
-    GameStory(
+    GameModel(
       id: '4',
       title: 'Underwater Quest',
       description: 'Dive deep to discover ocean mysteries',
@@ -39,7 +39,7 @@ class DummyGameStories{
       story: 'Beneath the waves, ancient secrets await discovery...',
       gameType: 'Exploration',
     ),
-    GameStory(
+    GameModel(
       id: '5',
       title: 'Robot Rebellion',
       description: 'Stop the rogue robots and save the city',
@@ -48,7 +48,7 @@ class DummyGameStories{
       story: 'Robots once served humanity, but now they threaten it...',
       gameType: 'Strategy',
     ),
-    GameStory(
+    GameModel(
       id: '6',
       title: 'Jungle Escape',
       description: 'Survive the wild and escape the jungle',
@@ -57,7 +57,7 @@ class DummyGameStories{
       story: 'Trapped in a dense jungle, every step is a challenge...',
       gameType: 'Survival',
     ),
-    GameStory(
+    GameModel(
       id: '7',
       title: 'Haunted Manor Mystery',
       description: 'Solve the mystery of the haunted manor',

@@ -26,8 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    AppCubit appCubit = context.watch<AppCubit>();
-    var appState = appCubit.state;
+    context.watch<AppCubit>();
     _alertTrigger();
 
     var authCubit = context.watch<AuthCubit>();
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> {
           // if not signed in, redirect to auth page and show alert
           if (authCubit.state.status != AuthStatus.authenticated) {
             _currentIndex = 1;
-            
+
             context.read<AppCubit>().showAlertMessage(
               'You must be signed in to create a game.',
             );
@@ -60,8 +59,8 @@ class _HomePageState extends State<HomePage> {
             context.router.push(CreateGameRoute());
           }
         },
-        child: Icon(Icons.add),
         shape: CircleBorder(),
+        child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CurvedNavigationBar(

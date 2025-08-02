@@ -431,7 +431,7 @@ function fixJsonEscaping(jsonString: string): string {
         .replace(/\n/g, '\\n')   // Escape newlines
         .replace(/\r/g, '\\r')   // Escape carriage returns
         .replace(/\t/g, '\\t');  // Escape tabs
-      
+
       return `"html": "${escapedHtml}"`;
     });
 
@@ -450,13 +450,13 @@ function tryFallbackParsing(response: string): GeneratedGame | null {
     const descriptionMatch = response.match(/"description":\s*"([^"]+)"/);
     const messageMatch = response.match(/"messageToUser":\s*"([^"]+)"/);
     const tagsMatch = response.match(/"tags":\s*\[([^\]]+)\]/);
-    
+
     // Extract HTML content more carefully
     const htmlMatch = response.match(/"html":\s*"(.*?)"\s*,\s*"messageToUser"/s);
-    
+
     if (titleMatch && htmlMatch) {
-      const tags = tagsMatch ? 
-        tagsMatch[1].split(',').map(tag => tag.trim().replace(/"/g, '')) : 
+      const tags = tagsMatch ?
+        tagsMatch[1].split(',').map(tag => tag.trim().replace(/"/g, '')) :
         ['generated'];
 
       return {
@@ -467,7 +467,7 @@ function tryFallbackParsing(response: string): GeneratedGame | null {
         tags: tags
       };
     }
-    
+
     return null;
   } catch (error) {
     console.error('Fallback parsing failed:', error);

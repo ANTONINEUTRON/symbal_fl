@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 
 class OAuthButtons extends StatelessWidget {
-  const OAuthButtons({
-    super.key,
-  });
+  const OAuthButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            context.read<AppCubit>().showAlertMessage("To be implemented");
+          },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 10.0),
             shape: RoundedRectangleBorder(
@@ -29,50 +31,36 @@ class OAuthButtons extends StatelessWidget {
               SizedBox(width: 8.0), // Space between icon and text
               Text(
                 'Sign in with Google',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
               ),
             ],
           ),
         ).addSpacing(bottom: 12),
         // Apple Sign In Button
-        ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              side: BorderSide(color: Colors.grey),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/apple_logo.png',
-                height: 25.0,
-              ),
-              SizedBox(width: 8.0), // Space between icon and text
-              Text(
-                'Get magic link',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
-        ),
-         Row(
+        // ElevatedButton(
+        //   onPressed: () {},
+        //   style: ElevatedButton.styleFrom(
+        //     padding: EdgeInsets.symmetric(vertical: 10.0),
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(8.0),
+        //       side: BorderSide(color: Colors.grey),
+        //     ),
+        //   ),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Icon(Icons.link_outlined, size: 25.0),
+        //       SizedBox(width: 8.0), // Space between icon and text
+        //       Text(
+        //         'Get magic link',
+        //         style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        Row(
           children: [
-            Expanded(
-              child: Divider(
-                thickness: 1,
-                color: Color(0XFFD7D7D7),
-              ),
-            ),
+            Expanded(child: Divider(thickness: 1, color: Color(0XFFD7D7D7))),
             Text(
               'Or use email',
               style: TextStyle(
@@ -81,12 +69,7 @@ class OAuthButtons extends StatelessWidget {
                 fontSize: 14,
               ),
             ).addSpacing(horizontal: 8.0),
-            Expanded(
-              child: Divider(
-                thickness: 1,
-                color: Color(0XFFD7D7D7),
-              ),
-            ),
+            Expanded(child: Divider(thickness: 1, color: Color(0XFFD7D7D7))),
           ],
         ).addSpacing(vertical: 16),
       ],

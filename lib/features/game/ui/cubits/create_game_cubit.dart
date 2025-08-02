@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
-import 'package:symbal_fl/features/game/domain/repositories/game_generation_repository.dart';
+import 'package:symbal_fl/features/game/domain/repositories/game_repository.dart';
 import 'package:symbal_fl/features/game/ui/cubits/create_game_state.dart';
 
 class CreateGameCubit extends Cubit<CreateGameState> {
   CreateGameCubit({required this.gameGenerationRepository})
     : super(const CreateGameState());
 
-  final GameGenerationRepository gameGenerationRepository;
+  final GameRepository gameGenerationRepository;
 
   Future<void> createGame({
     required String prompt,
