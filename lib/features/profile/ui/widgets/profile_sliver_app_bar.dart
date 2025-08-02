@@ -193,7 +193,7 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                             Clipboard.setData(
                               ClipboardData(text: 'qa12a...1aaw'),
                             );
-                            context.read<AppCubit>().setAlertMessage(
+                            context.read<AppCubit>().showAlertMessage(
                               "Wallet address copied!",
                             );
                           },
@@ -229,7 +229,7 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                       Icons.person_add,
                       Colors.purple,
                       () {
-                        context.read<AppCubit>().setAlertMessage(
+                        context.read<AppCubit>().showAlertMessage(
                           'Following...',
                         );
                       },
@@ -239,7 +239,7 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                       Icons.edit_outlined,
                       Colors.purple,
                       () {
-                        context.read<AppCubit>().setAlertMessage(
+                        context.read<AppCubit>().showAlertMessage(
                           'Editing profile...',
                         );
                       },

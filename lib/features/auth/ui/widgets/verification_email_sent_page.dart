@@ -164,7 +164,7 @@ class _VerificationEmailSentPageState extends State<VerificationEmailSentPage> {
                 //   ),
                 // );
                 if (canResendEmail) {
-                  context.read<AppCubit>().setAlertMessage('Verification email sent again! can retry in 2 minutes');
+                  context.read<AppCubit>().showAlertMessage('Verification email sent again! can retry in 2 minutes');
 
                   canResendEmail = false;
                   await context.read<AuthCubit>().resendVerificationEmail();
@@ -175,7 +175,7 @@ class _VerificationEmailSentPageState extends State<VerificationEmailSentPage> {
                     });
                   });
                 }else{
-                  context.read<AppCubit>().setAlertMessage('You can retry in 2 minutes');
+                  context.read<AppCubit>().showAlertMessage('You can retry in 2 minutes');
                 }
               },
               child: Text(

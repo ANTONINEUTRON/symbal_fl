@@ -46,7 +46,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
       }
     } catch (e) {
       // Handle error
-      context.read<AppCubit>().setErrorMessage("Failed to pick files: $e");
+      context.read<AppCubit>().showErrorMessage("Failed to pick files: $e");
     }
   }
 

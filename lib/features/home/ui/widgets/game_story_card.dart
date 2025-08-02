@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
+import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_schema/game_story_model.dart';
 
 class GameStoryCard extends StatelessWidget {
@@ -71,7 +72,9 @@ class GameStoryCard extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () {
-                    context.router.push(PlayGameRoute());
+                    context.router.push(PlayGameRoute(
+                      gameDataModel: GameDataModel.empty(),
+                    ));
                   },
                   icon: const Icon(Icons.play_arrow),
                   label: const Text('Play Now'),

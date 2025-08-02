@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.symbal_fl"
+    namespace = "ng.anto.symbal"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.1.12297006"
 
@@ -21,7 +21,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.symbal_fl"
+        applicationId = "ng.anto.symbal"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

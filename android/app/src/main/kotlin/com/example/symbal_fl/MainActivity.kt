@@ -1,4 +1,4 @@
-package com.example.symbal_fl
+package ng.anto.symbal
 
 import io.flutter.embedding.android.FlutterActivity
 

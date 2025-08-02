@@ -17,6 +17,8 @@ import 'package:symbal_fl/features/auth/ui/pages/reset_password_page.dart'
     as _i8;
 import 'package:symbal_fl/features/auth/ui/widgets/verification_email_sent_page.dart'
     as _i9;
+import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart'
+    as _i13;
 import 'package:symbal_fl/features/game/ui/pages/create_game_page.dart' as _i2;
 import 'package:symbal_fl/features/game/ui/pages/list_games_page.dart' as _i5;
 import 'package:symbal_fl/features/game/ui/pages/play_game_page.dart' as _i6;
@@ -107,18 +109,49 @@ class ListGamesRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.PlayGamePage]
-class PlayGameRoute extends _i11.PageRouteInfo<void> {
-  const PlayGameRoute({List<_i11.PageRouteInfo>? children})
-    : super(PlayGameRoute.name, initialChildren: children);
+class PlayGameRoute extends _i11.PageRouteInfo<PlayGameRouteArgs> {
+  PlayGameRoute({
+    _i12.Key? key,
+    required _i13.GameDataModel gameDataModel,
+    List<_i11.PageRouteInfo>? children,
+  }) : super(
+         PlayGameRoute.name,
+         args: PlayGameRouteArgs(key: key, gameDataModel: gameDataModel),
+         initialChildren: children,
+       );
 
   static const String name = 'PlayGameRoute';
 
   static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i6.PlayGamePage();
+      final args = data.argsAs<PlayGameRouteArgs>();
+      return _i6.PlayGamePage(key: args.key, gameDataModel: args.gameDataModel);
     },
   );
+}
+
+class PlayGameRouteArgs {
+  const PlayGameRouteArgs({this.key, required this.gameDataModel});
+
+  final _i12.Key? key;
+
+  final _i13.GameDataModel gameDataModel;
+
+  @override
+  String toString() {
+    return 'PlayGameRouteArgs{key: $key, gameDataModel: $gameDataModel}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! PlayGameRouteArgs) return false;
+    return key == other.key && gameDataModel == other.gameDataModel;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ gameDataModel.hashCode;
 }
 
 /// generated route for

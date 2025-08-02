@@ -34,7 +34,7 @@ class _AuthPageState extends State<AuthPage> {
         return const Center(child: CircularProgressIndicator());
       case AuthStatus.error:
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          appCubit.setErrorMessage(authCubit.state.errorMessage);
+          appCubit.showErrorMessage(authCubit.state.errorMessage);
         });
 
         Future.delayed(const Duration(seconds: 6), () {
@@ -46,7 +46,7 @@ class _AuthPageState extends State<AuthPage> {
         break;
       case AuthStatus.authenticated:
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          appCubit.setAlertMessage(
+          appCubit.showAlertMessage(
             "Welcome Back, ${authCubit.state.user?.name ?? authCubit.state.user?.email}",
           );
         });
@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
         return VerificationEmailSentPage();
       case AuthStatus.passwordReset:
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          appCubit.setErrorMessage("Password reset email sent");
+          appCubit.showErrorMessage("Password reset email sent");
         });
         break;
       default:

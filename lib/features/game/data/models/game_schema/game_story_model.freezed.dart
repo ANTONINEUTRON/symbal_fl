@@ -20,6 +20,7 @@ mixin _$GameStory {
  String get imageUrl; String get duration;//
  String? get story;//
  String get gameType; String? get creatorId; String? get gameDataId;//reference to the ai generated data
+//TODO add a list of gameIDs
  int get likes; int get plays; int get shares; int get comments; bool get isFavorite; bool get isVerified; List<String> get tags; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of GameStory
 /// with the given fields replaced by the non-null parameter values.
@@ -248,6 +249,7 @@ class _GameStory implements GameStory {
 @override final  String? creatorId;
 @override final  String? gameDataId;
 //reference to the ai generated data
+//TODO add a list of gameIDs
 @override@JsonKey() final  int likes;
 @override@JsonKey() final  int plays;
 @override@JsonKey() final  int shares;

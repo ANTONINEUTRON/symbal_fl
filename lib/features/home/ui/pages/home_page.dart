@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
+import 'package:symbal_fl/features/app/cubits/app_state.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_state.dart';
 import 'package:symbal_fl/features/auth/ui/pages/auth_page.dart';
@@ -27,37 +28,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     AppCubit appCubit = context.watch<AppCubit>();
     var appState = appCubit.state;
-    WidgetsBinding.instance.addPostFrameCallback((duration) {
-      if (appState.errorMessage.isNotEmpty) {
-        var message = appState.errorMessage;
-        showToast(
-          message,
-          context: context,
-          position: StyledToastPosition.top,
-          duration: Duration(seconds: 10),
-          backgroundColor: Colors.red.shade900,
-          onDismiss: () {
-            appCubit.reset();
-          },
-        );
-
-      } else if (appState.alertMessage.isNotEmpty) {
-        var message = appState.alertMessage;
-        
-        showToast(
-          message,
-          context: context,
-          position: StyledToastPosition.top,
-          duration: Duration(seconds: 10),
-          backgroundColor: Theme.of(context).colorScheme.tertiary,
-          onDismiss: () {
-            appCubit.reset();
-          },
-        );
-      }
-    });
+    _alertTrigger();
 
     var authCubit = context.watch<AuthCubit>();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: IndexedStack(
@@ -73,7 +47,18 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.router.push(CreateGameRoute());
+          // if not signed in, redirect to auth page and show alert
+          if (authCubit.state.status != AuthStatus.authenticated) {
+            _currentIndex = 1;
+            
+            context.read<AppCubit>().showAlertMessage(
+              'You must be signed in to create a game.',
+            );
+
+            return;
+          } else {
+            context.router.push(CreateGameRoute());
+          }
         },
         child: Icon(Icons.add),
         shape: CircleBorder(),
@@ -96,5 +81,39 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  void _alertTrigger() {
+    AppCubit appCubit = context.read<AppCubit>();
+    AppState appState = appCubit.state;
+
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      if (appState.errorMessage.isNotEmpty) {
+        var message = appState.errorMessage;
+        showToast(
+          message,
+          context: context,
+          position: StyledToastPosition.top,
+          duration: Duration(seconds: 10),
+          backgroundColor: Colors.red.shade900,
+          onDismiss: () {
+            appCubit.reset();
+          },
+        );
+      } else if (appState.alertMessage.isNotEmpty) {
+        var message = appState.alertMessage;
+
+        showToast(
+          message,
+          context: context,
+          position: StyledToastPosition.top,
+          duration: Duration(seconds: 10),
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
+          onDismiss: () {
+            appCubit.reset();
+          },
+        );
+      }
+    });
   }
 }

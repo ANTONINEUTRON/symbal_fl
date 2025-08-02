@@ -115,7 +115,7 @@ class WelcomeView extends StatelessWidget {
     return TextButton.icon(
           onPressed: () {
             // Navigate to game history
-            context.read<AppCubit>().setAlertMessage("🎮 Game History - Coming Soon!");
+            context.read<AppCubit>().showAlertMessage("🎮 Game History - Coming Soon!");
           },
           icon: const Icon(Icons.history, color: Colors.blue),
           label: const Text(

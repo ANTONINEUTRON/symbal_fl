@@ -55,7 +55,7 @@ class _ListGamesPageState extends State<ListGamesPage> {
             ),
           ),
           onPressed: () {},
-          label: Text('| ${profile?.symBalance} SYM'),
+          label: Text('| ${profile?.symBalance ?? 0} SYM'),
           icon: const Icon(Icons.games_rounded),
         ),
         actions: [
