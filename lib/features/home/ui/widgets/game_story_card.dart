@@ -5,10 +5,9 @@ import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
-import 'package:symbal_fl/features/game/domain/entities/game_details/game_details.dart';
 
 class GameStoryCard extends StatelessWidget {
-  final GameDetails gameStory;
+  final GameModel gameStory;
   final bool isActive;
 
   const GameStoryCard({
@@ -50,7 +49,7 @@ class GameStoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  gameStory.gameModel.title,
+                  gameStory.title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -59,14 +58,14 @@ class GameStoryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  gameStory.gameModel.description,
+                  gameStory.description,
                   style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    GameTag(text: gameStory.gameModel.duration).addSpacing(right: 8),
-                    GameTag(text: "${gameStory.analytics.plays} plays"),
+                    GameTag(text: gameStory.duration).addSpacing(right: 8),
+                    GameTag(text: "${14} plays"),
                   ],
                 ),
                 const SizedBox(height: 16),
