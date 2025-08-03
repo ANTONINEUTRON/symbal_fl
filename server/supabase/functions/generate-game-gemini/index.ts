@@ -16,8 +16,6 @@ interface GameGenerationRequest {
   assets?: string[];
 }
 
-
-
 interface GeminiResponse {
   candidates: Array<{
     content: {
@@ -46,7 +44,7 @@ Deno.serve(async (req) => {
     // Initialize Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      Deno.env.get('APP_PUB_KEY') ?? '',
       {
         global: {
           headers: { Authorization: req.headers.get('Authorization')! },
@@ -61,6 +59,8 @@ Deno.serve(async (req) => {
     } = await supabaseClient.auth.getUser();
 
     if (authError || !user) {
+      console.log('Unauthorized access attempt:', authError);
+      console.log('User:', user);
       return new Response(
         JSON.stringify({ error: 'Unauthorized' }),
         {
