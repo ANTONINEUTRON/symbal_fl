@@ -10,40 +10,42 @@ import 'package:symbal_fl/features/game/data/models/user_game_preference/user_ga
 import 'package:symbal_fl/features/game/domain/entities/game_details/game_details.dart';
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
+import 'package:uuid/uuid.dart';
 
 class GameRemoteDatasource {
   late final Dio _dio;
 
   GameRemoteDatasource() {
-    _dio = Dio(BaseOptions(
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 60),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    ));
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 60),
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
   }
 
   Future<MessageModel> generateGame(MessageModel message) async {
     try {
+      // Get the current user session
+      final supabase = Supabase.instance.client;
+      final session = supabase.auth.currentSession;
+
       // Prepare the request body
       final requestBody = {
         'prompt': message.prompt,
-        'userId': null, // You can add user ID from your auth system
-        'assets': message.attachedFiles, // Array of asset URLs
+        'userId': supabase.auth.currentUser?.id,
+        'assets': message.attachedFiles,
       };
 
-// Get the current user session
-      final supabase = Supabase.instance.client;
-      final session = supabase.auth.currentSession;
-      
       // Make HTTP request to Supabase Edge Function using Dio
       final response = await _dio.post(
         '${Env.dbUrl}/functions/v1/generate-game-gemini',
         data: requestBody,
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${session?.accessToken}', // Use session token
+            'Authorization':
+                'Bearer ${session?.accessToken}', // Use session token
           },
         ),
       );
@@ -53,17 +55,35 @@ class GameRemoteDatasource {
         
         // Parse the response and create a MessageModel with the generated game
         return MessageModel(
-          prompt: responseData['game']['messageToUser'] ?? 'Game generated successfully!',
+          prompt:
+              responseData['game']['messageToUser'] ??
+              'Game generated successfully!',
           isUser: false,
           timestamp: DateTime.now(),
           attachedFiles: message.attachedFiles,
-          game: GameDataModel(
-            id: responseData['gameId']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+          gameData: GameDataModel(
+            id:
+                responseData['game']['game_id']?.toString() ??
+                DateTime.now().millisecondsSinceEpoch.toString(),
             assets: message.attachedFiles,
             version: 1,
             renderableContent: responseData['game']['html'] ?? '',
             prompt: message.prompt,
-            message: responseData['game']['messageToUser'] ?? 'Game generated successfully!',
+            message:
+                responseData['game']['messageToUser'] ??
+                'Game generated successfully!',
+          ),
+          gameModel: GameModel(
+            id: const Uuid().v4(),
+            title: responseData['game']['title'],
+            description: responseData['game']['description'],
+            imageUrl: message.attachedFiles.isNotEmpty
+                ? message.attachedFiles.first
+                : '',
+            creatorId: responseData['game']['user_id'],
+            tags: List<String>.from(responseData['game']['tags']),
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
           ),
         );
       } else {
@@ -71,23 +91,27 @@ class GameRemoteDatasource {
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
-          message: 'Failed to generate game: ${response.data['error'] ?? 'Unknown error'}',
+          message:
+              'Failed to generate game: ${response.data['error'] ?? 'Unknown error'}',
         );
       }
     } on DioException catch (e) {
-      if(kDebugMode){
+      if (kDebugMode) {
         print('DioException: ${e}');
       }
       // Handle Dio-specific errors
-      String errorMessage = 'Sorry, I encountered an error while generating your game: ';
-      
+      String errorMessage =
+          'Sorry, I encountered an error while generating your game: ';
+
       if (e.type == DioExceptionType.connectionTimeout) {
-        errorMessage += 'Connection timeout. Please check your internet connection.';
+        errorMessage +=
+            'Connection timeout. Please check your internet connection.';
       } else if (e.type == DioExceptionType.receiveTimeout) {
         errorMessage += 'Request timeout. The server took too long to respond.';
       } else if (e.response != null) {
         final errorData = e.response?.data;
-        errorMessage += errorData['error'] ?? 'Server error (${e.response?.statusCode})';
+        errorMessage +=
+            errorData['error'] ?? 'Server error (${e.response?.statusCode})';
       } else {
         errorMessage += e.message ?? 'Network error';
       }
@@ -99,7 +123,7 @@ class GameRemoteDatasource {
         attachedFiles: message.attachedFiles,
       );
     } catch (e) {
-      if(kDebugMode){
+      if (kDebugMode) {
         print('Error: ${e}');
       }
 
@@ -112,45 +136,48 @@ class GameRemoteDatasource {
       );
     }
   }
+
   Future<List<String>> uploadFiles(List<File> files) async {
     try {
       final supabase = Supabase.instance.client;
       List<String> uploadedUrls = [];
-      
+
       for (File file in files) {
         // Read file as bytes
         final bytes = await file.readAsBytes();
-        
+
         // Create a unique filename with timestamp
         final timestamp = DateTime.now().millisecondsSinceEpoch;
         final fileExtension = path.extension(file.path);
-        final fileName = '${timestamp}_${path.basenameWithoutExtension(file.path)}$fileExtension';
-        
+        final fileName =
+            '${timestamp}_${path.basenameWithoutExtension(file.path)}$fileExtension';
+
         // Upload to Supabase Storage
         final uploadPath = 'game-assets/$fileName';
-        
+
         await supabase.storage
-            .from('game-assets') // Make sure this bucket exists in your Supabase project
+            .from(
+              'game-assets',
+            ) // Make sure this bucket exists in your Supabase project
             .uploadBinary(
               uploadPath,
               bytes,
-              fileOptions: FileOptions(
-                cacheControl: '3600',
-                upsert: false,
-              ),
+              fileOptions: FileOptions(cacheControl: '3600', upsert: false),
             );
-        
+
         // Get the public URL
         final publicUrl = supabase.storage
             .from('game-assets')
             .getPublicUrl(uploadPath);
-        
+
         uploadedUrls.add(publicUrl);
       }
-      
+
       return uploadedUrls;
     } on StorageException catch (e) {
-      throw Exception('Failed to upload files to Supabase Storage: ${e.message}');
+      throw Exception(
+        'Failed to upload files to Supabase Storage: ${e.message}',
+      );
     } catch (e) {
       throw Exception('Failed to upload files: ${e.toString()}');
     }
@@ -159,7 +186,7 @@ class GameRemoteDatasource {
   Future<void> saveGame(GameDataModel gameData) async {
     try {
       final supabase = Supabase.instance.client;
-      
+
       await supabase.from('game_data').insert(gameData.toJson());
     } catch (e) {
       throw Exception('Failed to save game: ${e.toString()}');
@@ -169,10 +196,10 @@ class GameRemoteDatasource {
   Future<void> upsertGameModel(GameModel gameModel) async {
     try {
       final supabase = Supabase.instance.client;
-      
+
       // Convert GameModel to JSON for Supabase
       final gameJson = gameModel.toJson();
-      
+
       // Handle DateTime conversion for Supabase
       if (gameModel.createdAt != null) {
         gameJson['created_at'] = gameModel.createdAt!.toIso8601String();
@@ -182,10 +209,9 @@ class GameRemoteDatasource {
       } else {
         gameJson['updated_at'] = DateTime.now().toIso8601String();
       }
-      
+
       // Upsert (insert or update) into games table
       await supabase.from('games').upsert(gameJson);
-      
     } catch (e) {
       throw Exception('Failed to upsert game model: ${e.toString()}');
     }
@@ -230,10 +256,10 @@ class GameRemoteDatasource {
       return GameDetails(
         gameModel: GameModel.fromJson(gameModelResponse),
         gameData: GameDataModel.fromJson(gameDataResponse),
-        analytics: analyticsResponse != null 
+        analytics: analyticsResponse != null
             ? GameAnalytics.fromJson(analyticsResponse)
             : GameAnalytics(gameId: gameId), // Default empty analytics
-        userPreference: userPrefResponse != null 
+        userPreference: userPrefResponse != null
             ? UserGamePreference.fromJson(userPrefResponse)
             : null,
       );
@@ -242,11 +268,15 @@ class GameRemoteDatasource {
     }
   }
 
-  Future<List<GameDetails>> getGamesList({String? userId, required int page, required int limit}) async {
+  Future<List<GameDetails>> getGamesList({
+    String? userId,
+    required int page,
+    required int limit,
+  }) async {
     try {
       // Get basic games first
       final games = await getGames(page: page, limit: limit);
-      
+
       // Convert each to GameDetails
       List<GameDetails> gameDetailsList = [];
       for (final game in games) {
@@ -263,7 +293,7 @@ class GameRemoteDatasource {
   Future<GameModel> getGame(String gameId) async {
     try {
       final supabase = Supabase.instance.client;
-      
+
       final response = await supabase
           .from('games')
           .select()
@@ -276,7 +306,10 @@ class GameRemoteDatasource {
     }
   }
 
-  Future<List<GameModel>> getGames({required int page, required int limit}) async {
+  Future<List<GameModel>> getGames({
+    required int page,
+    required int limit,
+  }) async {
     try {
       final supabase = Supabase.instance.client;
       final offset = page * limit;
@@ -287,7 +320,10 @@ class GameRemoteDatasource {
           .range(offset, offset + limit - 1)
           .order('created_at', ascending: false);
 
-      return response.map((data) => GameModel.fromJson(data)).toList().cast<GameModel>();
+      return response
+          .map((data) => GameModel.fromJson(data))
+          .toList()
+          .cast<GameModel>();
     } catch (e) {
       throw Exception('Failed to fetch games: ${e.toString()}');
     }
@@ -297,9 +333,7 @@ class GameRemoteDatasource {
     try {
       final supabase = Supabase.instance.client;
 
-      await supabase.rpc('increment_play_count', params: {
-        'p_game_id': gameId,
-      });
+      await supabase.rpc('increment_play_count', params: {'p_game_id': gameId});
     } catch (e) {
       throw Exception('Failed to increment play count: ${e.toString()}');
     }
@@ -309,10 +343,10 @@ class GameRemoteDatasource {
     try {
       final supabase = Supabase.instance.client;
 
-      await supabase.rpc('toggle_favorite', params: {
-        'p_user_id': userId,
-        'p_game_id': gameId,
-      });
+      await supabase.rpc(
+        'toggle_favorite',
+        params: {'p_user_id': userId, 'p_game_id': gameId},
+      );
     } catch (e) {
       throw Exception('Failed to toggle favorite: ${e.toString()}');
     }
@@ -322,10 +356,10 @@ class GameRemoteDatasource {
     try {
       final supabase = Supabase.instance.client;
 
-      await supabase.rpc('toggle_like', params: {
-        'p_user_id': userId,
-        'p_game_id': gameId,
-      });
+      await supabase.rpc(
+        'toggle_like',
+        params: {'p_user_id': userId, 'p_game_id': gameId},
+      );
     } catch (e) {
       throw Exception('Failed to like game: ${e.toString()}');
     }

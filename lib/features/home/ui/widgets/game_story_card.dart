@@ -34,7 +34,7 @@ class GameStoryCard extends StatelessWidget {
       child: Stack(
         children: [
           // Background image/video placeholder
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: const Icon(Icons.games, size: 100, color: Colors.white24),
@@ -64,7 +64,7 @@ class GameStoryCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    GameTag(text: gameStory.duration).addSpacing(right: 8),
+                    GameTag(text: "1 mins").addSpacing(right: 8),
                     GameTag(text: "${14} plays"),
                   ],
                 ),

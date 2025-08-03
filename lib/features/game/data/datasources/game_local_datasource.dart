@@ -56,7 +56,6 @@ class GameLocalDataSource {
 
   // Get all local games
   Future<List<GameModel>> getAllLocalGames() async {
-    final prefs = await SharedPreferences.getInstance();
     final gameIds = await _getGameIds();
     
     List<GameModel> games = [];
@@ -94,12 +93,6 @@ class GameLocalDataSource {
              game.description.toLowerCase().contains(lowerSearchTerm) ||
              game.tags.any((tag) => tag.toLowerCase().contains(lowerSearchTerm));
     }).toList();
-  }
-
-  // Get games by type
-  Future<List<GameModel>> getLocalGamesByType(String gameType) async {
-    final allGames = await getAllLocalGames();
-    return allGames.where((game) => game.gameType == gameType).toList();
   }
 
   // Get games by tags

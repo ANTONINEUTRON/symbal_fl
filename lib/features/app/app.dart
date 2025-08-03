@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider(create: (context) => AppCubit()),
           BlocProvider(
-            create: (context) => CreateGameCubit(
+            create: (context) => GameCubit(
               gameGenerationRepository: context.read<SupabaseGameRepository>(),
             ),
           ),

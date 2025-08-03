@@ -10,8 +10,6 @@ abstract class GameModel with _$GameModel {
     required String title,//
     required String description,//
     required String imageUrl,
-    required String duration,//
-    required String gameType,
     String? creatorId,
     String? gameDataId, // reference to the ai generated data
     @Default([]) List<String> gameIds,

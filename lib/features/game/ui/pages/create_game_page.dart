@@ -4,6 +4,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_state.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_input_field.dart';
@@ -24,20 +25,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode _textFieldFocus = FocusNode();
 
-  // String _selectedGameType = 'Puzzle';
-  // int _retriesCount = 3;
-  // bool _isGenerating = false;
-  // bool _hasStartedChat = false;
   List<PlatformFile> _selectedFiles = [];
 
-  //   'Strategy',
-  //   'Casual',
-  //   'Mystery',
-  //   'Fantasy',
-  //   'Sci-Fi',
-  // ];
-
-  // final List<MessageModel> _messages = [];
 
   @override
   void dispose() {
@@ -48,37 +37,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _sendMessage() {
-    CreateGameState createGameState = context.read<CreateGameCubit>().state;
+    CreateGameState createGameState = context.read<GameCubit>().state;
     if (_promptController.text.trim().isEmpty || createGameState.retriesCount <= 0) return;
 
     String userMessage = _promptController.text.trim();
 
-    // Add file information to the message if files are selected
-    // if (_selectedFiles.isNotEmpty) {
-    //   String fileInfo = '\n\nSelected assets:\n';
-    //   for (var file in _selectedFiles) {
-    //     fileInfo += '- ${file.name} (${file.extension?.toUpperCase()})\n';
-    //   }
-    //   userMessage += fileInfo;
-    // }
-
-    // setState(() {
-    //   if (!_hasStartedChat) {
-    //     _hasStartedChat = true;
-    //   }
-    //   _messages.add(
-    //     MessageModel(
-    //       prompt: userMessage,
-    //       isUser: true,
-    //       timestamp: DateTime.now(),
-    //       attachedFiles: [],
-    //     ),
-    //   );
-    //   _isGenerating = true;
-    //   _retriesCount--;
-    // });
-
-    context.read<CreateGameCubit>().createGame(
+    context.read<GameCubit>().createGame(
       prompt: userMessage,
       selectedFiles: _selectedFiles.map((file) => File(file.path!)).toList(),
     );
@@ -89,22 +53,6 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
     _scrollToBottom();
 
-    // Simulate AI response
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   setState(() {
-    //     _messages.add(
-    //       MessageModel(
-    //         prompt:
-    //             "🎮 Fantastic! I'm creating your $_selectedGameType game: \"$userMessage\"\n\n✨ Generating unique gameplay mechanics...\n🎭 Crafting an AI-powered story...\n🎯 Setting up fun challenges...\n\nYour personalized game will be ready shortly!",
-    //         isUser: false,
-    //         timestamp: DateTime.now(),
-    //         attachedFiles: [],
-    //       ),
-    //     );
-    //     _isGenerating = false;
-    //   });
-    //   _scrollToBottom();
-    // });
   }
 
   void _onFilesSelected(List<PlatformFile> files) {
@@ -127,7 +75,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   void _addRetries() {
     // call cubit method to add retries
-    context.read<CreateGameCubit>().addRetries(5);
+    context.read<GameCubit>().addRetries(5);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -145,8 +93,18 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      
+      _textFieldFocus.requestFocus();
+    _scrollToBottom();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var createGameCubit = context.watch<CreateGameCubit>();
+    var createGameCubit = context.watch<GameCubit>();
     CreateGameState createGameState = createGameCubit.state;
     
     return Scaffold(
@@ -158,6 +116,19 @@ class _CreateGamePageState extends State<CreateGamePage> {
         centerTitle: true,
         elevation: 0,
         actions: [
+          // Deploy Button
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            ),
+            onPressed: createGameState.isGenerating ? null : (){
+              context.read<GameCubit>().deployGame();
+            },
+            child: const Text('Deploy', style: TextStyle(fontWeight: FontWeight.bold)),
+          ).addSpacing(right: 8),
           // Retries Counter
           RetriesCounter(retriesCount: createGameState.retriesCount, addRetries: _addRetries),
         ],
@@ -191,64 +162,4 @@ class _CreateGamePageState extends State<CreateGamePage> {
     );
   }
 
-  // Container _buildGameType() {
-  //   return Container(
-  //     margin: const EdgeInsets.all(16),
-  //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-  //     decoration: BoxDecoration(
-  //       color: Colors.grey[800],
-  //       borderRadius: BorderRadius.circular(12),
-  //       border: Border.all(color: Colors.purple.withOpacity(0.3)),
-  //     ),
-  //     child: DropdownButtonHideUnderline(
-  //       child: DropdownButton<String>(
-  //         value: _selectedGameType,
-  //         isExpanded: true,
-  //         dropdownColor: Colors.grey[800],
-  //         icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white),
-  //         style: const TextStyle(color: Colors.white, fontSize: 16),
-  //         items: _gameTypes.map((type) {
-  //           return DropdownMenuItem(
-  //             value: type,
-  //             child: Row(
-  //               children: [
-  //                 Icon(_getGameTypeIcon(type), color: Colors.purple, size: 20),
-  //                 const SizedBox(width: 12),
-  //                 Text(type),
-  //               ],
-  //             ),
-  //           );
-  //         }).toList(),
-  //         onChanged: (value) {
-  //           setState(() {
-  //             _selectedGameType = value!;
-  //           });
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // IconData _getGameTypeIcon(String type) {
-  //   switch (type) {
-  //     case 'Puzzle':
-  //       return Icons.extension;
-  //     case 'Adventure':
-  //       return Icons.explore;
-  //     case 'Action':
-  //       return Icons.flash_on;
-  //     case 'Strategy':
-  //       return Icons.psychology;
-  //     case 'Casual':
-  //       return Icons.spa;
-  //     case 'Mystery':
-  //       return Icons.search;
-  //     case 'Fantasy':
-  //       return Icons.auto_awesome;
-  //     case 'Sci-Fi':
-  //       return Icons.rocket;
-  //     default:
-  //       return Icons.games;
-  //   }
-  // }
 }

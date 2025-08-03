@@ -11,8 +11,6 @@ _GameModel _$GameModelFromJson(Map<String, dynamic> json) => _GameModel(
   title: json['title'] as String,
   description: json['description'] as String,
   imageUrl: json['imageUrl'] as String,
-  duration: json['duration'] as String,
-  gameType: json['gameType'] as String,
   creatorId: json['creatorId'] as String?,
   gameDataId: json['gameDataId'] as String?,
   gameIds:
@@ -36,8 +34,6 @@ Map<String, dynamic> _$GameModelToJson(_GameModel instance) =>
       'title': instance.title,
       'description': instance.description,
       'imageUrl': instance.imageUrl,
-      'duration': instance.duration,
-      'gameType': instance.gameType,
       'creatorId': instance.creatorId,
       'gameDataId': instance.gameDataId,
       'gameIds': instance.gameIds,

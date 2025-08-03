@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/core/utils/utility_functions.dart';
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 
@@ -66,18 +68,9 @@ class MessageBubble extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             // Play Button
-                            if(message.game != null) ElevatedButton.icon(
+                            if(message.gameData != null) ElevatedButton.icon(
                               onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text('🎮 Starting game...'),
-                                    backgroundColor: Colors.green,
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                );
+                                context.router.push(PlayGameRoute(gameDataModel: message.gameData!));
                               },
                               icon: const Icon(
                                 Icons.play_arrow,

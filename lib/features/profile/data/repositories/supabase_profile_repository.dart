@@ -12,7 +12,6 @@ class SupabaseProfileRepository implements ProfileRepository {
         .select()
         .eq('id', userId)
         .single();
-        print("Response: $response");
 
     return AppUser.fromJson(response);
   }
