@@ -18,7 +18,7 @@ mixin _$GameModel {
  String get id; String get title;//
  String get description;//
  String get imageUrl; String get duration;//
- String get gameType; String? get creatorId; String? get gameDataId;//reference to the ai generated data
+ String get gameType; String? get creatorId; String? get gameDataId;// reference to the ai generated data
  List<String> get gameIds; bool get isVerified; List<String> get tags; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of GameModel
 /// with the given fields replaced by the non-null parameter values.
@@ -239,9 +239,9 @@ class _GameModel implements GameModel {
 @override final  String gameType;
 @override final  String? creatorId;
 @override final  String? gameDataId;
-//reference to the ai generated data
+// reference to the ai generated data
  final  List<String> _gameIds;
-//reference to the ai generated data
+// reference to the ai generated data
 @override@JsonKey() List<String> get gameIds {
   if (_gameIds is EqualUnmodifiableListView) return _gameIds;
   // ignore: implicit_dynamic_type

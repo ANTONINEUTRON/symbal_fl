@@ -7,15 +7,20 @@ import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/features/auth/data/repository/supabase_auth_repository.dart';
 import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/game/data/repository/supabase_game_repository.dart';
-import 'package:symbal_fl/features/game/ui/cubits/create_game_cubit.dart';
-import 'package:symbal_fl/features/game/ui/cubits/play_game_cubit.dart';
+import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
 import 'package:symbal_fl/features/profile/data/repositories/supabase_profile_repository.dart';
 import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
 
 final _appRoute = AppRouter();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(create: (context) => AppCubit()),
-          BlocProvider(create: (context) => GameCubit()),
           BlocProvider(
             create: (context) => CreateGameCubit(
               gameGenerationRepository: context.read<SupabaseGameRepository>(),

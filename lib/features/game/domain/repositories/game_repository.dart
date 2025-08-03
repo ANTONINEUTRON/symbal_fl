@@ -10,6 +10,7 @@ import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.da
 /// This repository is responsible for generating game data based on user input
 abstract class GameRepository {
 Future<MessageModel> generateGame(MessageModel message);
+  Future<void> saveGameModel(GameModel gameData);
   Future<void> saveGame(GameDataModel gameData);
   Future<List<String>> uploadFiles(List<File> files);
 
@@ -25,4 +26,16 @@ Future<MessageModel> generateGame(MessageModel message);
   Future<void> incrementPlayCount(String gameId);
   Future<void> toggleFavorite(String gameId, String userId);
   Future<void> likeGame(String gameId, String userId);
-}
+
+  // Local operations
+  Future<GameModel> getLocalGame(String gameId);
+  Future<void> saveLocalGame(GameModel gameModel);
+  Future<void> deleteLocalGame(String gameId);
+  Future<List<GameModel>> getAllLocalGames();
+  Future<int> getLocalGamesCount();
+  Future<bool> hasLocalGame(String gameId);
+  Future<void> clearAllLocalGames();
+  Future<GameModel> getGameWithFallback(String gameId);
+  Future<void> syncLocalGameToRemote(String gameId);
+  
+  }

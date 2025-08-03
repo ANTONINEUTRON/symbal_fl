@@ -11,10 +11,10 @@ import 'package:symbal_fl/features/game/domain/entities/game_details/game_detail
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 
-class GameGeneratorRemote {
+class GameRemoteDatasource {
   late final Dio _dio;
 
-  GameGeneratorRemote() {
+  GameRemoteDatasource() {
     _dio = Dio(BaseOptions(
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 60),
@@ -163,6 +163,31 @@ class GameGeneratorRemote {
       await supabase.from('game_data').insert(gameData.toJson());
     } catch (e) {
       throw Exception('Failed to save game: ${e.toString()}');
+    }
+  }
+
+  Future<void> upsertGameModel(GameModel gameModel) async {
+    try {
+      final supabase = Supabase.instance.client;
+      
+      // Convert GameModel to JSON for Supabase
+      final gameJson = gameModel.toJson();
+      
+      // Handle DateTime conversion for Supabase
+      if (gameModel.createdAt != null) {
+        gameJson['created_at'] = gameModel.createdAt!.toIso8601String();
+      }
+      if (gameModel.updatedAt != null) {
+        gameJson['updated_at'] = gameModel.updatedAt!.toIso8601String();
+      } else {
+        gameJson['updated_at'] = DateTime.now().toIso8601String();
+      }
+      
+      // Upsert (insert or update) into games table
+      await supabase.from('games').upsert(gameJson);
+      
+    } catch (e) {
+      throw Exception('Failed to upsert game model: ${e.toString()}');
     }
   }
 

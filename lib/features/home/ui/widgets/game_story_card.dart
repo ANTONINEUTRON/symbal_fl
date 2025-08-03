@@ -1,4 +1,3 @@
-// Game Story Card Widget
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -6,9 +5,10 @@ import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
+import 'package:symbal_fl/features/game/domain/entities/game_details/game_details.dart';
 
 class GameStoryCard extends StatelessWidget {
-  final GameModel gameStory;
+  final GameDetails gameStory;
   final bool isActive;
 
   const GameStoryCard({
@@ -50,7 +50,7 @@ class GameStoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  gameStory.title,
+                  gameStory.gameModel.title,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -59,14 +59,14 @@ class GameStoryCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  gameStory.description,
+                  gameStory.gameModel.description,
                   style: const TextStyle(color: Colors.white70, fontSize: 14),
                 ),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    GameTag(text: gameStory.duration).addSpacing(right: 8),
-                    GameTag(text: "${gameStory.plays} plays"),
+                    GameTag(text: gameStory.gameModel.duration).addSpacing(right: 8),
+                    GameTag(text: "${gameStory.analytics.plays} plays"),
                   ],
                 ),
                 const SizedBox(height: 16),

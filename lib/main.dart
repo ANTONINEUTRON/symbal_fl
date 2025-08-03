@@ -8,6 +8,7 @@ Future<void> main() async {
     url: Env.dbUrl,
     anonKey: Env.dbAnonKey,
   );
+  
 
   runApp(const MyApp());
 }

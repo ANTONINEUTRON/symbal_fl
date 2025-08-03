@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'game_model.freezed.dart';
 part 'game_model.g.dart';
 
-/// Non AI DATA
 @freezed
 abstract class GameModel with _$GameModel {
   const factory GameModel({
