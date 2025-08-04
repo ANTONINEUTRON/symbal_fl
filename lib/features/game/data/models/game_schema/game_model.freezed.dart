@@ -219,8 +219,8 @@ return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.crea
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(includeIfNull: true)
 class _GameModel implements GameModel {
   const _GameModel({required this.id, required this.title, required this.description, required this.imageUrl, this.creatorId, this.gameDataId, final  List<String> gameIds = const [], this.isVerified = false, final  List<String> tags = const [], this.createdAt, this.updatedAt}): _gameIds = gameIds,_tags = tags;
   factory _GameModel.fromJson(Map<String, dynamic> json) => _$GameModelFromJson(json);

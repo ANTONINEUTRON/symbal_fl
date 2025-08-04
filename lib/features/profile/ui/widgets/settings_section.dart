@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:symbal_fl/core/route/app_route.gr.dart';
 
 class SettingsSection extends StatelessWidget {
   const SettingsSection({super.key});
@@ -13,14 +15,25 @@ class SettingsSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SettingsItem(icon: Icons.wallet, title: 'Manage wallet'),
+          SettingsItem(
+            icon: Icons.wallet,
+            title: 'Manage wallet',
+            onTap: () {
+              print("Navigating to WalletPage");
+              context.router.push(WalletRoute());
+            },
+          ),
+          SettingsItem(icon: Icons.history_rounded, title: 'History',
+            onTap: () {
+              context.router.push(HistoryRoute());
+            },
+          ),
+          SettingsItem(icon: Icons.currency_exchange, title: 'Payments'),
+          SettingsItem(icon: Icons.favorite_outline, title: 'Favourites'),
           SettingsItem(
             icon: Icons.notifications_outlined,
             title: 'Notifications',
           ),
-          SettingsItem(icon: Icons.favorite_outline, title: 'Favourites'),
-          SettingsItem(icon: Icons.currency_exchange, title: 'Payments'),
-          SettingsItem(icon: Icons.history_rounded, title: 'History'),
           SettingsItem(icon: Icons.help_outline, title: 'Help & Support'),
           SettingsItem(icon: Icons.menu_book, title: 'Terms'),
           SettingsItem(icon: Icons.privacy_tip_outlined, title: 'Privacy'),
@@ -32,10 +45,8 @@ class SettingsSection extends StatelessWidget {
         ],
       ),
     );
-  
   }
 }
-
 
 class SettingsItem extends StatelessWidget {
   const SettingsItem({
@@ -43,31 +54,32 @@ class SettingsItem extends StatelessWidget {
     required this.icon,
     required this.title,
     this.isDestructive = false,
+    this.onTap,
   });
 
   final IconData icon;
   final String title;
   final bool isDestructive;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          leading: Icon(icon, color: isDestructive ? Colors.red : Colors.white),
+          leading: Icon(
+            icon,
+            color: isDestructive ? Colors.red : Colors.white,
+          ),
           title: Text(
             title,
-            style: TextStyle(color: isDestructive ? Colors.red : Colors.white),
+            style: TextStyle(
+              color: isDestructive ? Colors.red : Colors.white,
+            ),
           ),
-          onTap: () {
-            Navigator.pop(context);
-            // TODO: Implement settings actions
-          },
+          onTap: onTap,
         ),
-        Divider(
-          color: Colors.grey[700],
-          height: 1,
-        ),
+        Divider(color: Colors.grey[700], height: 1),
       ],
     );
   }
