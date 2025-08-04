@@ -74,8 +74,10 @@ class GameCubit extends HydratedCubit<CreateGameState> {
   }
 
   // ✅ Deploy game to production
-  Future<void> deployGame() async {
-    if (state.generatedGame == null) {
+  Future<void> deployGame([GameModel? gameToDeploy]) async {
+    final gameModel = gameToDeploy ?? state.generatedGame;
+    
+    if (gameModel == null) {
       emit(state.copyWith(error: 'No game to deploy'));
       return;
     }
@@ -84,7 +86,7 @@ class GameCubit extends HydratedCubit<CreateGameState> {
 
     try {
       // Save to remote database
-      await gameGenerationRepository.saveGameModel(state.generatedGame!);
+      await gameGenerationRepository.saveGameModel(gameModel);
       
       // ✅ Clear from local state after successful deployment (auto-persisted)
       emit(state.copyWith(
