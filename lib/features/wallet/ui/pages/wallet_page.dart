@@ -5,30 +5,31 @@ import 'package:symbal_fl/features/wallet/ui/widgets/connect_wallet_view.dart';
 import 'package:symbal_fl/features/wallet/ui/widgets/connected_wallet_view.dart';
 import 'package:symbal_fl/gen/assets.gen.dart';
 
-
 @RoutePage()
-class WalletPage extends StatelessWidget {
+class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
 
+  @override
+  State<WalletPage> createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
   // Dummy wallet data - set to null to show connect view
-  static const String? _walletAddress = null; // Set to null to show connect view
-  static const String _fullWalletAddress =
+  final String? _walletAddress = null; // Set to null to show connect view
+  final String _fullWalletAddress =
       '0x742d35Cc6dF32E8C5B9C8B1A8B6F1e2D7A4C8B3E';
-  
+
   // Multiple currency balances
-  static final List<Balance> _balances = [
+  final List<Balance> _balances = [
     Balance(
       currency: 'SOL',
       amount: 15.42,
-      symbol: Assets.icons.solanaPng.image(
-        height: 24, 
-        width: 24,
-      ),
+      symbol: Assets.icons.solanaPng.image(height: 24, width: 24),
     ),
     Balance(
       currency: 'BONK',
       amount: 125000.0,
-      symbol: Assets.icons.bonkPng.image(height: 24,width: 24,),
+      symbol: Assets.icons.bonkPng.image(height: 24, width: 24),
     ),
   ];
 
@@ -49,7 +50,7 @@ class WalletPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
-      body: _walletAddress != null 
+      body: _walletAddress != null
           ? ConnectedWalletView(
               walletAddress: _walletAddress!,
               fullWalletAddress: _fullWalletAddress,
@@ -64,8 +65,9 @@ class WalletPage extends StatelessWidget {
   }
 
   void _onConnectWallet() {
-    // TODO: Implement wallet connection logic
-    print('Connect wallet tapped');
+    print('Connect Wallet is coming soon');
+
+    
   }
 
   void _onImportWallet() {
@@ -78,4 +80,3 @@ class WalletPage extends StatelessWidget {
     print('Create wallet tapped');
   }
 }
-

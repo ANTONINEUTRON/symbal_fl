@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/ui/engine/symbal_rendering_engine.dart';
 
@@ -15,6 +16,8 @@ class PlayGamePage extends StatefulWidget {
 class _PlayGamePageState extends State<PlayGamePage> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

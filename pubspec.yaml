@@ -74,6 +74,7 @@ dev_dependencies:
   flutter_gen: ^5.10.0
   flutter_gen_runner: ^5.10.0
   envied_generator: ^1.1.1
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
