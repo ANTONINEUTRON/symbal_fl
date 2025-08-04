@@ -20,3 +20,36 @@ entrypoint = "./functions/generate-game-gemini/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/generate-game-gemini/*.html" ]
+
+[functions.create-wallet]
+enabled = true
+verify_jwt = true
+import_map = "./functions/create-wallet/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/create-wallet/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/create-wallet/*.html" ]
+
+[functions.import-wallet]
+enabled = true
+verify_jwt = true
+import_map = "./functions/import-wallet/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/import-wallet/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/import-wallet/*.html" ]
+
+[functions.send-transaction]
+enabled = true
+verify_jwt = true
+import_map = "./functions/send-transaction/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/send-transaction/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/send-transaction/*.html" ]

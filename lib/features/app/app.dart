@@ -10,6 +10,7 @@ import 'package:symbal_fl/features/game/data/repository/supabase_game_repository
 import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
 import 'package:symbal_fl/features/profile/data/repositories/supabase_profile_repository.dart';
 import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 
 final _appRoute = AppRouter();
 
@@ -34,6 +35,8 @@ class _MyAppState extends State<MyApp> {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => AppCubit()),
+          BlocProvider(create: (context) => WalletCubit()),
           BlocProvider(
             create: (context) => AuthCubit(
               authRepository: context.read<SupabaseAuthRepository>(),
@@ -45,7 +48,6 @@ class _MyAppState extends State<MyApp> {
               profileRepository: context.read<SupabaseProfileRepository>(),
             ),
           ),
-          BlocProvider(create: (context) => AppCubit()),
           BlocProvider(
             create: (context) => GameCubit(
               gameGenerationRepository: context.read<SupabaseGameRepository>(),
