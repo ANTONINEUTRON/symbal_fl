@@ -33,8 +33,8 @@ class ConnectedWalletView extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Action Buttons
-          const ActionButtons(),
-          const SizedBox(height: 32),
+          // const ActionButtons(),
+          // const SizedBox(height: 32),
 
           // Recent Transactions
           const RecentTransactions(),
@@ -166,10 +166,10 @@ class ActionButtons extends StatelessWidget {
       builder: (context) => AlertDialog(
         backgroundColor: Colors.grey[800],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
+        title: Wrap(
           children: [
             Icon(Icons.arrow_upward, color: Colors.orange, size: 24),
-            const SizedBox(width: 12),
+            const SizedBox(width: 2),
             const Text('Withdraw Funds', style: TextStyle(color: Colors.white)),
           ],
         ),

@@ -19,7 +19,6 @@ class SettingsSection extends StatelessWidget {
             icon: Icons.wallet,
             title: 'Manage wallet',
             onTap: () {
-              print("Navigating to WalletPage");
               context.router.push(WalletRoute());
             },
           ),

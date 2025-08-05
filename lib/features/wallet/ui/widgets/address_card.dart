@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 
 class AddressCard extends StatelessWidget {
   final String walletAddress;
@@ -8,6 +10,8 @@ class AddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var walletCubit = context.read<WalletCubit>();
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -20,20 +24,34 @@ class AddressCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.account_balance_wallet,
-                color: Theme.of(context).colorScheme.tertiary,
-                size: 24,
+              Row(
+                children: [
+                  Icon(
+                    Icons.account_balance_wallet,
+                    color: Theme.of(context).colorScheme.tertiary,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Wallet Address',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 12),
-              const Text(
-                'Wallet Address',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
+              //
+              //
+              IconButton(
+                onPressed: () {
+                  walletCubit.disconnectWallet();
+                },
+                icon: Icon(Icons.logout_sharp),
+                color: Colors.red,
               ),
             ],
           ),
@@ -52,7 +70,7 @@ class AddressCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        walletAddress,
+                        walletCubit.getFormatedWallet(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,

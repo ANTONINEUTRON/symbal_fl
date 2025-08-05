@@ -23,9 +23,9 @@ class _WalletPageState extends State<WalletPage> {
     var walletCubit = context.watch<WalletCubit>();
     var walletState = walletCubit.state;
 
-    String? _walletAddress = context.watch<ProfileCubit>().state.userProfile?.walletAddress;//.walletAddress;
+    String? _walletAddress = walletState.walletAddress;
     List<Balance> _balances = walletState.balances;
-
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text(
