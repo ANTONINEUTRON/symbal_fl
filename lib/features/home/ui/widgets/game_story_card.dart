@@ -64,7 +64,7 @@ class GameStoryCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    GameTag(text: "1 mins").addSpacing(right: 8),
+                    GameTag(text: "puzzle").addSpacing(right: 8),
                     GameTag(text: "${14} plays"),
                   ],
                 ),
@@ -95,7 +95,7 @@ class GameStoryCard extends StatelessWidget {
             bottom: 40,
             child: Column(
               children: [
-                GameCardActionBtn(icon: Icons.favorite_outline, label: '12.5K'),
+                GameCardActionBtn(icon: Icons.favorite_outline, label: '3'),
                 const SizedBox(height: 18),
                 GameCardActionBtn(
                   icon: Icons.share_outlined,

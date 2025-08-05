@@ -6,13 +6,11 @@ import 'package:symbal_fl/features/wallet/ui/widgets/recent_transactions.dart';
 
 class ConnectedWalletView extends StatelessWidget {
   final String walletAddress;
-  final String fullWalletAddress;
   final List<Balance> balances;
 
   const ConnectedWalletView({
     super.key,
     required this.walletAddress,
-    required this.fullWalletAddress,
     required this.balances,
   });
 
@@ -31,7 +29,6 @@ class ConnectedWalletView extends StatelessWidget {
           // Wallet Address Section
           AddressCard(
             walletAddress: walletAddress,
-            fullWalletAddress: fullWalletAddress,
           ),
           const SizedBox(height: 24),
 

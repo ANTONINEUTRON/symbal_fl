@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
 import 'package:symbal_fl/features/wallet/domain/entity/balance.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 import 'package:symbal_fl/features/wallet/ui/widgets/connect_wallet_view.dart';
 import 'package:symbal_fl/features/wallet/ui/widgets/connected_wallet_view.dart';
 import 'package:symbal_fl/gen/assets.gen.dart';
@@ -14,27 +17,15 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
-  // Dummy wallet data - set to null to show connect view
-  final String? _walletAddress = null; // Set to null to show connect view
-  final String _fullWalletAddress =
-      '0x742d35Cc6dF32E8C5B9C8B1A8B6F1e2D7A4C8B3E';
-
-  // Multiple currency balances
-  final List<Balance> _balances = [
-    Balance(
-      currency: 'SOL',
-      amount: 15.42,
-      symbol: Assets.icons.solanaPng.image(height: 24, width: 24),
-    ),
-    Balance(
-      currency: 'BONK',
-      amount: 125000.0,
-      symbol: Assets.icons.bonkPng.image(height: 24, width: 24),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    var walletCubit = context.watch<WalletCubit>();
+    var walletState = walletCubit.state;
+
+    String? _walletAddress = context.watch<ProfileCubit>().state.userProfile?.walletAddress;//.walletAddress;
+    List<Balance> _balances = walletState.balances;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -52,23 +43,17 @@ class _WalletPageState extends State<WalletPage> {
       ),
       body: _walletAddress != null
           ? ConnectedWalletView(
-              walletAddress: _walletAddress!,
-              fullWalletAddress: _fullWalletAddress,
+              walletAddress: _walletAddress,
               balances: _balances,
             )
           : ConnectWalletView(
-              onConnectWallet: _onConnectWallet,
+              onConnectWallet: walletCubit.connectWallet,
               onImportWallet: _onImportWallet,
               onCreateWallet: _onCreateWallet,
             ),
     );
   }
 
-  void _onConnectWallet() {
-    print('Connect Wallet is coming soon');
-
-    
-  }
 
   void _onImportWallet() {
     // TODO: Implement wallet import logic

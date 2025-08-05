@@ -12,6 +12,7 @@ import 'package:symbal_fl/features/game/ui/widgets/chat_input_field.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_view.dart';
 import 'package:symbal_fl/features/game/ui/widgets/retries_counter.dart';
 import 'package:symbal_fl/features/game/ui/widgets/welcome_view.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 
 @RoutePage()
 class CreateGamePage extends StatefulWidget {
@@ -74,10 +75,11 @@ class _CreateGamePageState extends State<CreateGamePage> {
     });
   }
 
-  void _addRetries() {
+  void _addRetries()async {
     // call cubit method to add retries
-    context.read<GameCubit>().addRetries(5);
+    await context.read<WalletCubit>().connectWallet();
 
+    context.read<GameCubit>().addRetries(5);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('🎉 +5 retries added!'),
@@ -296,8 +298,11 @@ class _CreateGamePageState extends State<CreateGamePage> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
+              onPressed: ()async {
+                // Navigator.pop(context);
+
+                // connect to pay
+                await context.read<WalletCubit>().connectWallet();
                 
                 // Create updated game model
                 final updatedGame = gameModel.copyWith(

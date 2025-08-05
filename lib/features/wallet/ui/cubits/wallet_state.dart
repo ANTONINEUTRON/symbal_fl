@@ -4,27 +4,27 @@ import 'package:symbal_fl/features/wallet/domain/entity/balance.dart';
 
 class WalletState extends Equatable{
   final String? walletAddress;
-  final String? fullWalletAddress;
   final List<Balance> balances;
+  final String? error;
 
   const WalletState({
     this.walletAddress,
-    this.fullWalletAddress,
     this.balances = const [],
+    this.error,
   });
 
   @override
-  List<Object?> get props => [walletAddress, fullWalletAddress, balances];
+  List<Object?> get props => [walletAddress, balances, error];
 
   WalletState copyWith({
     String? walletAddress,
-    String? fullWalletAddress,
     List<Balance>? balances,
+    String? error,
   }) {
     return WalletState(
       walletAddress: walletAddress ?? this.walletAddress,
-      fullWalletAddress: fullWalletAddress ?? this.fullWalletAddress,
       balances: balances ?? this.balances,
+      error: error ?? this.error,
     );
   }
 }

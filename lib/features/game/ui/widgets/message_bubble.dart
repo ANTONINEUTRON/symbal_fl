@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/core/utils/utility_functions.dart';
+import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -70,7 +71,7 @@ class MessageBubble extends StatelessWidget {
                             // Play Button
                             if(message.gameData != null) ElevatedButton.icon(
                               onPressed: () {
-                                context.router.push(PlayGameRoute(gameDataModel: message.gameData!));
+                                context.router.push(PlayGameRoute(gameDataModel: GameDataModel.empty()));//message.gameData!
                               },
                               icon: const Icon(
                                 Icons.play_arrow,

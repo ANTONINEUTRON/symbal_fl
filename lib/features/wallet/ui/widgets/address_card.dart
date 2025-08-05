@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 class AddressCard extends StatelessWidget {
   final String walletAddress;
-  final String fullWalletAddress;
 
-  const AddressCard({
-    super.key,
-    required this.walletAddress,
-    required this.fullWalletAddress,
-  });
+  const AddressCard({super.key, required this.walletAddress});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +58,9 @@ class AddressCard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'monospace',
+                          overflow: TextOverflow.ellipsis,
                         ),
+                        maxLines: 1,
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -75,11 +71,13 @@ class AddressCard extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => _copyToClipboard(context, fullWalletAddress),
+                  onTap: () => _copyToClipboard(context, walletAddress),
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.secondary.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
@@ -109,4 +107,3 @@ class AddressCard extends StatelessWidget {
     );
   }
 }
-

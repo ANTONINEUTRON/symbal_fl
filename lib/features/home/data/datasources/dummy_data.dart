@@ -1,48 +1,50 @@
-
 import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
 
-class DummyGameStories{
+class DummyGameStories {
   static final List<GameModel> stories = [
     GameModel(
       id: '1',
-      title: 'Mystic Forest Adventure',
-      description: 'A magical journey through an enchanted forest',
-      imageUrl: 'assets/images/forest_game.jpg',
-      ),
+      title: 'Crystal Maze Puzzle',
+      description:
+          'Navigate through crystal mazes and solve mind-bending puzzles',
+      imageUrl: 'assets/images/crystal_puzzle.jpg',
+    ),
     GameModel(
       id: '2',
-      title: 'Space Rescue Mission',
-      description: 'Save the galaxy in this thrilling space adventure',
-      imageUrl: 'assets/images/space_game.jpg',
-      ),
+      title: 'Tic Tac Toe Ultimate',
+      description:
+          'Classic tic-tac-toe with modern twists and multiplayer modes',
+      imageUrl: 'assets/images/tic_tac_toe.jpg',
+    ),
     GameModel(
       id: '3',
-      title: 'Lost City Explorer',
-      description: 'Uncover secrets in the ruins of a forgotten city',
-      imageUrl: 'assets/images/lost_city.jpg',
-      ),
+      title: 'Block Puzzle Master',
+      description: 'Fit colorful blocks together in this addictive puzzle game',
+      imageUrl: 'assets/images/block_puzzle.jpg',
+    ),
     GameModel(
       id: '4',
-      title: 'Underwater Quest',
-      description: 'Dive deep to discover ocean mysteries',
-      imageUrl: 'assets/images/underwater_game.jpg',
-      ),
+      title: 'Jigsaw Universe',
+      description: 'Complete stunning jigsaw puzzles from around the universe',
+      imageUrl: 'assets/images/jigsaw_puzzle.jpg',
+    ),
     GameModel(
       id: '5',
-      title: 'Robot Rebellion',
-      description: 'Stop the rogue robots and save the city',
-      imageUrl: 'assets/images/robot_game.jpg',
-      ),
+      title: 'Word Connect Pro',
+      description: 'Connect letters to form words in this brain-teasing puzzle',
+      imageUrl: 'assets/images/word_puzzle.jpg',
+    ),
     GameModel(
       id: '6',
-      title: 'Jungle Escape',
-      description: 'Survive the wild and escape the jungle',
-      imageUrl: 'assets/images/jungle_game.jpg',
-      ),
+      title: 'Number Sudoku Challenge',
+      description: 'Test your logic with challenging sudoku number puzzles',
+      imageUrl: 'assets/images/sudoku_puzzle.jpg',
+    ),
     GameModel(
       id: '7',
-      title: 'Haunted Manor Mystery',
-      description: 'Solve the mystery of the haunted manor',
-      imageUrl: 'assets/images/haunted_manor.jpg',),
-      ];
+      title: 'Pattern Memory Quest',
+      description: 'Remember and recreate complex patterns to advance',
+      imageUrl: 'assets/images/pattern_puzzle.jpg',
+    ),
+  ];
 }
