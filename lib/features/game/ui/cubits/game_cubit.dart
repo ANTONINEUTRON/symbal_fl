@@ -41,6 +41,41 @@ class GameCubit extends HydratedCubit<CreateGameState> {
     return allGames.isNotEmpty ? allGames.last : null;
   }
 
+  /// Load deployed games from the database into state
+  Future<void> loadDeployedGames({String? userId, int limit = 20}) async {
+    emit(state.copyWith(isLoadingDeployedGames: true));
+    
+    try {
+      // Get the deployed games as GameModel from repository
+      final games = await gameGenerationRepository.getGames(limit: limit);
+      
+      emit(state.copyWith(
+        deployedGames: games,
+        isLoadingDeployedGames: false,
+      ));
+      
+      print('Loaded ${games.length} deployed games');
+    } catch (e) {
+      emit(state.copyWith(
+        isLoadingDeployedGames: false,
+        error: 'Failed to load deployed games: ${e.toString()}',
+      ));
+      
+      print('Error fetching deployed games: $e');
+    }
+  }
+
+  /// Get deployed games from state
+  List<GameModel> get deployedGames => state.deployedGames;
+
+  /// Check if deployed games are loading
+  bool get isLoadingDeployedGames => state.isLoadingDeployedGames;
+
+  /// Refresh deployed games
+  Future<void> refreshDeployedGames() async {
+    await loadDeployedGames();
+  }
+
   Future<void> createGame({
     required String prompt,
     required List<File> selectedFiles,
@@ -156,6 +191,9 @@ class GameCubit extends HydratedCubit<CreateGameState> {
         isDeployed: true,
         selectedGameId: null, // Clear selection after deployment
       ));
+      
+      // Automatically refresh deployed games after successful deployment
+      await loadDeployedGames();
       
       print("Game deployed successfully: ${updatedGameData.title}");
       if (tokenUrl != null) {

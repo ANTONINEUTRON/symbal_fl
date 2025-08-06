@@ -16,6 +16,8 @@ abstract class CreateGameState with _$CreateGameState {
     @Default(3) int retriesCount,
     GameModel? generatedGame,
     @Default([]) List<GameModel> draftGames,
+    @Default([]) List<GameModel> deployedGames,
+    @Default(false) bool isLoadingDeployedGames,
     String? error,
     String? selectedGameId, // Track which game user wants to deploy
   }) = _CreateGameState;

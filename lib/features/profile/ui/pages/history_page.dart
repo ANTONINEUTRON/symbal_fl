@@ -1,15 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:symbal_fl/core/extensions/widget_helpers.dart';
-import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
-import 'package:symbal_fl/features/game/ui/cubits/game_state.dart';
-import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
-import 'package:symbal_fl/features/game/ui/widgets/deploy_game_dialog.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/deployed_games_tab.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/drafts_tab.dart';
-import 'package:symbal_fl/features/profile/ui/widgets/game_card.dart';
-import 'package:symbal_fl/features/profile/ui/widgets/game_history_item.dart';
 
 @RoutePage()
 class HistoryPage extends StatefulWidget {

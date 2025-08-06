@@ -29,6 +29,8 @@ mixin _$CreateGameState {
   int get retriesCount => throw _privateConstructorUsedError;
   GameModel? get generatedGame => throw _privateConstructorUsedError;
   List<GameModel> get draftGames => throw _privateConstructorUsedError;
+  List<GameModel> get deployedGames => throw _privateConstructorUsedError;
+  bool get isLoadingDeployedGames => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   String? get selectedGameId => throw _privateConstructorUsedError;
 
@@ -58,6 +60,8 @@ abstract class $CreateGameStateCopyWith<$Res> {
     int retriesCount,
     GameModel? generatedGame,
     List<GameModel> draftGames,
+    List<GameModel> deployedGames,
+    bool isLoadingDeployedGames,
     String? error,
     String? selectedGameId,
   });
@@ -88,6 +92,8 @@ class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
     Object? retriesCount = null,
     Object? generatedGame = freezed,
     Object? draftGames = null,
+    Object? deployedGames = null,
+    Object? isLoadingDeployedGames = null,
     Object? error = freezed,
     Object? selectedGameId = freezed,
   }) {
@@ -125,6 +131,14 @@ class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
                 ? _value.draftGames
                 : draftGames // ignore: cast_nullable_to_non_nullable
                       as List<GameModel>,
+            deployedGames: null == deployedGames
+                ? _value.deployedGames
+                : deployedGames // ignore: cast_nullable_to_non_nullable
+                      as List<GameModel>,
+            isLoadingDeployedGames: null == isLoadingDeployedGames
+                ? _value.isLoadingDeployedGames
+                : isLoadingDeployedGames // ignore: cast_nullable_to_non_nullable
+                      as bool,
             error: freezed == error
                 ? _value.error
                 : error // ignore: cast_nullable_to_non_nullable
@@ -171,6 +185,8 @@ abstract class _$$CreateGameStateImplCopyWith<$Res>
     int retriesCount,
     GameModel? generatedGame,
     List<GameModel> draftGames,
+    List<GameModel> deployedGames,
+    bool isLoadingDeployedGames,
     String? error,
     String? selectedGameId,
   });
@@ -201,6 +217,8 @@ class __$$CreateGameStateImplCopyWithImpl<$Res>
     Object? retriesCount = null,
     Object? generatedGame = freezed,
     Object? draftGames = null,
+    Object? deployedGames = null,
+    Object? isLoadingDeployedGames = null,
     Object? error = freezed,
     Object? selectedGameId = freezed,
   }) {
@@ -238,6 +256,14 @@ class __$$CreateGameStateImplCopyWithImpl<$Res>
             ? _value._draftGames
             : draftGames // ignore: cast_nullable_to_non_nullable
                   as List<GameModel>,
+        deployedGames: null == deployedGames
+            ? _value._deployedGames
+            : deployedGames // ignore: cast_nullable_to_non_nullable
+                  as List<GameModel>,
+        isLoadingDeployedGames: null == isLoadingDeployedGames
+            ? _value.isLoadingDeployedGames
+            : isLoadingDeployedGames // ignore: cast_nullable_to_non_nullable
+                  as bool,
         error: freezed == error
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
@@ -263,10 +289,13 @@ class _$CreateGameStateImpl implements _CreateGameState {
     this.retriesCount = 3,
     this.generatedGame,
     final List<GameModel> draftGames = const [],
+    final List<GameModel> deployedGames = const [],
+    this.isLoadingDeployedGames = false,
     this.error,
     this.selectedGameId,
   }) : _chatList = chatList,
-       _draftGames = draftGames;
+       _draftGames = draftGames,
+       _deployedGames = deployedGames;
 
   factory _$CreateGameStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateGameStateImplFromJson(json);
@@ -306,6 +335,18 @@ class _$CreateGameStateImpl implements _CreateGameState {
     return EqualUnmodifiableListView(_draftGames);
   }
 
+  final List<GameModel> _deployedGames;
+  @override
+  @JsonKey()
+  List<GameModel> get deployedGames {
+    if (_deployedGames is EqualUnmodifiableListView) return _deployedGames;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_deployedGames);
+  }
+
+  @override
+  @JsonKey()
+  final bool isLoadingDeployedGames;
   @override
   final String? error;
   @override
@@ -313,7 +354,7 @@ class _$CreateGameStateImpl implements _CreateGameState {
 
   @override
   String toString() {
-    return 'CreateGameState(chatList: $chatList, isGenerating: $isGenerating, isDeploying: $isDeploying, isDraftSaved: $isDraftSaved, isDeployed: $isDeployed, retriesCount: $retriesCount, generatedGame: $generatedGame, draftGames: $draftGames, error: $error, selectedGameId: $selectedGameId)';
+    return 'CreateGameState(chatList: $chatList, isGenerating: $isGenerating, isDeploying: $isDeploying, isDraftSaved: $isDraftSaved, isDeployed: $isDeployed, retriesCount: $retriesCount, generatedGame: $generatedGame, draftGames: $draftGames, deployedGames: $deployedGames, isLoadingDeployedGames: $isLoadingDeployedGames, error: $error, selectedGameId: $selectedGameId)';
   }
 
   @override
@@ -338,6 +379,12 @@ class _$CreateGameStateImpl implements _CreateGameState {
               other._draftGames,
               _draftGames,
             ) &&
+            const DeepCollectionEquality().equals(
+              other._deployedGames,
+              _deployedGames,
+            ) &&
+            (identical(other.isLoadingDeployedGames, isLoadingDeployedGames) ||
+                other.isLoadingDeployedGames == isLoadingDeployedGames) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.selectedGameId, selectedGameId) ||
                 other.selectedGameId == selectedGameId));
@@ -355,6 +402,8 @@ class _$CreateGameStateImpl implements _CreateGameState {
     retriesCount,
     generatedGame,
     const DeepCollectionEquality().hash(_draftGames),
+    const DeepCollectionEquality().hash(_deployedGames),
+    isLoadingDeployedGames,
     error,
     selectedGameId,
   );
@@ -386,6 +435,8 @@ abstract class _CreateGameState implements CreateGameState {
     final int retriesCount,
     final GameModel? generatedGame,
     final List<GameModel> draftGames,
+    final List<GameModel> deployedGames,
+    final bool isLoadingDeployedGames,
     final String? error,
     final String? selectedGameId,
   }) = _$CreateGameStateImpl;
@@ -409,6 +460,10 @@ abstract class _CreateGameState implements CreateGameState {
   GameModel? get generatedGame;
   @override
   List<GameModel> get draftGames;
+  @override
+  List<GameModel> get deployedGames;
+  @override
+  bool get isLoadingDeployedGames;
   @override
   String? get error;
   @override

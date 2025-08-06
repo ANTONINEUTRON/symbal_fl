@@ -27,6 +27,12 @@ _$CreateGameStateImpl _$$CreateGameStateImplFromJson(
           ?.map((e) => GameModel.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
+  deployedGames:
+      (json['deployedGames'] as List<dynamic>?)
+          ?.map((e) => GameModel.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  isLoadingDeployedGames: json['isLoadingDeployedGames'] as bool? ?? false,
   error: json['error'] as String?,
   selectedGameId: json['selectedGameId'] as String?,
 );
@@ -42,6 +48,8 @@ Map<String, dynamic> _$$CreateGameStateImplToJson(
   'retriesCount': instance.retriesCount,
   'generatedGame': instance.generatedGame,
   'draftGames': instance.draftGames,
+  'deployedGames': instance.deployedGames,
+  'isLoadingDeployedGames': instance.isLoadingDeployedGames,
   'error': instance.error,
   'selectedGameId': instance.selectedGameId,
 };
