@@ -150,19 +150,21 @@ class _CreateGamePageState extends State<CreateGamePage> {
         centerTitle: true,
         elevation: 0,
         actions: [
-          // Deploy Button
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            ),
-            onPressed: createGameState.isGenerating ? null : (){
-              _showDeployDialog(createGameState.generatedGame);
-            },
-            child: const Text('Deploy', style: TextStyle(fontWeight: FontWeight.bold)),
-          ).addSpacing(right: 8),
+          // Deploy Button - only show if there are games available to deploy
+          if (createGameState.chatList.isNotEmpty && createGameCubit.getAllGeneratedGames().isNotEmpty) ...[
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              ),
+              onPressed: createGameState.isGenerating ? null : (){
+                _showDeployDialog(createGameState.generatedGame);
+              },
+              child: const Text('Deploy', style: TextStyle(fontWeight: FontWeight.bold)),
+            ).addSpacing(right: 8),
+          ],
           // Retries Counter
           RetriesCounter(retriesCount: createGameState.retriesCount, addRetries: _addRetries),
         ],

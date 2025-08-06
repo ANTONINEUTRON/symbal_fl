@@ -22,8 +22,6 @@ class CoinGeckoPriceRepository implements PriceRepository {
           'include_24hr_change': 'true',
         },
       );
-
-      print("Prices fetched: ${response.data}");
       
       Map<String, PriceData> prices = {};
       for (String token in tokens) {

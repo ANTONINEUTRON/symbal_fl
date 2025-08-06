@@ -1,7 +1,9 @@
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/core/extensions/widget_helpers.dart';
+import 'package:symbal_fl/core/route/app_route.gr.dart';
 import 'package:symbal_fl/features/app/cubits/app_cubit.dart';
 import 'package:symbal_fl/gen/assets.gen.dart';
 
@@ -115,7 +117,7 @@ class WelcomeView extends StatelessWidget {
     return TextButton.icon(
           onPressed: () {
             // Navigate to game history
-            context.read<AppCubit>().showAlertMessage("🎮 Game History - Coming Soon!");
+            context.router.push(HistoryRoute());
           },
           icon: const Icon(Icons.history, color: Colors.blue),
           label: const Text(

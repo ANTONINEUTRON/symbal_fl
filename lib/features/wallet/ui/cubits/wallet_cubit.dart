@@ -136,8 +136,7 @@ class WalletCubit extends HydratedCubit<WalletState> {
         publicKey.toBase58(),
         commitment: Commitment.confirmed,
       );
-      print("Balance gotten for SOL: ${solBalance.value}");
-      final solAmount = solBalance.value / 1e9; // Convert lamports to SOL
+      final solAmount = solBalance.value / 1e9; 
       
       List<Balance> balances = [
         Balance(
