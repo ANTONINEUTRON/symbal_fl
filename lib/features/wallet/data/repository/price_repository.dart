@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:symbal_fl/features/wallet/domain/entity/price_data.dart';
 import 'package:symbal_fl/features/wallet/domain/repository/price_repository.dart';
 
-class CoinGeckoPriceRepository implements PriceRepository {
+class MarketPriceRepository implements PriceRepository {
   final Dio _dio;
 
-  CoinGeckoPriceRepository({Dio? dio}) : _dio = dio ?? Dio() {
+  MarketPriceRepository({Dio? dio}) : _dio = dio ?? Dio() {
     _dio.options.connectTimeout = const Duration(seconds: 10);
     _dio.options.receiveTimeout = const Duration(seconds: 10);
   }

@@ -6,7 +6,7 @@ import 'package:symbal_fl/features/wallet/domain/entity/balance.dart';
 import 'package:symbal_fl/features/wallet/domain/entity/transaction.dart';
 import 'package:symbal_fl/features/wallet/domain/repository/price_repository.dart';
 import 'package:symbal_fl/features/wallet/domain/usecases/get_token_prices_usecase.dart';
-import 'package:symbal_fl/features/wallet/data/repository/coingecko_price_repository.dart';
+import 'package:symbal_fl/features/wallet/data/repository/price_repository.dart';
 import 'package:symbal_fl/features/wallet/ui/cubits/wallet_state.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,7 +15,7 @@ class WalletCubit extends HydratedCubit<WalletState> {
     PriceRepository? priceRepository,
     GetTokenPricesUseCase? getTokenPricesUseCase,
   }) : super(const WalletState()) {
-    final repository = priceRepository ?? CoinGeckoPriceRepository();
+    final repository = priceRepository ?? MarketPriceRepository();
     _getTokenPricesUseCase = getTokenPricesUseCase ?? GetTokenPricesUseCase(repository);
     _setupSolanaClient();
     
