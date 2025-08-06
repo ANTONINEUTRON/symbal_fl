@@ -21,12 +21,25 @@ GameDataModel _$GameDataModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$GameDataModel {
-  String get id => throw _privateConstructorUsedError;
-  List<String> get assets => throw _privateConstructorUsedError;
-  int get version => throw _privateConstructorUsedError;
-  String get renderableContent => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError; // Core metadata
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  List<String> get tags =>
+      throw _privateConstructorUsedError; // Game content - maps to database 'html' field
+  @JsonKey(name: 'html')
+  String get renderableContent => throw _privateConstructorUsedError; // AI generation context - maps to database fields
+  @JsonKey(name: 'original_prompt')
   String get prompt => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
+  @JsonKey(name: 'message_to_user')
+  String get message => throw _privateConstructorUsedError; // Database fields with exact mapping
+  @JsonKey(name: 'user_id')
+  String? get userId => throw _privateConstructorUsedError;
+  List<String> get assets => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  @JsonKey(name: "created_at")
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "updated_at")
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this GameDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,11 +60,17 @@ abstract class $GameDataModelCopyWith<$Res> {
   @useResult
   $Res call({
     String id,
+    String title,
+    String description,
+    List<String> tags,
+    @JsonKey(name: 'html') String renderableContent,
+    @JsonKey(name: 'original_prompt') String prompt,
+    @JsonKey(name: 'message_to_user') String message,
+    @JsonKey(name: 'user_id') String? userId,
     List<String> assets,
-    int version,
-    String renderableContent,
-    String prompt,
-    String message,
+    String status,
+    @JsonKey(name: "created_at") DateTime? createdAt,
+    @JsonKey(name: "updated_at") DateTime? updatedAt,
   });
 }
 
@@ -71,11 +90,17 @@ class _$GameDataModelCopyWithImpl<$Res, $Val extends GameDataModel>
   @override
   $Res call({
     Object? id = null,
-    Object? assets = null,
-    Object? version = null,
+    Object? title = null,
+    Object? description = null,
+    Object? tags = null,
     Object? renderableContent = null,
     Object? prompt = null,
     Object? message = null,
+    Object? userId = freezed,
+    Object? assets = null,
+    Object? status = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -83,14 +108,18 @@ class _$GameDataModelCopyWithImpl<$Res, $Val extends GameDataModel>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as String,
-            assets: null == assets
-                ? _value.assets
-                : assets // ignore: cast_nullable_to_non_nullable
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+            tags: null == tags
+                ? _value.tags
+                : tags // ignore: cast_nullable_to_non_nullable
                       as List<String>,
-            version: null == version
-                ? _value.version
-                : version // ignore: cast_nullable_to_non_nullable
-                      as int,
             renderableContent: null == renderableContent
                 ? _value.renderableContent
                 : renderableContent // ignore: cast_nullable_to_non_nullable
@@ -103,6 +132,26 @@ class _$GameDataModelCopyWithImpl<$Res, $Val extends GameDataModel>
                 ? _value.message
                 : message // ignore: cast_nullable_to_non_nullable
                       as String,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            assets: null == assets
+                ? _value.assets
+                : assets // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
           )
           as $Val,
     );
@@ -120,11 +169,17 @@ abstract class _$$GameDataModelImplCopyWith<$Res>
   @useResult
   $Res call({
     String id,
+    String title,
+    String description,
+    List<String> tags,
+    @JsonKey(name: 'html') String renderableContent,
+    @JsonKey(name: 'original_prompt') String prompt,
+    @JsonKey(name: 'message_to_user') String message,
+    @JsonKey(name: 'user_id') String? userId,
     List<String> assets,
-    int version,
-    String renderableContent,
-    String prompt,
-    String message,
+    String status,
+    @JsonKey(name: "created_at") DateTime? createdAt,
+    @JsonKey(name: "updated_at") DateTime? updatedAt,
   });
 }
 
@@ -143,11 +198,17 @@ class __$$GameDataModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? assets = null,
-    Object? version = null,
+    Object? title = null,
+    Object? description = null,
+    Object? tags = null,
     Object? renderableContent = null,
     Object? prompt = null,
     Object? message = null,
+    Object? userId = freezed,
+    Object? assets = null,
+    Object? status = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(
       _$GameDataModelImpl(
@@ -155,14 +216,18 @@ class __$$GameDataModelImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as String,
-        assets: null == assets
-            ? _value._assets
-            : assets // ignore: cast_nullable_to_non_nullable
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        tags: null == tags
+            ? _value._tags
+            : tags // ignore: cast_nullable_to_non_nullable
                   as List<String>,
-        version: null == version
-            ? _value.version
-            : version // ignore: cast_nullable_to_non_nullable
-                  as int,
         renderableContent: null == renderableContent
             ? _value.renderableContent
             : renderableContent // ignore: cast_nullable_to_non_nullable
@@ -175,6 +240,26 @@ class __$$GameDataModelImplCopyWithImpl<$Res>
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
                   as String,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        assets: null == assets
+            ? _value._assets
+            : assets // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
       ),
     );
   }
@@ -182,21 +267,58 @@ class __$$GameDataModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GameDataModelImpl implements _GameDataModel {
+class _$GameDataModelImpl extends _GameDataModel {
   const _$GameDataModelImpl({
     required this.id,
+    required this.title,
+    required this.description,
+    final List<String> tags = const [],
+    @JsonKey(name: 'html') required this.renderableContent,
+    @JsonKey(name: 'original_prompt') required this.prompt,
+    @JsonKey(name: 'message_to_user') required this.message,
+    @JsonKey(name: 'user_id') this.userId,
     final List<String> assets = const [],
-    this.version = 1,
-    required this.renderableContent,
-    required this.prompt,
-    required this.message,
-  }) : _assets = assets;
+    this.status = 'generated',
+    @JsonKey(name: "created_at") this.createdAt,
+    @JsonKey(name: "updated_at") this.updatedAt,
+  }) : _tags = tags,
+       _assets = assets,
+       super._();
 
   factory _$GameDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$GameDataModelImplFromJson(json);
 
   @override
   final String id;
+  // Core metadata
+  @override
+  final String title;
+  @override
+  final String description;
+  final List<String> _tags;
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
+  // Game content - maps to database 'html' field
+  @override
+  @JsonKey(name: 'html')
+  final String renderableContent;
+  // AI generation context - maps to database fields
+  @override
+  @JsonKey(name: 'original_prompt')
+  final String prompt;
+  @override
+  @JsonKey(name: 'message_to_user')
+  final String message;
+  // Database fields with exact mapping
+  @override
+  @JsonKey(name: 'user_id')
+  final String? userId;
   final List<String> _assets;
   @override
   @JsonKey()
@@ -208,17 +330,17 @@ class _$GameDataModelImpl implements _GameDataModel {
 
   @override
   @JsonKey()
-  final int version;
+  final String status;
   @override
-  final String renderableContent;
+  @JsonKey(name: "created_at")
+  final DateTime? createdAt;
   @override
-  final String prompt;
-  @override
-  final String message;
+  @JsonKey(name: "updated_at")
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'GameDataModel(id: $id, assets: $assets, version: $version, renderableContent: $renderableContent, prompt: $prompt, message: $message)';
+    return 'GameDataModel(id: $id, title: $title, description: $description, tags: $tags, renderableContent: $renderableContent, prompt: $prompt, message: $message, userId: $userId, assets: $assets, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -227,12 +349,21 @@ class _$GameDataModelImpl implements _GameDataModel {
         (other.runtimeType == runtimeType &&
             other is _$GameDataModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._assets, _assets) &&
-            (identical(other.version, version) || other.version == version) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.renderableContent, renderableContent) ||
                 other.renderableContent == renderableContent) &&
             (identical(other.prompt, prompt) || other.prompt == prompt) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            const DeepCollectionEquality().equals(other._assets, _assets) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -240,11 +371,17 @@ class _$GameDataModelImpl implements _GameDataModel {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    const DeepCollectionEquality().hash(_assets),
-    version,
+    title,
+    description,
+    const DeepCollectionEquality().hash(_tags),
     renderableContent,
     prompt,
     message,
+    userId,
+    const DeepCollectionEquality().hash(_assets),
+    status,
+    createdAt,
+    updatedAt,
   );
 
   /// Create a copy of GameDataModel
@@ -261,31 +398,56 @@ class _$GameDataModelImpl implements _GameDataModel {
   }
 }
 
-abstract class _GameDataModel implements GameDataModel {
+abstract class _GameDataModel extends GameDataModel {
   const factory _GameDataModel({
     required final String id,
+    required final String title,
+    required final String description,
+    final List<String> tags,
+    @JsonKey(name: 'html') required final String renderableContent,
+    @JsonKey(name: 'original_prompt') required final String prompt,
+    @JsonKey(name: 'message_to_user') required final String message,
+    @JsonKey(name: 'user_id') final String? userId,
     final List<String> assets,
-    final int version,
-    required final String renderableContent,
-    required final String prompt,
-    required final String message,
+    final String status,
+    @JsonKey(name: "created_at") final DateTime? createdAt,
+    @JsonKey(name: "updated_at") final DateTime? updatedAt,
   }) = _$GameDataModelImpl;
+  const _GameDataModel._() : super._();
 
   factory _GameDataModel.fromJson(Map<String, dynamic> json) =
       _$GameDataModelImpl.fromJson;
 
   @override
-  String get id;
+  String get id; // Core metadata
+  @override
+  String get title;
+  @override
+  String get description;
+  @override
+  List<String> get tags; // Game content - maps to database 'html' field
+  @override
+  @JsonKey(name: 'html')
+  String get renderableContent; // AI generation context - maps to database fields
+  @override
+  @JsonKey(name: 'original_prompt')
+  String get prompt;
+  @override
+  @JsonKey(name: 'message_to_user')
+  String get message; // Database fields with exact mapping
+  @override
+  @JsonKey(name: 'user_id')
+  String? get userId;
   @override
   List<String> get assets;
   @override
-  int get version;
+  String get status;
   @override
-  String get renderableContent;
+  @JsonKey(name: "created_at")
+  DateTime? get createdAt;
   @override
-  String get prompt;
-  @override
-  String get message;
+  @JsonKey(name: "updated_at")
+  DateTime? get updatedAt;
 
   /// Create a copy of GameDataModel
   /// with the given fields replaced by the non-null parameter values.

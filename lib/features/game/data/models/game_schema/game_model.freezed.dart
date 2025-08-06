@@ -22,16 +22,25 @@ GameModel _$GameModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$GameModel {
   String get id => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError; //
-  String get description => throw _privateConstructorUsedError; //
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_url')
   String get imageUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: "creator_id")
   String? get creatorId => throw _privateConstructorUsedError;
-  String? get gameDataId =>
-      throw _privateConstructorUsedError; // reference to the ai generated data
+  @JsonKey(name: "game_data_id")
+  String? get gameDataId => throw _privateConstructorUsedError; // reference to the ai generated data
+  @JsonKey(name: "game_ids")
   List<String> get gameIds => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_verified")
   bool get isVerified => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
+  List<String> get assets =>
+      throw _privateConstructorUsedError; // Version for local game management
+  int get version => throw _privateConstructorUsedError;
+  @JsonKey(name: "created_at")
   DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "updated_at")
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this GameModel to a JSON map.
@@ -53,14 +62,16 @@ abstract class $GameModelCopyWith<$Res> {
     String id,
     String title,
     String description,
-    String imageUrl,
-    String? creatorId,
-    String? gameDataId,
-    List<String> gameIds,
-    bool isVerified,
+    @JsonKey(name: 'image_url') String imageUrl,
+    @JsonKey(name: "creator_id") String? creatorId,
+    @JsonKey(name: "game_data_id") String? gameDataId,
+    @JsonKey(name: "game_ids") List<String> gameIds,
+    @JsonKey(name: "is_verified") bool isVerified,
     List<String> tags,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    List<String> assets,
+    int version,
+    @JsonKey(name: "created_at") DateTime? createdAt,
+    @JsonKey(name: "updated_at") DateTime? updatedAt,
   });
 }
 
@@ -88,6 +99,8 @@ class _$GameModelCopyWithImpl<$Res, $Val extends GameModel>
     Object? gameIds = null,
     Object? isVerified = null,
     Object? tags = null,
+    Object? assets = null,
+    Object? version = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -129,6 +142,14 @@ class _$GameModelCopyWithImpl<$Res, $Val extends GameModel>
                 ? _value.tags
                 : tags // ignore: cast_nullable_to_non_nullable
                       as List<String>,
+            assets: null == assets
+                ? _value.assets
+                : assets // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            version: null == version
+                ? _value.version
+                : version // ignore: cast_nullable_to_non_nullable
+                      as int,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
@@ -156,14 +177,16 @@ abstract class _$$GameModelImplCopyWith<$Res>
     String id,
     String title,
     String description,
-    String imageUrl,
-    String? creatorId,
-    String? gameDataId,
-    List<String> gameIds,
-    bool isVerified,
+    @JsonKey(name: 'image_url') String imageUrl,
+    @JsonKey(name: "creator_id") String? creatorId,
+    @JsonKey(name: "game_data_id") String? gameDataId,
+    @JsonKey(name: "game_ids") List<String> gameIds,
+    @JsonKey(name: "is_verified") bool isVerified,
     List<String> tags,
-    DateTime? createdAt,
-    DateTime? updatedAt,
+    List<String> assets,
+    int version,
+    @JsonKey(name: "created_at") DateTime? createdAt,
+    @JsonKey(name: "updated_at") DateTime? updatedAt,
   });
 }
 
@@ -190,6 +213,8 @@ class __$$GameModelImplCopyWithImpl<$Res>
     Object? gameIds = null,
     Object? isVerified = null,
     Object? tags = null,
+    Object? assets = null,
+    Object? version = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -231,6 +256,14 @@ class __$$GameModelImplCopyWithImpl<$Res>
             ? _value._tags
             : tags // ignore: cast_nullable_to_non_nullable
                   as List<String>,
+        assets: null == assets
+            ? _value._assets
+            : assets // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        version: null == version
+            ? _value.version
+            : version // ignore: cast_nullable_to_non_nullable
+                  as int,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
@@ -251,16 +284,19 @@ class _$GameModelImpl implements _GameModel {
     required this.id,
     required this.title,
     required this.description,
-    required this.imageUrl,
-    this.creatorId,
-    this.gameDataId,
-    final List<String> gameIds = const [],
-    this.isVerified = false,
+    @JsonKey(name: 'image_url') required this.imageUrl,
+    @JsonKey(name: "creator_id") this.creatorId,
+    @JsonKey(name: "game_data_id") this.gameDataId,
+    @JsonKey(name: "game_ids") final List<String> gameIds = const [],
+    @JsonKey(name: "is_verified") this.isVerified = false,
     final List<String> tags = const [],
-    this.createdAt,
-    this.updatedAt,
+    final List<String> assets = const [],
+    this.version = 1,
+    @JsonKey(name: "created_at") this.createdAt,
+    @JsonKey(name: "updated_at") this.updatedAt,
   }) : _gameIds = gameIds,
-       _tags = tags;
+       _tags = tags,
+       _assets = assets;
 
   factory _$GameModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$GameModelImplFromJson(json);
@@ -269,21 +305,22 @@ class _$GameModelImpl implements _GameModel {
   final String id;
   @override
   final String title;
-  //
   @override
   final String description;
-  //
   @override
+  @JsonKey(name: 'image_url')
   final String imageUrl;
   @override
+  @JsonKey(name: "creator_id")
   final String? creatorId;
   @override
+  @JsonKey(name: "game_data_id")
   final String? gameDataId;
   // reference to the ai generated data
   final List<String> _gameIds;
   // reference to the ai generated data
   @override
-  @JsonKey()
+  @JsonKey(name: "game_ids")
   List<String> get gameIds {
     if (_gameIds is EqualUnmodifiableListView) return _gameIds;
     // ignore: implicit_dynamic_type
@@ -291,7 +328,7 @@ class _$GameModelImpl implements _GameModel {
   }
 
   @override
-  @JsonKey()
+  @JsonKey(name: "is_verified")
   final bool isVerified;
   final List<String> _tags;
   @override
@@ -302,14 +339,29 @@ class _$GameModelImpl implements _GameModel {
     return EqualUnmodifiableListView(_tags);
   }
 
+  final List<String> _assets;
   @override
+  @JsonKey()
+  List<String> get assets {
+    if (_assets is EqualUnmodifiableListView) return _assets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_assets);
+  }
+
+  // Version for local game management
+  @override
+  @JsonKey()
+  final int version;
+  @override
+  @JsonKey(name: "created_at")
   final DateTime? createdAt;
   @override
+  @JsonKey(name: "updated_at")
   final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, assets: $assets, version: $version, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -331,6 +383,8 @@ class _$GameModelImpl implements _GameModel {
             (identical(other.isVerified, isVerified) ||
                 other.isVerified == isVerified) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
+            const DeepCollectionEquality().equals(other._assets, _assets) &&
+            (identical(other.version, version) || other.version == version) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -350,6 +404,8 @@ class _$GameModelImpl implements _GameModel {
     const DeepCollectionEquality().hash(_gameIds),
     isVerified,
     const DeepCollectionEquality().hash(_tags),
+    const DeepCollectionEquality().hash(_assets),
+    version,
     createdAt,
     updatedAt,
   );
@@ -373,14 +429,16 @@ abstract class _GameModel implements GameModel {
     required final String id,
     required final String title,
     required final String description,
-    required final String imageUrl,
-    final String? creatorId,
-    final String? gameDataId,
-    final List<String> gameIds,
-    final bool isVerified,
+    @JsonKey(name: 'image_url') required final String imageUrl,
+    @JsonKey(name: "creator_id") final String? creatorId,
+    @JsonKey(name: "game_data_id") final String? gameDataId,
+    @JsonKey(name: "game_ids") final List<String> gameIds,
+    @JsonKey(name: "is_verified") final bool isVerified,
     final List<String> tags,
-    final DateTime? createdAt,
-    final DateTime? updatedAt,
+    final List<String> assets,
+    final int version,
+    @JsonKey(name: "created_at") final DateTime? createdAt,
+    @JsonKey(name: "updated_at") final DateTime? updatedAt,
   }) = _$GameModelImpl;
 
   factory _GameModel.fromJson(Map<String, dynamic> json) =
@@ -389,24 +447,35 @@ abstract class _GameModel implements GameModel {
   @override
   String get id;
   @override
-  String get title; //
+  String get title;
   @override
-  String get description; //
+  String get description;
   @override
+  @JsonKey(name: 'image_url')
   String get imageUrl;
   @override
+  @JsonKey(name: "creator_id")
   String? get creatorId;
   @override
+  @JsonKey(name: "game_data_id")
   String? get gameDataId; // reference to the ai generated data
   @override
+  @JsonKey(name: "game_ids")
   List<String> get gameIds;
   @override
+  @JsonKey(name: "is_verified")
   bool get isVerified;
   @override
   List<String> get tags;
   @override
+  List<String> get assets; // Version for local game management
+  @override
+  int get version;
+  @override
+  @JsonKey(name: "created_at")
   DateTime? get createdAt;
   @override
+  @JsonKey(name: "updated_at")
   DateTime? get updatedAt;
 
   /// Create a copy of GameModel

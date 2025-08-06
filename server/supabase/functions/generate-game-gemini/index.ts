@@ -3,6 +3,11 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 
 console.log("Generate Game Function Started!");
 
+// Generate UUID v4
+function generateUUID(): string {
+  return crypto.randomUUID();
+}
+
 // CORS headers for preflight requests
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',

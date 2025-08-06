@@ -9,7 +9,16 @@ import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.da
 /// Repository interface for game generation
 /// This repository is responsible for generating game data based on user input
 abstract class GameRepository {
-Future<MessageModel> generateGame(MessageModel message);
+  Future<MessageModel> generateGame(MessageModel message);
+  
+  // Game deployment
+  Future<void> deployGame({
+    required String prompt,
+    required GameDataModel gameData,
+    String? tokenUrl,
+  });
+  Future<List<GameDataModel>> getDeployedGames({String? userId});
+  
   Future<void> saveGameModel(GameModel gameData);
   Future<void> saveGame(GameDataModel gameData);
   Future<List<String>> uploadFiles(List<File> files);

@@ -3,28 +3,104 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'game_data_model.freezed.dart';
 part 'game_data_model.g.dart';
 
+// Represents the AI-generated game data model
 @freezed
 abstract class GameDataModel with _$GameDataModel {
   const factory GameDataModel({
     required String id,
-    @Default([]) List<String> assets,
-    @Default(1) int version,
+
+    // Core metadata
+    required String title,
+    required String description,
+    @Default([]) List<String> tags,
+    
+    // Game content - maps to database 'html' field
+    @JsonKey(name: 'html')
     required String renderableContent,
+    
+    // AI generation context - maps to database fields
+    @JsonKey(name: 'original_prompt')
     required String prompt,
+    
+    @JsonKey(name: 'message_to_user')
     required String message,
+    
+    // Database fields with exact mapping
+    @JsonKey(name: 'user_id') String? userId,
+    @Default([]) List<String> assets,
+    @Default('generated') String status,
+
+    @JsonKey(name: "created_at")
+    DateTime? createdAt,
+
+    @JsonKey(name: "updated_at")
+    DateTime? updatedAt,
   }) = _GameDataModel;
+
+  const GameDataModel._();
 
   factory GameDataModel.fromJson(Map<String, dynamic> json) =>
       _$GameDataModelFromJson(json);
 
-  static empty() => GameDataModel(
+  // Create empty game for local development
+  static GameDataModel empty({
+    String? title,
+    String? description,
+    List<String>? tags,
+  }) => GameDataModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
-        assets: [],
-        version: 1,
+        title: title ?? 'Untitled Game',
+        description: description ?? 'AI Generated Game',
+        tags: tags ?? ['puzzle', 'ai-generated'],
         renderableContent: _callLLMToGenerateGame(),
         prompt: '',
         message: 'Game generated successfully!',
+        assets: [],
+        status: 'generated',
+        createdAt: DateTime.now(),
       );
+
+  // Create from AI generation (matches what edge function expects)
+  static GameDataModel fromAIResponse({
+    required String id,
+    required String title,
+    required String description,
+    required List<String> tags,
+    required String html,
+    required String messageToUser,
+    required String originalPrompt,
+    List<String>? assets,
+    String? userId,
+  }) => GameDataModel(
+        id: id,
+        title: title,
+        description: description,
+        tags: tags,
+        renderableContent: html,
+        message: messageToUser,
+        prompt: originalPrompt,
+        assets: assets ?? [],
+        status: 'generated',
+        userId: userId,
+        createdAt: DateTime.now(),
+      );
+
+  // Convert to format expected by edge function
+  Map<String, dynamic> toDatabasePayload() {
+    return {
+      'title': title,
+      'description': description,
+      'html': renderableContent,
+      'messageToUser': message,
+      'tags': tags,
+      'assets': assets,
+    };
+  }
+
+  // Create from database response (what comes back from Supabase)
+  static GameDataModel fromDatabase(Map<String, dynamic> json) {
+    return GameDataModel.fromJson(json);
+  }
 
   static String _callLLMToGenerateGame() {
 // return r"""<!DOCTYPE html>

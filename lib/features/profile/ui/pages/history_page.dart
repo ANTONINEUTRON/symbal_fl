@@ -495,7 +495,7 @@ class GameCard extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              context.read<GameCubit>().deployGame(game);
+              context.read<GameCubit>().deployGame(gameToDeploy: game);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('${game.title} deployed successfully!')),
               );

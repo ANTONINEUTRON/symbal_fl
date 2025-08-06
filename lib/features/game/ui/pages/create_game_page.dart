@@ -302,7 +302,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 // Navigator.pop(context);
 
                 // connect to pay
-                await context.read<WalletCubit>().connectWallet();
+                // await context.read<WalletCubit>().connectWallet();
                 
                 // Create updated game model
                 final updatedGame = gameModel.copyWith(
@@ -312,7 +312,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 );
                 
                 // Deploy with updated data
-                context.read<GameCubit>().deployGame(updatedGame);
+                context.read<GameCubit>().deployGame(
+                  gameToDeploy: updatedGame,
+                  updatedTitle: titleController.text.trim(),
+                  updatedDescription: descriptionController.text.trim(),
+                  updatedTags: tags,
+                );
                 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

@@ -23,6 +23,24 @@ class SupabaseGameRepository implements GameRepository {
   }
 
   @override
+  Future<void> deployGame({
+    required String prompt,
+    required GameDataModel gameData,
+    String? tokenUrl,
+  }) async {
+    return await _remoteDataSource.deployGame(
+      prompt: prompt,
+      gameData: gameData,
+      tokenUrl: tokenUrl,
+    );
+  }
+
+  @override
+  Future<List<GameDataModel>> getDeployedGames({String? userId}) async {
+    return await _remoteDataSource.getDeployedGames(userId: userId);
+  }
+
+  @override
   Future<void> saveGame(GameDataModel gameData) async {
     return await _remoteDataSource.saveGame(gameData);
   }

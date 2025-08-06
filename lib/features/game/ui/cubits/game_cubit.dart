@@ -13,6 +13,33 @@ class GameCubit extends HydratedCubit<CreateGameState> {
 
   final GameRepository gameGenerationRepository;
 
+  /// Get all games from chat history
+  List<GameModel> getAllGeneratedGames() {
+    return state.chatList
+        .where((msg) => msg.gameModel != null)
+        .map((msg) => msg.gameModel!)
+        .toList();
+  }
+
+  /// Select specific game for deployment
+  void selectGameForDeployment(String gameId) {
+    final allGames = getAllGeneratedGames();
+    final selectedGame = allGames.where((game) => game.id == gameId).firstOrNull;
+    
+    if (selectedGame != null) {
+      emit(state.copyWith(
+        generatedGame: selectedGame,
+        selectedGameId: gameId,
+      ));
+    }
+  }
+
+  /// Get the latest game (for default selection)
+  GameModel? getLatestGame() {
+    final allGames = getAllGeneratedGames();
+    return allGames.isNotEmpty ? allGames.last : null;
+  }
+
   Future<void> createGame({
     required String prompt,
     required List<File> selectedFiles,
@@ -72,8 +99,14 @@ class GameCubit extends HydratedCubit<CreateGameState> {
     }
   }
 
-  // ✅ Deploy game to production
-  Future<void> deployGame([GameModel? gameToDeploy]) async {
+  /// Enhanced deployment with token URL and game modifications
+  Future<void> deployGame({
+    GameModel? gameToDeploy,
+    String? tokenUrl,
+    String? updatedTitle,
+    String? updatedDescription,
+    List<String>? updatedTags,
+  }) async {
     final gameModel = gameToDeploy ?? state.generatedGame;
     
     if (gameModel == null) {
@@ -81,25 +114,40 @@ class GameCubit extends HydratedCubit<CreateGameState> {
       return;
     }
 
-    emit(state.copyWith(isDeploying: true));
+    emit(state.copyWith(isDeploying: true, error: null));
 
     try {
+      // Create enhanced game model with updates
+      final enhancedGame = gameModel.copyWith(
+        title: updatedTitle ?? gameModel.title,
+        description: updatedDescription ?? gameModel.description,
+        tags: updatedTags ?? gameModel.tags,
+        // Add token URL if GameModel supports it, otherwise handle in metadata
+      );
+
       // Save to remote database
-      await gameGenerationRepository.saveGameModel(gameModel);
+      await gameGenerationRepository.saveGameModel(enhancedGame);
       
       emit(state.copyWith(
         isDeploying: false,
         isDeployed: true,
-        generatedGame: null, 
-        isDraftSaved: false,
-      ));
+        selectedGameId: null, // Clear selection after deployment
+      ),);
       
-      print("Game deployed successfully and removed from drafts");
+      print("Game deployed successfully: ${enhancedGame.title}");
+      if (tokenUrl != null) {
+        print("Token URL associated: $tokenUrl");
+      }
+      
     } catch (e) {
       emit(state.copyWith(
         isDeploying: false,
         error: 'Failed to deploy game: ${e.toString()}',
       ));
+      
+      if (kDebugMode) {
+        print('Error deploying game: $e');
+      }
     }
   }
 
@@ -184,6 +232,29 @@ class GameCubit extends HydratedCubit<CreateGameState> {
 
   void clearError() {
     emit(state.copyWith(error: null));
+  }
+
+  /// Clear deployment success state
+  void clearDeploymentSuccess() {
+    emit(state.copyWith(isDeployed: false));
+  }
+
+  /// Check if a specific game is selected for deployment
+  bool isGameSelected(String gameId) {
+    return state.selectedGameId == gameId;
+  }
+
+  /// Get currently selected game for deployment
+  GameModel? getSelectedGame() {
+    if (state.selectedGameId == null) return state.generatedGame;
+    
+    final allGames = getAllGeneratedGames();
+    return allGames.where((game) => game.id == state.selectedGameId).firstOrNull;
+  }
+
+  /// Clear game selection
+  void clearGameSelection() {
+    emit(state.copyWith(selectedGameId: null));
   }
 
   // ✅ REQUIRED: Implement fromJson for state restoration

@@ -28,6 +28,7 @@ _$CreateGameStateImpl _$$CreateGameStateImplFromJson(
           .toList() ??
       const [],
   error: json['error'] as String?,
+  selectedGameId: json['selectedGameId'] as String?,
 );
 
 Map<String, dynamic> _$$CreateGameStateImplToJson(
@@ -42,4 +43,5 @@ Map<String, dynamic> _$$CreateGameStateImplToJson(
   'generatedGame': instance.generatedGame,
   'draftGames': instance.draftGames,
   'error': instance.error,
+  'selectedGameId': instance.selectedGameId,
 };

@@ -44,55 +44,59 @@ class GameRemoteDatasource {
         data: requestBody,
         options: Options(
           headers: {
-            'Authorization':
-                'Bearer ${session?.accessToken}', // Use session token
+            'Authorization': 'Bearer ${session?.accessToken}',
           },
         ),
       );
 
       if (response.statusCode == 200) {
         final responseData = response.data;
+        final generatedGame = responseData['game'];
         
-        // Parse the response and create a MessageModel with the generated game
+        // Create GameDataModel from AI response
+        final gameData = GameDataModel.fromAIResponse(
+          id: responseData['gameId'],
+          title: generatedGame['title'],
+          description: generatedGame['description'],
+          tags: List<String>.from(generatedGame['tags'] ?? []),
+          html: generatedGame['html'],
+          messageToUser: generatedGame['messageToUser'],
+          originalPrompt: message.prompt,
+          assets: List<String>.from(generatedGame['assets'] ?? []),
+          userId: supabase.auth.currentUser?.id,
+        );
+
+        // Create GameModel for UI
+        final gameModel = GameModel(
+          id: const Uuid().v4(),
+          title: gameData.title,
+          description: gameData.description,
+          imageUrl: message.attachedFiles.isNotEmpty ? message.attachedFiles.first : '',
+          creatorId: gameData.userId,
+          gameDataId: gameData.id,
+          gameIds: [gameData.id],
+          tags: gameData.tags,
+          assets: gameData.assets,
+          version: 1,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
+
+        // Return MessageModel with the generated game
         return MessageModel(
-          prompt:
-              responseData['game']['messageToUser'] ??
-              'Game generated successfully!',
+          prompt: gameData.message,
           isUser: false,
           timestamp: DateTime.now(),
           attachedFiles: message.attachedFiles,
-          gameData: GameDataModel(
-            id:
-                responseData['game']['game_id']?.toString() ??
-                DateTime.now().millisecondsSinceEpoch.toString(),
-            assets: message.attachedFiles,
-            version: 1,
-            renderableContent: responseData['game']['html'] ?? '',
-            prompt: message.prompt,
-            message:
-                responseData['game']['messageToUser'] ??
-                'Game generated successfully!',
-          ),
-          gameModel: GameModel(
-            id: const Uuid().v4(),
-            title: responseData['game']['title'],
-            description: responseData['game']['description'],
-            imageUrl: message.attachedFiles.isNotEmpty
-                ? message.attachedFiles.first
-                : '',
-            creatorId: responseData['game']['user_id'],
-            tags: List<String>.from(responseData['game']['tags']),
-            createdAt: DateTime.now(),
-            updatedAt: DateTime.now(),
-          ),
+          gameData: gameData,
+          gameModel: gameModel,
         );
       } else {
         // Handle error response
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
-          message:
-              'Failed to generate game: ${response.data['error'] ?? 'Unknown error'}',
+          message: 'Failed to generate game: ${response.data['error'] ?? 'Unknown error'}',
         );
       }
     } on DioException catch (e) {
@@ -134,6 +138,76 @@ class GameRemoteDatasource {
         timestamp: DateTime.now(),
         attachedFiles: message.attachedFiles,
       );
+    }
+  }
+
+  // Deploy a game to the database
+  Future<void> deployGame({
+    required String prompt,
+    required GameDataModel gameData,
+    String? tokenUrl,
+  }) async {
+    try {
+      final supabase = Supabase.instance.client;
+      final session = supabase.auth.currentSession;
+
+      // Prepare the deployment payload
+      final requestBody = {
+        'action': 'deploy',
+        'prompt': prompt,
+        'generatedGame': gameData.toDatabasePayload(),
+        'tokenUrl': tokenUrl,
+      };
+
+      // Call the edge function to deploy
+      final response = await _dio.post(
+        '${Env.dbUrl}/functions/v1/generate_game',
+        data: requestBody,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${session?.accessToken}',
+          },
+        ),
+      );
+
+      if (response.statusCode != 200) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          message: 'Failed to deploy game: ${response.data['error'] ?? 'Unknown error'}',
+        );
+      }
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print('Deployment DioException: ${e}');
+      }
+      throw Exception('Failed to deploy game: ${e.message}');
+    } catch (e) {
+      if (kDebugMode) {
+        print('Deployment Error: ${e}');
+      }
+      throw Exception('Failed to deploy game: ${e.toString()}');
+    }
+  }
+
+  // Get deployed games from database
+  Future<List<GameDataModel>> getDeployedGames({String? userId}) async {
+    try {
+      final supabase = Supabase.instance.client;
+      final currentUserId = userId ?? supabase.auth.currentUser?.id;
+
+      final response = await supabase
+          .from('generated_games')
+          .select()
+          .eq('user_id', currentUserId ?? '')
+          .order('created_at', ascending: false);
+
+      return response
+          .map((json) => GameDataModel.fromDatabase(json))
+          .toList()
+          .cast<GameDataModel>();
+    } catch (e) {
+      throw Exception('Failed to fetch deployed games: ${e.toString()}');
     }
   }
 
@@ -187,7 +261,8 @@ class GameRemoteDatasource {
     try {
       final supabase = Supabase.instance.client;
 
-      await supabase.from('game_data').insert(gameData.toJson());
+      // Save to the correct table based on schema
+      await supabase.from('generated_games').insert(gameData.toJson());
     } catch (e) {
       throw Exception('Failed to save game: ${e.toString()}');
     }
@@ -197,6 +272,7 @@ class GameRemoteDatasource {
     try {
       final supabase = Supabase.instance.client;
 
+print(gameModel);
       // Convert GameModel to JSON for Supabase
       final gameJson = gameModel.toJson();
 

@@ -30,6 +30,7 @@ mixin _$CreateGameState {
   GameModel? get generatedGame => throw _privateConstructorUsedError;
   List<GameModel> get draftGames => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
+  String? get selectedGameId => throw _privateConstructorUsedError;
 
   /// Serializes this CreateGameState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,6 +59,7 @@ abstract class $CreateGameStateCopyWith<$Res> {
     GameModel? generatedGame,
     List<GameModel> draftGames,
     String? error,
+    String? selectedGameId,
   });
 
   $GameModelCopyWith<$Res>? get generatedGame;
@@ -87,6 +89,7 @@ class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
     Object? generatedGame = freezed,
     Object? draftGames = null,
     Object? error = freezed,
+    Object? selectedGameId = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -125,6 +128,10 @@ class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
             error: freezed == error
                 ? _value.error
                 : error // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            selectedGameId: freezed == selectedGameId
+                ? _value.selectedGameId
+                : selectedGameId // ignore: cast_nullable_to_non_nullable
                       as String?,
           )
           as $Val,
@@ -165,6 +172,7 @@ abstract class _$$CreateGameStateImplCopyWith<$Res>
     GameModel? generatedGame,
     List<GameModel> draftGames,
     String? error,
+    String? selectedGameId,
   });
 
   @override
@@ -194,6 +202,7 @@ class __$$CreateGameStateImplCopyWithImpl<$Res>
     Object? generatedGame = freezed,
     Object? draftGames = null,
     Object? error = freezed,
+    Object? selectedGameId = freezed,
   }) {
     return _then(
       _$CreateGameStateImpl(
@@ -233,6 +242,10 @@ class __$$CreateGameStateImplCopyWithImpl<$Res>
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
                   as String?,
+        selectedGameId: freezed == selectedGameId
+            ? _value.selectedGameId
+            : selectedGameId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -251,6 +264,7 @@ class _$CreateGameStateImpl implements _CreateGameState {
     this.generatedGame,
     final List<GameModel> draftGames = const [],
     this.error,
+    this.selectedGameId,
   }) : _chatList = chatList,
        _draftGames = draftGames;
 
@@ -294,10 +308,12 @@ class _$CreateGameStateImpl implements _CreateGameState {
 
   @override
   final String? error;
+  @override
+  final String? selectedGameId;
 
   @override
   String toString() {
-    return 'CreateGameState(chatList: $chatList, isGenerating: $isGenerating, isDeploying: $isDeploying, isDraftSaved: $isDraftSaved, isDeployed: $isDeployed, retriesCount: $retriesCount, generatedGame: $generatedGame, draftGames: $draftGames, error: $error)';
+    return 'CreateGameState(chatList: $chatList, isGenerating: $isGenerating, isDeploying: $isDeploying, isDraftSaved: $isDraftSaved, isDeployed: $isDeployed, retriesCount: $retriesCount, generatedGame: $generatedGame, draftGames: $draftGames, error: $error, selectedGameId: $selectedGameId)';
   }
 
   @override
@@ -322,7 +338,9 @@ class _$CreateGameStateImpl implements _CreateGameState {
               other._draftGames,
               _draftGames,
             ) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.selectedGameId, selectedGameId) ||
+                other.selectedGameId == selectedGameId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -338,6 +356,7 @@ class _$CreateGameStateImpl implements _CreateGameState {
     generatedGame,
     const DeepCollectionEquality().hash(_draftGames),
     error,
+    selectedGameId,
   );
 
   /// Create a copy of CreateGameState
@@ -368,6 +387,7 @@ abstract class _CreateGameState implements CreateGameState {
     final GameModel? generatedGame,
     final List<GameModel> draftGames,
     final String? error,
+    final String? selectedGameId,
   }) = _$CreateGameStateImpl;
 
   factory _CreateGameState.fromJson(Map<String, dynamic> json) =
@@ -391,6 +411,8 @@ abstract class _CreateGameState implements CreateGameState {
   List<GameModel> get draftGames;
   @override
   String? get error;
+  @override
+  String? get selectedGameId;
 
   /// Create a copy of CreateGameState
   /// with the given fields replaced by the non-null parameter values.

@@ -17,6 +17,7 @@ abstract class CreateGameState with _$CreateGameState {
     GameModel? generatedGame,
     @Default([]) List<GameModel> draftGames,
     String? error,
+    String? selectedGameId, // Track which game user wants to deploy
   }) = _CreateGameState;
 
 
