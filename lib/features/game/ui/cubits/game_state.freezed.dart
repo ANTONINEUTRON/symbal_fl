@@ -15,12 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-CreateGameState _$CreateGameStateFromJson(Map<String, dynamic> json) {
-  return _CreateGameState.fromJson(json);
+GameState _$GameStateFromJson(Map<String, dynamic> json) {
+  return _GameState.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CreateGameState {
+mixin _$GameState {
   List<MessageModel> get chatList => throw _privateConstructorUsedError;
   bool get isGenerating => throw _privateConstructorUsedError;
   bool get isDeploying => throw _privateConstructorUsedError;
@@ -34,22 +34,20 @@ mixin _$CreateGameState {
   String? get error => throw _privateConstructorUsedError;
   String? get selectedGameId => throw _privateConstructorUsedError;
 
-  /// Serializes this CreateGameState to a JSON map.
+  /// Serializes this GameState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CreateGameState
+  /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CreateGameStateCopyWith<CreateGameState> get copyWith =>
+  $GameStateCopyWith<GameState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateGameStateCopyWith<$Res> {
-  factory $CreateGameStateCopyWith(
-    CreateGameState value,
-    $Res Function(CreateGameState) then,
-  ) = _$CreateGameStateCopyWithImpl<$Res, CreateGameState>;
+abstract class $GameStateCopyWith<$Res> {
+  factory $GameStateCopyWith(GameState value, $Res Function(GameState) then) =
+      _$GameStateCopyWithImpl<$Res, GameState>;
   @useResult
   $Res call({
     List<MessageModel> chatList,
@@ -70,16 +68,16 @@ abstract class $CreateGameStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
-    implements $CreateGameStateCopyWith<$Res> {
-  _$CreateGameStateCopyWithImpl(this._value, this._then);
+class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
+    implements $GameStateCopyWith<$Res> {
+  _$GameStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CreateGameState
+  /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -152,7 +150,7 @@ class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
     );
   }
 
-  /// Create a copy of CreateGameState
+  /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -168,12 +166,12 @@ class _$CreateGameStateCopyWithImpl<$Res, $Val extends CreateGameState>
 }
 
 /// @nodoc
-abstract class _$$CreateGameStateImplCopyWith<$Res>
-    implements $CreateGameStateCopyWith<$Res> {
-  factory _$$CreateGameStateImplCopyWith(
-    _$CreateGameStateImpl value,
-    $Res Function(_$CreateGameStateImpl) then,
-  ) = __$$CreateGameStateImplCopyWithImpl<$Res>;
+abstract class _$$GameStateImplCopyWith<$Res>
+    implements $GameStateCopyWith<$Res> {
+  factory _$$GameStateImplCopyWith(
+    _$GameStateImpl value,
+    $Res Function(_$GameStateImpl) then,
+  ) = __$$GameStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -196,15 +194,15 @@ abstract class _$$CreateGameStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CreateGameStateImplCopyWithImpl<$Res>
-    extends _$CreateGameStateCopyWithImpl<$Res, _$CreateGameStateImpl>
-    implements _$$CreateGameStateImplCopyWith<$Res> {
-  __$$CreateGameStateImplCopyWithImpl(
-    _$CreateGameStateImpl _value,
-    $Res Function(_$CreateGameStateImpl) _then,
+class __$$GameStateImplCopyWithImpl<$Res>
+    extends _$GameStateCopyWithImpl<$Res, _$GameStateImpl>
+    implements _$$GameStateImplCopyWith<$Res> {
+  __$$GameStateImplCopyWithImpl(
+    _$GameStateImpl _value,
+    $Res Function(_$GameStateImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of CreateGameState
+  /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -223,7 +221,7 @@ class __$$CreateGameStateImplCopyWithImpl<$Res>
     Object? selectedGameId = freezed,
   }) {
     return _then(
-      _$CreateGameStateImpl(
+      _$GameStateImpl(
         chatList: null == chatList
             ? _value._chatList
             : chatList // ignore: cast_nullable_to_non_nullable
@@ -279,8 +277,8 @@ class __$$CreateGameStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CreateGameStateImpl implements _CreateGameState {
-  const _$CreateGameStateImpl({
+class _$GameStateImpl implements _GameState {
+  const _$GameStateImpl({
     final List<MessageModel> chatList = const [],
     this.isGenerating = false,
     this.isDeploying = false,
@@ -297,8 +295,8 @@ class _$CreateGameStateImpl implements _CreateGameState {
        _draftGames = draftGames,
        _deployedGames = deployedGames;
 
-  factory _$CreateGameStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CreateGameStateImplFromJson(json);
+  factory _$GameStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameStateImplFromJson(json);
 
   final List<MessageModel> _chatList;
   @override
@@ -354,14 +352,14 @@ class _$CreateGameStateImpl implements _CreateGameState {
 
   @override
   String toString() {
-    return 'CreateGameState(chatList: $chatList, isGenerating: $isGenerating, isDeploying: $isDeploying, isDraftSaved: $isDraftSaved, isDeployed: $isDeployed, retriesCount: $retriesCount, generatedGame: $generatedGame, draftGames: $draftGames, deployedGames: $deployedGames, isLoadingDeployedGames: $isLoadingDeployedGames, error: $error, selectedGameId: $selectedGameId)';
+    return 'GameState(chatList: $chatList, isGenerating: $isGenerating, isDeploying: $isDeploying, isDraftSaved: $isDraftSaved, isDeployed: $isDeployed, retriesCount: $retriesCount, generatedGame: $generatedGame, draftGames: $draftGames, deployedGames: $deployedGames, isLoadingDeployedGames: $isLoadingDeployedGames, error: $error, selectedGameId: $selectedGameId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CreateGameStateImpl &&
+            other is _$GameStateImpl &&
             const DeepCollectionEquality().equals(other._chatList, _chatList) &&
             (identical(other.isGenerating, isGenerating) ||
                 other.isGenerating == isGenerating) &&
@@ -408,25 +406,22 @@ class _$CreateGameStateImpl implements _CreateGameState {
     selectedGameId,
   );
 
-  /// Create a copy of CreateGameState
+  /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CreateGameStateImplCopyWith<_$CreateGameStateImpl> get copyWith =>
-      __$$CreateGameStateImplCopyWithImpl<_$CreateGameStateImpl>(
-        this,
-        _$identity,
-      );
+  _$$GameStateImplCopyWith<_$GameStateImpl> get copyWith =>
+      __$$GameStateImplCopyWithImpl<_$GameStateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CreateGameStateImplToJson(this);
+    return _$$GameStateImplToJson(this);
   }
 }
 
-abstract class _CreateGameState implements CreateGameState {
-  const factory _CreateGameState({
+abstract class _GameState implements GameState {
+  const factory _GameState({
     final List<MessageModel> chatList,
     final bool isGenerating,
     final bool isDeploying,
@@ -439,10 +434,10 @@ abstract class _CreateGameState implements CreateGameState {
     final bool isLoadingDeployedGames,
     final String? error,
     final String? selectedGameId,
-  }) = _$CreateGameStateImpl;
+  }) = _$GameStateImpl;
 
-  factory _CreateGameState.fromJson(Map<String, dynamic> json) =
-      _$CreateGameStateImpl.fromJson;
+  factory _GameState.fromJson(Map<String, dynamic> json) =
+      _$GameStateImpl.fromJson;
 
   @override
   List<MessageModel> get chatList;
@@ -469,10 +464,10 @@ abstract class _CreateGameState implements CreateGameState {
   @override
   String? get selectedGameId;
 
-  /// Create a copy of CreateGameState
+  /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreateGameStateImplCopyWith<_$CreateGameStateImpl> get copyWith =>
+  _$$GameStateImplCopyWith<_$GameStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

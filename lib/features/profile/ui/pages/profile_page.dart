@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/profile_sliver_app_bar.dart';
-import 'package:symbal_fl/features/profile/ui/widgets/settings_section.dart';
+import 'package:symbal_fl/features/profile/ui/widgets/profile_menu_section.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/stat_section.dart';
 
 @RoutePage()
@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage>
                 // Stats Row
                 StatsSection(),
                 const SizedBox(height: 8),
-                SettingsSection(),
+                ProfileMenuSection(),
               ],
             ),
           ),

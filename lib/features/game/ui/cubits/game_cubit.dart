@@ -8,9 +8,9 @@ import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/domain/repositories/game_repository.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_state.dart';
 
-class GameCubit extends HydratedCubit<CreateGameState> {
+class GameCubit extends HydratedCubit<GameState> {
   GameCubit({required this.gameGenerationRepository})
-    : super(const CreateGameState());
+    : super(const GameState());
 
   final GameRepository gameGenerationRepository;
 
@@ -327,9 +327,9 @@ class GameCubit extends HydratedCubit<CreateGameState> {
 
   // ✅ REQUIRED: Implement fromJson for state restoration
   @override
-  CreateGameState? fromJson(Map<String, dynamic> json) {
+  GameState? fromJson(Map<String, dynamic> json) {
     try {
-      return CreateGameState.fromJson(json);
+      return GameState.fromJson(json);
     } catch (e) {
       print('Error restoring state: $e');
       return null; // Return null to use initial state
@@ -338,7 +338,7 @@ class GameCubit extends HydratedCubit<CreateGameState> {
 
   // ✅ REQUIRED: Implement toJson for state persistence
   @override
-  Map<String, dynamic>? toJson(CreateGameState state) {
+  Map<String, dynamic>? toJson(GameState state) {
     try {
       return state.toJson();
     } catch (e) {

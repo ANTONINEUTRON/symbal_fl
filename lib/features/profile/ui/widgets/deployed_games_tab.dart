@@ -24,7 +24,7 @@ class _DeployedGamesTabState extends State<DeployedGamesTab> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameCubit, CreateGameState>(
+    return BlocBuilder<GameCubit, GameState>(
       builder: (context, state) {
         if (state.isLoadingDeployedGames) {
           return const Center(

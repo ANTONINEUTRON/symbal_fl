@@ -161,55 +161,62 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
               ),
               const SizedBox(height: 24),
 
-              // Game Selector - always show to display available games
-              const Text(
-                'Game to Deploy:',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white24),
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xFF1A1A2E),
-                ),
-                child: DropdownButton<GameModel>(
-                  value: selectedGame,
-                  isExpanded: true,
-                  underline: const SizedBox(),
-                  dropdownColor: const Color(0xFF1A1A2E),
-                  hint: const Text(
-                    'Choose a game version...',
-                    style: TextStyle(color: Colors.white54),
+              // Game Selector
+              if (widget.availableGames.length > 1) ...[
+                const Text(
+                  'Select Game Version:',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
-                  items: widget.availableGames
-                      .map(
-                        (game) => DropdownMenuItem(
-                          value: game,
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Text(
-                              '${game.title.isNotEmpty ? game.title : 'Untitled Game'} - ${_formatGameTime(game.createdAt)}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white24),
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xFF1A1A2E),
+                  ),
+                  child: DropdownButton<GameModel>(
+                    value: selectedGame,
+                    isExpanded: true,
+                    underline: const SizedBox(),
+                    dropdownColor: const Color(0xFF1A1A2E),
+                    items: widget.availableGames
+                        .map(
+                          (game) => DropdownMenuItem(
+                            value: game,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  game.title.isNotEmpty
+                                      ? game.title
+                                      : 'Untitled Game',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  _formatGameTime(game.createdAt),
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white54,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: _updateSelectedGame,
+                        )
+                        .toList(),
+                    onChanged: _updateSelectedGame,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
+                const SizedBox(height: 24),
+              ],
 
               Expanded(
                 child: SingleChildScrollView(

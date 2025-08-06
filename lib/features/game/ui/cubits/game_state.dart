@@ -6,8 +6,8 @@ part 'game_state.freezed.dart';
 part 'game_state.g.dart'; 
 
 @freezed
-abstract class CreateGameState with _$CreateGameState {
-  const factory CreateGameState({
+abstract class GameState with _$GameState {
+  const factory GameState({
     @Default([]) List<MessageModel> chatList,
     @Default(false) bool isGenerating,
     @Default(false) bool isDeploying,
@@ -20,9 +20,9 @@ abstract class CreateGameState with _$CreateGameState {
     @Default(false) bool isLoadingDeployedGames,
     String? error,
     String? selectedGameId, // Track which game user wants to deploy
-  }) = _CreateGameState;
+  }) = _GameState;
 
 
-  factory CreateGameState.fromJson(Map<String, dynamic> json) =>
-      _$CreateGameStateFromJson(json);
+  factory GameState.fromJson(Map<String, dynamic> json) =>
+      _$GameStateFromJson(json);
 }

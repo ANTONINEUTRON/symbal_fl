@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:symbal_fl/core/route/app_route.gr.dart';
 
-class SettingsSection extends StatelessWidget {
-  const SettingsSection({super.key});
+class ProfileMenuSection extends StatelessWidget {
+  const ProfileMenuSection({super.key});
 
   @override
   Widget build(BuildContext context) {

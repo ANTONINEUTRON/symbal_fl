@@ -40,7 +40,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _sendMessage() {
-    CreateGameState createGameState = context.read<GameCubit>().state;
+    GameState createGameState = context.read<GameCubit>().state;
     if (_promptController.text.trim().isEmpty || createGameState.retriesCount <= 0) return;
 
     String userMessage = _promptController.text.trim();
@@ -139,7 +139,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   @override
   Widget build(BuildContext context) {
     var createGameCubit = context.watch<GameCubit>();
-    CreateGameState createGameState = createGameCubit.state;
+    GameState createGameState = createGameCubit.state;
     
     return Scaffold(
       backgroundColor: Colors.grey[900],

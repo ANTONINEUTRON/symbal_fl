@@ -16,7 +16,7 @@ class EnhancedGameChatExample extends StatelessWidget {
         title: const Text('Enhanced Game Creation'),
         actions: [
           // Deploy button in app bar
-          BlocBuilder<GameCubit, CreateGameState>(
+          BlocBuilder<GameCubit, GameState>(
             builder: (context, state) {
               final hasGames = context.read<GameCubit>().getAllGeneratedGames().isNotEmpty;
               
@@ -71,7 +71,7 @@ class EnhancedGameChatExample extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<GameCubit, CreateGameState>(
+      body: BlocBuilder<GameCubit, GameState>(
         builder: (context, state) {
           return Column(
             children: [
