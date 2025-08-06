@@ -43,13 +43,12 @@ class GameCubit extends HydratedCubit<CreateGameState> {
       // Call backend to generate game
       MessageModel aiMessage = await gameGenerationRepository.generateGame(message);
       
-      // ✅ Update state with AI message and generated game (automatically persisted!)
       emit(
         state.copyWith(
           chatList: [...state.chatList, aiMessage],
           isGenerating: false,
-          generatedGame: aiMessage.gameModel, // ✅ Automatically saved by HydratedBloc
-          isDraftSaved: aiMessage.gameModel != null, // ✅ Mark as saved if game exists
+          generatedGame: aiMessage.gameModel, 
+          isDraftSaved: aiMessage.gameModel != null, 
         ),
       );
 
@@ -88,11 +87,10 @@ class GameCubit extends HydratedCubit<CreateGameState> {
       // Save to remote database
       await gameGenerationRepository.saveGameModel(gameModel);
       
-      // ✅ Clear from local state after successful deployment (auto-persisted)
       emit(state.copyWith(
         isDeploying: false,
         isDeployed: true,
-        generatedGame: null, // ✅ Automatically removed from storage
+        generatedGame: null, 
         isDraftSaved: false,
       ));
       
@@ -105,7 +103,6 @@ class GameCubit extends HydratedCubit<CreateGameState> {
     }
   }
 
-  // ✅ Add multiple games to drafts (for managing multiple generated games)
   void addToDrafts(GameModel gameModel) {
     final updatedDrafts = [...state.draftGames];
     
@@ -122,7 +119,6 @@ class GameCubit extends HydratedCubit<CreateGameState> {
     ));
   }
 
-  // ✅ Load specific draft
   void loadDraft(String gameId) {
     final game = state.draftGames.firstWhere(
       (game) => game.id == gameId,
@@ -135,7 +131,6 @@ class GameCubit extends HydratedCubit<CreateGameState> {
     ));
   }
 
-  // ✅ Delete draft
   void deleteDraft(String gameId) {
     final updatedDrafts = state.draftGames
         .where((game) => game.id != gameId)
@@ -157,14 +152,12 @@ class GameCubit extends HydratedCubit<CreateGameState> {
     ));
   }
 
-  // ✅ Save current game as draft
   void saveCurrentGameAsDraft() {
     if (state.generatedGame != null) {
       addToDrafts(state.generatedGame!);
     }
   }
 
-  // ✅ Clear all drafts
   void clearAllDrafts() {
     emit(state.copyWith(
       draftGames: [],
