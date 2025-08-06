@@ -99,7 +99,19 @@ class _CreateGamePageState extends State<CreateGamePage> {
   void _showDeployDialog(GameModel? gameModel) {
     if (gameModel == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No game to deploy')),
+        const SnackBar(content: Text('No game to deploy')),
+      );
+      return;
+    }
+
+    // Check wallet connection first
+    final walletState = context.read<WalletCubit>().state;
+    if (!walletState.isConnected) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please connect your wallet first'),
+          backgroundColor: Colors.orange,
+        ),
       );
       return;
     }
@@ -111,12 +123,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
     // If no games available, show error
     if (availableGames.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No games available for deployment')),
+        const SnackBar(content: Text('No games available for deployment')),
       );
       return;
     }
 
-    // Show deployment dialog for version selection
+    // Show deployment dialog for version selection and editing
     showDialog(
       context: context,
       builder: (context) => DeployGameDialog(

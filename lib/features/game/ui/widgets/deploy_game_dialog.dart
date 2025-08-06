@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_state.dart';
+import 'package:symbal_fl/features/game/ui/widgets/payment_bottom_sheet.dart';
 
 class DeployGameDialog extends StatefulWidget {
   final List<GameModel> availableGames;
@@ -502,14 +503,35 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
       return;
     }
 
-    context.read<GameCubit>().deployGame(
-      gameToDeploy: selectedGame!,
-      tokenUrl: trimmedTokenUrl.isEmpty ? null : trimmedTokenUrl,
-      updatedTitle: titleController.text.trim(),
-      updatedDescription: descriptionController.text.trim(),
-      updatedTags: updatedTags,
+    // Close the current dialog
+    Navigator.pop(context);
+    
+    // Show payment bottom sheet
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PaymentBottomSheet(
+        gameModel: selectedGame!,
+        tokenUrl: trimmedTokenUrl.isEmpty ? null : trimmedTokenUrl,
+        updatedTitle: titleController.text.trim().isEmpty 
+            ? null 
+            : titleController.text.trim(),
+        updatedDescription: descriptionController.text.trim().isEmpty 
+            ? null 
+            : descriptionController.text.trim(),
+        updatedTags: updatedTags.isEmpty ? null : updatedTags,
+        onPaymentSuccess: () {
+          // Deploy the game after successful payment
+          context.read<GameCubit>().deployGame(
+            gameToDeploy: selectedGame!,
+            tokenUrl: trimmedTokenUrl.isEmpty ? null : trimmedTokenUrl,
+            updatedTitle: titleController.text.trim(),
+            updatedDescription: descriptionController.text.trim(),
+            updatedTags: updatedTags,
+          );
+        },
+      ),
     );
-
-    // Don't close dialog immediately - let BlocListener handle it after deployment completes
   }
 }

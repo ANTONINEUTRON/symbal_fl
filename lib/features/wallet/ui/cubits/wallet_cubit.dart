@@ -352,6 +352,82 @@ class WalletCubit extends HydratedCubit<WalletState> {
     emit(state.copyWith(error: 'Create wallet feature coming soon'));
   }
 
+  /// Process payment for game deployment
+  Future<void> processPayment({
+    required double amount,
+    required String currency,
+    required String description,
+    Map<String, dynamic>? transactionData,
+  }) async {
+    emit(state.copyWith(isLoading: true, error: null));
+
+    try {
+      // Check if wallet is connected
+      if (!state.isConnected || state.walletAddress == null) {
+        throw Exception('Wallet not connected');
+      }
+
+      // Check balance
+      final balance = getBalanceForCurrency(currency);
+      if (balance < amount) {
+        throw Exception('Insufficient $currency balance');
+      }
+
+      // Create transaction (for now, we'll simulate it)
+      final transaction = Transaction(
+        id: _uuid.v4(),
+        amount: amount,
+        currency: currency,
+        type: TransactionType.withdraw, // Use withdraw for payments
+        timestamp: DateTime.now(),
+        description: description,
+        txHash: _uuid.v4(), // Simulate transaction hash
+      );
+
+      // Add transaction to list
+      final updatedTransactions = [transaction, ...state.transactions];
+      
+      // Update balances (subtract the payment amount)
+      final updatedBalances = state.balances.map((balance) {
+        if (balance.currency == currency) {
+          return balance.copyWith(amount: balance.amount - amount);
+        }
+        return balance;
+      }).toList();
+
+      emit(state.copyWith(
+        isLoading: false,
+        transactions: updatedTransactions,
+        balances: updatedBalances,
+      ));
+
+      // Simulate processing delay
+      await Future.delayed(const Duration(seconds: 2));
+
+    } catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      ));
+    }
+  }
+
+  /// Get balance for a specific currency
+  double getBalanceForCurrency(String currency) {
+    try {
+      final balance = state.balances.firstWhere((b) => b.currency == currency);
+      return balance.amount;
+    } catch (e) {
+      return 0.0;
+    }
+  }
+
+  /// Get SOL balance (convenience method)
+  double get solBalance => getBalanceForCurrency('SOL');
+
+  /// Get BONK balance (convenience method) 
+  double get bonkBalance => getBalanceForCurrency('BONK');
+
   // HydratedCubit implementation
   @override
   WalletState? fromJson(Map<String, dynamic> json) {
