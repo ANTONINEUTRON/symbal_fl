@@ -9,6 +9,7 @@ import 'package:symbal_fl/features/auth/ui/cubits/auth_cubit.dart';
 import 'package:symbal_fl/features/profile/data/models/app_user.dart';
 import 'package:symbal_fl/features/profile/ui/cubits/profile_cubit.dart';
 import 'package:symbal_fl/features/profile/ui/widgets/settings_section.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 
 class ProfileSliverAppBar extends StatefulWidget {
   const ProfileSliverAppBar({super.key, this.isProfileView = false});
@@ -98,7 +99,8 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
   }
 
   Widget _buildProfileHeader({required AppUser profile}) {
-
+    var walletState = context.watch<WalletCubit>();
+    var formatedWallet = walletState.getFormatedWallet();
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -182,27 +184,30 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                     Wrap(
                       children: [
                         Text(
-                          '${profile.walletAddress ?? 'no wallet yet'}',
+                          formatedWallet.isEmpty
+                              ? "Wallet not connected"
+                              : formatedWallet,
                           style: TextStyle(
                             color: Colors.grey[400],
                             fontSize: 12,
                           ),
                         ).addSpacing(bottom: 12),
-                        GestureDetector(
-                          onTap: () {
-                            Clipboard.setData(
-                              ClipboardData(text: 'qa12a...1aaw'),
-                            );
-                            context.read<AppCubit>().showAlertMessage(
-                              "Wallet address copied!",
-                            );
-                          },
-                          child: Icon(
-                            Icons.copy_all_outlined,
-                            size: 16,
-                            color: Colors.grey[400],
+                        if (formatedWallet.isNotEmpty)
+                          GestureDetector(
+                            onTap: () {
+                              Clipboard.setData(
+                                ClipboardData(text: 'qa12a...1aaw'),
+                              );
+                              context.read<AppCubit>().showAlertMessage(
+                                "Wallet address copied!",
+                              );
+                            },
+                            child: Icon(
+                              Icons.copy_all_outlined,
+                              size: 16,
+                              color: Colors.grey[400],
+                            ),
                           ),
-                        ),
                       ],
                     ),
 
@@ -251,7 +256,8 @@ class _ProfileSliverAppBarState extends State<ProfileSliverAppBar> {
                 () {
                   SharePlus.instance.share(
                     ShareParams(
-                      text: 'Check out my profile on Symbal! https://symbal.fun/${profile.id}',
+                      text:
+                          'Check out my profile on Symbal! https://symbal.fun/${profile.id}',
                       subject: '${profile.name}\'s Symbal Profile',
                     ),
                   );

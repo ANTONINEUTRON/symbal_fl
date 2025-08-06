@@ -6,8 +6,8 @@ part of 'message_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_MessageModel _$MessageModelFromJson(Map<String, dynamic> json) =>
-    _MessageModel(
+_$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
+    _$MessageModelImpl(
       prompt: json['prompt'] as String,
       isUser: json['isUser'] as bool,
       timestamp: DateTime.parse(json['timestamp'] as String),
@@ -24,7 +24,7 @@ _MessageModel _$MessageModelFromJson(Map<String, dynamic> json) =>
           : GameModel.fromJson(json['gameModel'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$MessageModelToJson(_MessageModel instance) =>
+Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
     <String, dynamic>{
       'prompt': instance.prompt,
       'isUser': instance.isUser,

@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,308 +9,477 @@ part of 'app_user.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
+
+AppUser _$AppUserFromJson(Map<String, dynamic> json) {
+  return _AppUser.fromJson(json);
+}
 
 /// @nodoc
 mixin _$AppUser {
-
- String get id; String get email; String get name;@JsonKey(name: 'avatar_url') String? get avatarUrl;@JsonKey(name: 'wallet_address') String? get walletAddress; String get bio;@JsonKey(name: 'followers_count') int get followersCount;@JsonKey(name: 'following_count') int get followingCount; int get plays;@JsonKey(name: 'sym_balance') int get symBalance;@JsonKey(name: 'games_created') int get gamesCreated; UserStatus get status;@JsonKey(name: 'created_at') DateTime get createdAt;@JsonKey(name: 'updated_at') DateTime get updatedAt;
-/// Create a copy of AppUser
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AppUserCopyWith<AppUser> get copyWith => _$AppUserCopyWithImpl<AppUser>(this as AppUser, _$identity);
+  String get id => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatar_url')
+  String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'wallet_address')
+  String? get walletAddress => throw _privateConstructorUsedError;
+  String get bio => throw _privateConstructorUsedError;
+  @JsonKey(name: 'followers_count')
+  int get followersCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'following_count')
+  int get followingCount => throw _privateConstructorUsedError;
+  int get plays => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sym_balance')
+  int get symBalance => throw _privateConstructorUsedError;
+  @JsonKey(name: 'games_created')
+  int get gamesCreated => throw _privateConstructorUsedError;
+  UserStatus get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this AppUser to a JSON map.
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppUser&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.plays, plays) || other.plays == plays)&&(identical(other.symBalance, symBalance) || other.symBalance == symBalance)&&(identical(other.gamesCreated, gamesCreated) || other.gamesCreated == gamesCreated)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,email,name,avatarUrl,walletAddress,bio,followersCount,followingCount,plays,symBalance,gamesCreated,status,createdAt,updatedAt);
-
-@override
-String toString() {
-  return 'AppUser(id: $id, email: $email, name: $name, avatarUrl: $avatarUrl, walletAddress: $walletAddress, bio: $bio, followersCount: $followersCount, followingCount: $followingCount, plays: $plays, symBalance: $symBalance, gamesCreated: $gamesCreated, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
-}
-
-
+  /// Create a copy of AppUser
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AppUserCopyWith<AppUser> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $AppUserCopyWith<$Res>  {
-  factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) _then) = _$AppUserCopyWithImpl;
-@useResult
-$Res call({
- String id, String email, String name,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'wallet_address') String? walletAddress, String bio,@JsonKey(name: 'followers_count') int followersCount,@JsonKey(name: 'following_count') int followingCount, int plays,@JsonKey(name: 'sym_balance') int symBalance,@JsonKey(name: 'games_created') int gamesCreated, UserStatus status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
-});
-
-
-
-
+abstract class $AppUserCopyWith<$Res> {
+  factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) then) =
+      _$AppUserCopyWithImpl<$Res, AppUser>;
+  @useResult
+  $Res call({
+    String id,
+    String email,
+    String name,
+    @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'wallet_address') String? walletAddress,
+    String bio,
+    @JsonKey(name: 'followers_count') int followersCount,
+    @JsonKey(name: 'following_count') int followingCount,
+    int plays,
+    @JsonKey(name: 'sym_balance') int symBalance,
+    @JsonKey(name: 'games_created') int gamesCreated,
+    UserStatus status,
+    @JsonKey(name: 'created_at') DateTime createdAt,
+    @JsonKey(name: 'updated_at') DateTime updatedAt,
+  });
 }
+
 /// @nodoc
-class _$AppUserCopyWithImpl<$Res>
+class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
     implements $AppUserCopyWith<$Res> {
-  _$AppUserCopyWithImpl(this._self, this._then);
+  _$AppUserCopyWithImpl(this._value, this._then);
 
-  final AppUser _self;
-  final $Res Function(AppUser) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
-/// Create a copy of AppUser
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? name = null,Object? avatarUrl = freezed,Object? walletAddress = freezed,Object? bio = null,Object? followersCount = null,Object? followingCount = null,Object? plays = null,Object? symBalance = null,Object? gamesCreated = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
-  return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,walletAddress: freezed == walletAddress ? _self.walletAddress : walletAddress // ignore: cast_nullable_to_non_nullable
-as String?,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
-as String,followersCount: null == followersCount ? _self.followersCount : followersCount // ignore: cast_nullable_to_non_nullable
-as int,followingCount: null == followingCount ? _self.followingCount : followingCount // ignore: cast_nullable_to_non_nullable
-as int,plays: null == plays ? _self.plays : plays // ignore: cast_nullable_to_non_nullable
-as int,symBalance: null == symBalance ? _self.symBalance : symBalance // ignore: cast_nullable_to_non_nullable
-as int,gamesCreated: null == gamesCreated ? _self.gamesCreated : gamesCreated // ignore: cast_nullable_to_non_nullable
-as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as UserStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
-  ));
+  /// Create a copy of AppUser
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? email = null,
+    Object? name = null,
+    Object? avatarUrl = freezed,
+    Object? walletAddress = freezed,
+    Object? bio = null,
+    Object? followersCount = null,
+    Object? followingCount = null,
+    Object? plays = null,
+    Object? symBalance = null,
+    Object? gamesCreated = null,
+    Object? status = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            email: null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            avatarUrl: freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            walletAddress: freezed == walletAddress
+                ? _value.walletAddress
+                : walletAddress // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            bio: null == bio
+                ? _value.bio
+                : bio // ignore: cast_nullable_to_non_nullable
+                      as String,
+            followersCount: null == followersCount
+                ? _value.followersCount
+                : followersCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            followingCount: null == followingCount
+                ? _value.followingCount
+                : followingCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            plays: null == plays
+                ? _value.plays
+                : plays // ignore: cast_nullable_to_non_nullable
+                      as int,
+            symBalance: null == symBalance
+                ? _value.symBalance
+                : symBalance // ignore: cast_nullable_to_non_nullable
+                      as int,
+            gamesCreated: null == gamesCreated
+                ? _value.gamesCreated
+                : gamesCreated // ignore: cast_nullable_to_non_nullable
+                      as int,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as UserStatus,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+          )
+          as $Val,
+    );
+  }
 }
 
+/// @nodoc
+abstract class _$$AppUserImplCopyWith<$Res> implements $AppUserCopyWith<$Res> {
+  factory _$$AppUserImplCopyWith(
+    _$AppUserImpl value,
+    $Res Function(_$AppUserImpl) then,
+  ) = __$$AppUserImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    String id,
+    String email,
+    String name,
+    @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'wallet_address') String? walletAddress,
+    String bio,
+    @JsonKey(name: 'followers_count') int followersCount,
+    @JsonKey(name: 'following_count') int followingCount,
+    int plays,
+    @JsonKey(name: 'sym_balance') int symBalance,
+    @JsonKey(name: 'games_created') int gamesCreated,
+    UserStatus status,
+    @JsonKey(name: 'created_at') DateTime createdAt,
+    @JsonKey(name: 'updated_at') DateTime updatedAt,
+  });
 }
 
+/// @nodoc
+class __$$AppUserImplCopyWithImpl<$Res>
+    extends _$AppUserCopyWithImpl<$Res, _$AppUserImpl>
+    implements _$$AppUserImplCopyWith<$Res> {
+  __$$AppUserImplCopyWithImpl(
+    _$AppUserImpl _value,
+    $Res Function(_$AppUserImpl) _then,
+  ) : super(_value, _then);
 
-/// Adds pattern-matching-related methods to [AppUser].
-extension AppUserPatterns on AppUser {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AppUser value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _AppUser() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AppUser value)  $default,){
-final _that = this;
-switch (_that) {
-case _AppUser():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AppUser value)?  $default,){
-final _that = this;
-switch (_that) {
-case _AppUser() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email,  String name, @JsonKey(name: 'avatar_url')  String? avatarUrl, @JsonKey(name: 'wallet_address')  String? walletAddress,  String bio, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount,  int plays, @JsonKey(name: 'sym_balance')  int symBalance, @JsonKey(name: 'games_created')  int gamesCreated,  UserStatus status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _AppUser() when $default != null:
-return $default(_that.id,_that.email,_that.name,_that.avatarUrl,_that.walletAddress,_that.bio,_that.followersCount,_that.followingCount,_that.plays,_that.symBalance,_that.gamesCreated,_that.status,_that.createdAt,_that.updatedAt);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email,  String name, @JsonKey(name: 'avatar_url')  String? avatarUrl, @JsonKey(name: 'wallet_address')  String? walletAddress,  String bio, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount,  int plays, @JsonKey(name: 'sym_balance')  int symBalance, @JsonKey(name: 'games_created')  int gamesCreated,  UserStatus status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)  $default,) {final _that = this;
-switch (_that) {
-case _AppUser():
-return $default(_that.id,_that.email,_that.name,_that.avatarUrl,_that.walletAddress,_that.bio,_that.followersCount,_that.followingCount,_that.plays,_that.symBalance,_that.gamesCreated,_that.status,_that.createdAt,_that.updatedAt);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email,  String name, @JsonKey(name: 'avatar_url')  String? avatarUrl, @JsonKey(name: 'wallet_address')  String? walletAddress,  String bio, @JsonKey(name: 'followers_count')  int followersCount, @JsonKey(name: 'following_count')  int followingCount,  int plays, @JsonKey(name: 'sym_balance')  int symBalance, @JsonKey(name: 'games_created')  int gamesCreated,  UserStatus status, @JsonKey(name: 'created_at')  DateTime createdAt, @JsonKey(name: 'updated_at')  DateTime updatedAt)?  $default,) {final _that = this;
-switch (_that) {
-case _AppUser() when $default != null:
-return $default(_that.id,_that.email,_that.name,_that.avatarUrl,_that.walletAddress,_that.bio,_that.followersCount,_that.followingCount,_that.plays,_that.symBalance,_that.gamesCreated,_that.status,_that.createdAt,_that.updatedAt);case _:
-  return null;
-
-}
-}
-
+  /// Create a copy of AppUser
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? email = null,
+    Object? name = null,
+    Object? avatarUrl = freezed,
+    Object? walletAddress = freezed,
+    Object? bio = null,
+    Object? followersCount = null,
+    Object? followingCount = null,
+    Object? plays = null,
+    Object? symBalance = null,
+    Object? gamesCreated = null,
+    Object? status = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+  }) {
+    return _then(
+      _$AppUserImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        walletAddress: freezed == walletAddress
+            ? _value.walletAddress
+            : walletAddress // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        bio: null == bio
+            ? _value.bio
+            : bio // ignore: cast_nullable_to_non_nullable
+                  as String,
+        followersCount: null == followersCount
+            ? _value.followersCount
+            : followersCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        followingCount: null == followingCount
+            ? _value.followingCount
+            : followingCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        plays: null == plays
+            ? _value.plays
+            : plays // ignore: cast_nullable_to_non_nullable
+                  as int,
+        symBalance: null == symBalance
+            ? _value.symBalance
+            : symBalance // ignore: cast_nullable_to_non_nullable
+                  as int,
+        gamesCreated: null == gamesCreated
+            ? _value.gamesCreated
+            : gamesCreated // ignore: cast_nullable_to_non_nullable
+                  as int,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as UserStatus,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: null == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
+class _$AppUserImpl implements _AppUser {
+  const _$AppUserImpl({
+    required this.id,
+    required this.email,
+    required this.name,
+    @JsonKey(name: 'avatar_url') this.avatarUrl,
+    @JsonKey(name: 'wallet_address') this.walletAddress,
+    this.bio = 'Hi there!',
+    @JsonKey(name: 'followers_count') this.followersCount = 0,
+    @JsonKey(name: 'following_count') this.followingCount = 0,
+    this.plays = 0,
+    @JsonKey(name: 'sym_balance') this.symBalance = 0,
+    @JsonKey(name: 'games_created') this.gamesCreated = 0,
+    this.status = UserStatus.active,
+    @JsonKey(name: 'created_at') required this.createdAt,
+    @JsonKey(name: 'updated_at') required this.updatedAt,
+  });
 
-class _AppUser implements AppUser {
-  const _AppUser({required this.id, required this.email, required this.name, @JsonKey(name: 'avatar_url') this.avatarUrl, @JsonKey(name: 'wallet_address') this.walletAddress, this.bio = 'Hi there!', @JsonKey(name: 'followers_count') this.followersCount = 0, @JsonKey(name: 'following_count') this.followingCount = 0, this.plays = 0, @JsonKey(name: 'sym_balance') this.symBalance = 0, @JsonKey(name: 'games_created') this.gamesCreated = 0, this.status = UserStatus.active, @JsonKey(name: 'created_at') required this.createdAt, @JsonKey(name: 'updated_at') required this.updatedAt});
-  factory _AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
+  factory _$AppUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AppUserImplFromJson(json);
 
-@override final  String id;
-@override final  String email;
-@override final  String name;
-@override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
-@override@JsonKey(name: 'wallet_address') final  String? walletAddress;
-@override@JsonKey() final  String bio;
-@override@JsonKey(name: 'followers_count') final  int followersCount;
-@override@JsonKey(name: 'following_count') final  int followingCount;
-@override@JsonKey() final  int plays;
-@override@JsonKey(name: 'sym_balance') final  int symBalance;
-@override@JsonKey(name: 'games_created') final  int gamesCreated;
-@override@JsonKey() final  UserStatus status;
-@override@JsonKey(name: 'created_at') final  DateTime createdAt;
-@override@JsonKey(name: 'updated_at') final  DateTime updatedAt;
+  @override
+  final String id;
+  @override
+  final String email;
+  @override
+  final String name;
+  @override
+  @JsonKey(name: 'avatar_url')
+  final String? avatarUrl;
+  @override
+  @JsonKey(name: 'wallet_address')
+  final String? walletAddress;
+  @override
+  @JsonKey()
+  final String bio;
+  @override
+  @JsonKey(name: 'followers_count')
+  final int followersCount;
+  @override
+  @JsonKey(name: 'following_count')
+  final int followingCount;
+  @override
+  @JsonKey()
+  final int plays;
+  @override
+  @JsonKey(name: 'sym_balance')
+  final int symBalance;
+  @override
+  @JsonKey(name: 'games_created')
+  final int gamesCreated;
+  @override
+  @JsonKey()
+  final UserStatus status;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  final DateTime updatedAt;
 
-/// Create a copy of AppUser
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$AppUserCopyWith<_AppUser> get copyWith => __$AppUserCopyWithImpl<_AppUser>(this, _$identity);
+  @override
+  String toString() {
+    return 'AppUser(id: $id, email: $email, name: $name, avatarUrl: $avatarUrl, walletAddress: $walletAddress, bio: $bio, followersCount: $followersCount, followingCount: $followingCount, plays: $plays, symBalance: $symBalance, gamesCreated: $gamesCreated, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
 
-@override
-Map<String, dynamic> toJson() {
-  return _$AppUserToJson(this, );
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AppUserImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.walletAddress, walletAddress) ||
+                other.walletAddress == walletAddress) &&
+            (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.followersCount, followersCount) ||
+                other.followersCount == followersCount) &&
+            (identical(other.followingCount, followingCount) ||
+                other.followingCount == followingCount) &&
+            (identical(other.plays, plays) || other.plays == plays) &&
+            (identical(other.symBalance, symBalance) ||
+                other.symBalance == symBalance) &&
+            (identical(other.gamesCreated, gamesCreated) ||
+                other.gamesCreated == gamesCreated) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    email,
+    name,
+    avatarUrl,
+    walletAddress,
+    bio,
+    followersCount,
+    followingCount,
+    plays,
+    symBalance,
+    gamesCreated,
+    status,
+    createdAt,
+    updatedAt,
+  );
+
+  /// Create a copy of AppUser
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AppUserImplCopyWith<_$AppUserImpl> get copyWith =>
+      __$$AppUserImplCopyWithImpl<_$AppUserImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AppUserImplToJson(this);
+  }
 }
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppUser&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.walletAddress, walletAddress) || other.walletAddress == walletAddress)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.followersCount, followersCount) || other.followersCount == followersCount)&&(identical(other.followingCount, followingCount) || other.followingCount == followingCount)&&(identical(other.plays, plays) || other.plays == plays)&&(identical(other.symBalance, symBalance) || other.symBalance == symBalance)&&(identical(other.gamesCreated, gamesCreated) || other.gamesCreated == gamesCreated)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+abstract class _AppUser implements AppUser {
+  const factory _AppUser({
+    required final String id,
+    required final String email,
+    required final String name,
+    @JsonKey(name: 'avatar_url') final String? avatarUrl,
+    @JsonKey(name: 'wallet_address') final String? walletAddress,
+    final String bio,
+    @JsonKey(name: 'followers_count') final int followersCount,
+    @JsonKey(name: 'following_count') final int followingCount,
+    final int plays,
+    @JsonKey(name: 'sym_balance') final int symBalance,
+    @JsonKey(name: 'games_created') final int gamesCreated,
+    final UserStatus status,
+    @JsonKey(name: 'created_at') required final DateTime createdAt,
+    @JsonKey(name: 'updated_at') required final DateTime updatedAt,
+  }) = _$AppUserImpl;
+
+  factory _AppUser.fromJson(Map<String, dynamic> json) = _$AppUserImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get email;
+  @override
+  String get name;
+  @override
+  @JsonKey(name: 'avatar_url')
+  String? get avatarUrl;
+  @override
+  @JsonKey(name: 'wallet_address')
+  String? get walletAddress;
+  @override
+  String get bio;
+  @override
+  @JsonKey(name: 'followers_count')
+  int get followersCount;
+  @override
+  @JsonKey(name: 'following_count')
+  int get followingCount;
+  @override
+  int get plays;
+  @override
+  @JsonKey(name: 'sym_balance')
+  int get symBalance;
+  @override
+  @JsonKey(name: 'games_created')
+  int get gamesCreated;
+  @override
+  UserStatus get status;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  DateTime get updatedAt;
+
+  /// Create a copy of AppUser
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AppUserImplCopyWith<_$AppUserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,email,name,avatarUrl,walletAddress,bio,followersCount,followingCount,plays,symBalance,gamesCreated,status,createdAt,updatedAt);
-
-@override
-String toString() {
-  return 'AppUser(id: $id, email: $email, name: $name, avatarUrl: $avatarUrl, walletAddress: $walletAddress, bio: $bio, followersCount: $followersCount, followingCount: $followingCount, plays: $plays, symBalance: $symBalance, gamesCreated: $gamesCreated, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
-  factory _$AppUserCopyWith(_AppUser value, $Res Function(_AppUser) _then) = __$AppUserCopyWithImpl;
-@override @useResult
-$Res call({
- String id, String email, String name,@JsonKey(name: 'avatar_url') String? avatarUrl,@JsonKey(name: 'wallet_address') String? walletAddress, String bio,@JsonKey(name: 'followers_count') int followersCount,@JsonKey(name: 'following_count') int followingCount, int plays,@JsonKey(name: 'sym_balance') int symBalance,@JsonKey(name: 'games_created') int gamesCreated, UserStatus status,@JsonKey(name: 'created_at') DateTime createdAt,@JsonKey(name: 'updated_at') DateTime updatedAt
-});
-
-
-
-
-}
-/// @nodoc
-class __$AppUserCopyWithImpl<$Res>
-    implements _$AppUserCopyWith<$Res> {
-  __$AppUserCopyWithImpl(this._self, this._then);
-
-  final _AppUser _self;
-  final $Res Function(_AppUser) _then;
-
-/// Create a copy of AppUser
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? name = null,Object? avatarUrl = freezed,Object? walletAddress = freezed,Object? bio = null,Object? followersCount = null,Object? followingCount = null,Object? plays = null,Object? symBalance = null,Object? gamesCreated = null,Object? status = null,Object? createdAt = null,Object? updatedAt = null,}) {
-  return _then(_AppUser(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
-as String?,walletAddress: freezed == walletAddress ? _self.walletAddress : walletAddress // ignore: cast_nullable_to_non_nullable
-as String?,bio: null == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
-as String,followersCount: null == followersCount ? _self.followersCount : followersCount // ignore: cast_nullable_to_non_nullable
-as int,followingCount: null == followingCount ? _self.followingCount : followingCount // ignore: cast_nullable_to_non_nullable
-as int,plays: null == plays ? _self.plays : plays // ignore: cast_nullable_to_non_nullable
-as int,symBalance: null == symBalance ? _self.symBalance : symBalance // ignore: cast_nullable_to_non_nullable
-as int,gamesCreated: null == gamesCreated ? _self.gamesCreated : gamesCreated // ignore: cast_nullable_to_non_nullable
-as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as UserStatus,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
-  ));
-}
-
-
-}
-
-// dart format on

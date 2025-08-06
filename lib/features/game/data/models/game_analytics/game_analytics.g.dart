@@ -6,8 +6,8 @@ part of 'game_analytics.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_GameAnalytics _$GameAnalyticsFromJson(Map<String, dynamic> json) =>
-    _GameAnalytics(
+_$GameAnalyticsImpl _$$GameAnalyticsImplFromJson(Map<String, dynamic> json) =>
+    _$GameAnalyticsImpl(
       gameId: json['gameId'] as String,
       likes: (json['likes'] as num?)?.toInt() ?? 0,
       plays: (json['plays'] as num?)?.toInt() ?? 0,
@@ -18,7 +18,7 @@ _GameAnalytics _$GameAnalyticsFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['lastUpdated'] as String),
     );
 
-Map<String, dynamic> _$GameAnalyticsToJson(_GameAnalytics instance) =>
+Map<String, dynamic> _$$GameAnalyticsImplToJson(_$GameAnalyticsImpl instance) =>
     <String, dynamic>{
       'gameId': instance.gameId,
       'likes': instance.likes,

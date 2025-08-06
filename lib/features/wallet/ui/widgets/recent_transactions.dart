@@ -1,83 +1,89 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:symbal_fl/features/wallet/domain/entity/transaction.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
+import 'package:symbal_fl/features/wallet/ui/cubits/wallet_state.dart';
 
 class RecentTransactions extends StatelessWidget {
   const RecentTransactions({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocBuilder<WalletCubit, WalletState>(
+      builder: (context, state) {
+        final recentTransactions = context.read<WalletCubit>().getRecentTransactions(limit: 3);
+        
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Recent Activity',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('View all transactions - Coming Soon!'),
-                    backgroundColor: Colors.purple,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Recent Activity',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                   ),
-                );
-              },
-              child: Text(
-                'View All',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.tertiary,
-                  fontWeight: FontWeight.w500,
                 ),
-              ),
+                TextButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('View all transactions - Coming Soon!'),
+                        backgroundColor: Colors.purple,
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'View All',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.tertiary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
             ),
+            const SizedBox(height: 16),
+            if (recentTransactions.isEmpty)
+              Container(
+                padding: const EdgeInsets.all(32),
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.history,
+                        color: Colors.grey[400],
+                        size: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'No recent activity',
+                        style: TextStyle(
+                          color: Colors.grey[400],
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            else
+              ...recentTransactions.map((transaction) => _buildTransactionItem(transaction)),
           ],
-        ),
-        const SizedBox(height: 16),
-        ...List.generate(3, (index) => _buildTransactionItem(index)),
-      ],
+        );
+      },
     );
   }
 
-  Widget _buildTransactionItem(int index) {
-    final List<Map<String, dynamic>> transactions = [
-      {
-        'type': 'deposit',
-        'amount': '+125.50',
-        'currency': 'SYM',
-        'description': 'Game Reward',
-        'time': '2 hours ago',
-        'icon': Icons.emoji_events,
-        'color': Colors.green,
-      },
-      {
-        'type': 'withdraw',
-        'amount': '-15.00',
-        'currency': 'SOL',
-        'description': 'Cash Out',
-        'time': '1 day ago',
-        'icon': Icons.arrow_upward,
-        'color': Colors.orange,
-      },
-      {
-        'type': 'deposit',
-        'amount': '+50000',
-        'currency': 'BONK',
-        'description': 'Tournament Win',
-        'time': '3 days ago',
-        'icon': Icons.military_tech,
-        'color': Colors.green,
-      },
-    ];
-
-    final transaction = transactions[index];
-
+  Widget _buildTransactionItem(Transaction transaction) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -91,12 +97,12 @@ class RecentTransactions extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: transaction['color'].withOpacity(0.2),
+              color: transaction.color.withOpacity(0.2),
               shape: BoxShape.circle,
             ),
             child: Icon(
-              transaction['icon'],
-              color: transaction['color'],
+              transaction.icon,
+              color: transaction.color,
               size: 20,
             ),
           ),
@@ -106,7 +112,7 @@ class RecentTransactions extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  transaction['description'],
+                  transaction.description,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -115,16 +121,16 @@ class RecentTransactions extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  transaction['time'],
+                  transaction.timeAgo,
                   style: TextStyle(color: Colors.grey[400], fontSize: 12),
                 ),
               ],
             ),
           ),
           Text(
-            '${transaction['amount']} ${transaction['currency'] ?? 'SYM'}',
+            '${transaction.formattedAmount} ${transaction.currency}',
             style: TextStyle(
-              color: transaction['color'],
+              color: transaction.color,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:symbal_fl/features/wallet/domain/entity/balance.dart';
 
@@ -9,17 +8,19 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Calculate total portfolio value in USD equivalent (dummy calculation)
-    double totalValueUSD = balances.fold(0.0, (sum, balance) => sum + (balance.amount * _getUSDRate(balance.currency)));
-    
+    double totalValueUSD = balances.fold(
+      0.0,
+      (sum, balance) => sum + balance.usdValue,
+    );
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Colors.purple, Colors.pink, Colors.orange],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          colors: [Colors.purple, Colors.deepPurple, Colors.orange],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomLeft,
         ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
@@ -74,7 +75,7 @@ class BalanceCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Individual currency balances
           ...List.generate(balances.length, (index) {
             final balance = balances[index];
@@ -91,7 +92,18 @@ class BalanceCard extends StatelessWidget {
                           color: Colors.white.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: balance.symbol,
+                        child: Image.asset(
+                          balance.symbol,
+                          height: 24,
+                          width: 24,
+                          errorBuilder: (context, error, stackTrace) {
+                            // Fallback to text symbol if image fails to load
+                            return Text(
+                              balance.currency == 'SOL' ? '☀️' : '🐶',
+                              style: const TextStyle(fontSize: 20),
+                            );
+                          },
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Column(
@@ -120,12 +132,28 @@ class BalanceCard extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Text(
-                        '\$${(balance.amount * _getUSDRate(balance.currency)).toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                        ),
+                      Row(
+                        spacing: 4,
+                        children: [
+                          Text(
+                            '\$${balance.usdValue.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                          ),
+
+                          // Show price change if available
+                          if (balance.priceChange24h != 0.0)
+                            Text(
+                              balance.formattedPriceChange,
+                              style: TextStyle(
+                                color: balance.priceChangeColor,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                        ],
                       ),
                     ],
                   ),
@@ -143,19 +171,5 @@ class BalanceCard extends StatelessWidget {
       return '${(balance / 1000).toStringAsFixed(1)}K $currency';
     }
     return '${balance.toStringAsFixed(2)} $currency';
-  }
-
-  double _getUSDRate(String currency) {
-    // Dummy USD conversion rates
-    switch (currency) {
-      case 'SYM':
-        return 1.25; // $1.25 per SYM
-      case 'SOL':
-        return 23.45; // $23.45 per SOL
-      case 'BONK':
-        return 0.000012; // $0.000012 per BONK
-      default:
-        return 1.0;
-    }
   }
 }

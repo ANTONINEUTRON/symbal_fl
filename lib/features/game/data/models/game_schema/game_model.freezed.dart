@@ -1,5 +1,5 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,318 +9,410 @@ part of 'game_model.dart';
 // FreezedGenerator
 // **************************************************************************
 
-// dart format off
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
+
+GameModel _$GameModelFromJson(Map<String, dynamic> json) {
+  return _GameModel.fromJson(json);
+}
 
 /// @nodoc
 mixin _$GameModel {
-
- String get id; String get title;//
- String get description;//
- String get imageUrl; String? get creatorId; String? get gameDataId;// reference to the ai generated data
- List<String> get gameIds; bool get isVerified; List<String> get tags; DateTime? get createdAt; DateTime? get updatedAt;
-/// Create a copy of GameModel
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$GameModelCopyWith<GameModel> get copyWith => _$GameModelCopyWithImpl<GameModel>(this as GameModel, _$identity);
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError; //
+  String get description => throw _privateConstructorUsedError; //
+  String get imageUrl => throw _privateConstructorUsedError;
+  String? get creatorId => throw _privateConstructorUsedError;
+  String? get gameDataId =>
+      throw _privateConstructorUsedError; // reference to the ai generated data
+  List<String> get gameIds => throw _privateConstructorUsedError;
+  bool get isVerified => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this GameModel to a JSON map.
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GameModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.creatorId, creatorId) || other.creatorId == creatorId)&&(identical(other.gameDataId, gameDataId) || other.gameDataId == gameDataId)&&const DeepCollectionEquality().equals(other.gameIds, gameIds)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,title,description,imageUrl,creatorId,gameDataId,const DeepCollectionEquality().hash(gameIds),isVerified,const DeepCollectionEquality().hash(tags),createdAt,updatedAt);
-
-@override
-String toString() {
-  return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, createdAt: $createdAt, updatedAt: $updatedAt)';
-}
-
-
+  /// Create a copy of GameModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $GameModelCopyWith<GameModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract mixin class $GameModelCopyWith<$Res>  {
-  factory $GameModelCopyWith(GameModel value, $Res Function(GameModel) _then) = _$GameModelCopyWithImpl;
-@useResult
-$Res call({
- String id, String title, String description, String imageUrl, String? creatorId, String? gameDataId, List<String> gameIds, bool isVerified, List<String> tags, DateTime? createdAt, DateTime? updatedAt
-});
-
-
-
-
+abstract class $GameModelCopyWith<$Res> {
+  factory $GameModelCopyWith(GameModel value, $Res Function(GameModel) then) =
+      _$GameModelCopyWithImpl<$Res, GameModel>;
+  @useResult
+  $Res call({
+    String id,
+    String title,
+    String description,
+    String imageUrl,
+    String? creatorId,
+    String? gameDataId,
+    List<String> gameIds,
+    bool isVerified,
+    List<String> tags,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  });
 }
+
 /// @nodoc
-class _$GameModelCopyWithImpl<$Res>
+class _$GameModelCopyWithImpl<$Res, $Val extends GameModel>
     implements $GameModelCopyWith<$Res> {
-  _$GameModelCopyWithImpl(this._self, this._then);
+  _$GameModelCopyWithImpl(this._value, this._then);
 
-  final GameModel _self;
-  final $Res Function(GameModel) _then;
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
-/// Create a copy of GameModel
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? imageUrl = null,Object? creatorId = freezed,Object? gameDataId = freezed,Object? gameIds = null,Object? isVerified = null,Object? tags = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,creatorId: freezed == creatorId ? _self.creatorId : creatorId // ignore: cast_nullable_to_non_nullable
-as String?,gameDataId: freezed == gameDataId ? _self.gameDataId : gameDataId // ignore: cast_nullable_to_non_nullable
-as String?,gameIds: null == gameIds ? _self.gameIds : gameIds // ignore: cast_nullable_to_non_nullable
-as List<String>,isVerified: null == isVerified ? _self.isVerified : isVerified // ignore: cast_nullable_to_non_nullable
-as bool,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
-  ));
+  /// Create a copy of GameModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? imageUrl = null,
+    Object? creatorId = freezed,
+    Object? gameDataId = freezed,
+    Object? gameIds = null,
+    Object? isVerified = null,
+    Object? tags = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+            imageUrl: null == imageUrl
+                ? _value.imageUrl
+                : imageUrl // ignore: cast_nullable_to_non_nullable
+                      as String,
+            creatorId: freezed == creatorId
+                ? _value.creatorId
+                : creatorId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            gameDataId: freezed == gameDataId
+                ? _value.gameDataId
+                : gameDataId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            gameIds: null == gameIds
+                ? _value.gameIds
+                : gameIds // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            isVerified: null == isVerified
+                ? _value.isVerified
+                : isVerified // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            tags: null == tags
+                ? _value.tags
+                : tags // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+          )
+          as $Val,
+    );
+  }
 }
 
+/// @nodoc
+abstract class _$$GameModelImplCopyWith<$Res>
+    implements $GameModelCopyWith<$Res> {
+  factory _$$GameModelImplCopyWith(
+    _$GameModelImpl value,
+    $Res Function(_$GameModelImpl) then,
+  ) = __$$GameModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    String id,
+    String title,
+    String description,
+    String imageUrl,
+    String? creatorId,
+    String? gameDataId,
+    List<String> gameIds,
+    bool isVerified,
+    List<String> tags,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  });
 }
 
+/// @nodoc
+class __$$GameModelImplCopyWithImpl<$Res>
+    extends _$GameModelCopyWithImpl<$Res, _$GameModelImpl>
+    implements _$$GameModelImplCopyWith<$Res> {
+  __$$GameModelImplCopyWithImpl(
+    _$GameModelImpl _value,
+    $Res Function(_$GameModelImpl) _then,
+  ) : super(_value, _then);
 
-/// Adds pattern-matching-related methods to [GameModel].
-extension GameModelPatterns on GameModel {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _GameModel value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _GameModel() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _GameModel value)  $default,){
-final _that = this;
-switch (_that) {
-case _GameModel():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _GameModel value)?  $default,){
-final _that = this;
-switch (_that) {
-case _GameModel() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String imageUrl,  String? creatorId,  String? gameDataId,  List<String> gameIds,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _GameModel() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.creatorId,_that.gameDataId,_that.gameIds,_that.isVerified,_that.tags,_that.createdAt,_that.updatedAt);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String imageUrl,  String? creatorId,  String? gameDataId,  List<String> gameIds,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
-switch (_that) {
-case _GameModel():
-return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.creatorId,_that.gameDataId,_that.gameIds,_that.isVerified,_that.tags,_that.createdAt,_that.updatedAt);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String imageUrl,  String? creatorId,  String? gameDataId,  List<String> gameIds,  bool isVerified,  List<String> tags,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
-switch (_that) {
-case _GameModel() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.imageUrl,_that.creatorId,_that.gameDataId,_that.gameIds,_that.isVerified,_that.tags,_that.createdAt,_that.updatedAt);case _:
-  return null;
-
-}
-}
-
+  /// Create a copy of GameModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? title = null,
+    Object? description = null,
+    Object? imageUrl = null,
+    Object? creatorId = freezed,
+    Object? gameDataId = freezed,
+    Object? gameIds = null,
+    Object? isVerified = null,
+    Object? tags = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(
+      _$GameModelImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        imageUrl: null == imageUrl
+            ? _value.imageUrl
+            : imageUrl // ignore: cast_nullable_to_non_nullable
+                  as String,
+        creatorId: freezed == creatorId
+            ? _value.creatorId
+            : creatorId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        gameDataId: freezed == gameDataId
+            ? _value.gameDataId
+            : gameDataId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        gameIds: null == gameIds
+            ? _value._gameIds
+            : gameIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        isVerified: null == isVerified
+            ? _value.isVerified
+            : isVerified // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        tags: null == tags
+            ? _value._tags
+            : tags // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
+class _$GameModelImpl implements _GameModel {
+  const _$GameModelImpl({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.imageUrl,
+    this.creatorId,
+    this.gameDataId,
+    final List<String> gameIds = const [],
+    this.isVerified = false,
+    final List<String> tags = const [],
+    this.createdAt,
+    this.updatedAt,
+  }) : _gameIds = gameIds,
+       _tags = tags;
 
-class _GameModel implements GameModel {
-  const _GameModel({required this.id, required this.title, required this.description, required this.imageUrl, this.creatorId, this.gameDataId, final  List<String> gameIds = const [], this.isVerified = false, final  List<String> tags = const [], this.createdAt, this.updatedAt}): _gameIds = gameIds,_tags = tags;
-  factory _GameModel.fromJson(Map<String, dynamic> json) => _$GameModelFromJson(json);
+  factory _$GameModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GameModelImplFromJson(json);
 
-@override final  String id;
-@override final  String title;
-//
-@override final  String description;
-//
-@override final  String imageUrl;
-@override final  String? creatorId;
-@override final  String? gameDataId;
-// reference to the ai generated data
- final  List<String> _gameIds;
-// reference to the ai generated data
-@override@JsonKey() List<String> get gameIds {
-  if (_gameIds is EqualUnmodifiableListView) return _gameIds;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_gameIds);
+  @override
+  final String id;
+  @override
+  final String title;
+  //
+  @override
+  final String description;
+  //
+  @override
+  final String imageUrl;
+  @override
+  final String? creatorId;
+  @override
+  final String? gameDataId;
+  // reference to the ai generated data
+  final List<String> _gameIds;
+  // reference to the ai generated data
+  @override
+  @JsonKey()
+  List<String> get gameIds {
+    if (_gameIds is EqualUnmodifiableListView) return _gameIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_gameIds);
+  }
+
+  @override
+  @JsonKey()
+  final bool isVerified;
+  final List<String> _tags;
+  @override
+  @JsonKey()
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
+
+  @override
+  String toString() {
+    return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GameModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
+            (identical(other.creatorId, creatorId) ||
+                other.creatorId == creatorId) &&
+            (identical(other.gameDataId, gameDataId) ||
+                other.gameDataId == gameDataId) &&
+            const DeepCollectionEquality().equals(other._gameIds, _gameIds) &&
+            (identical(other.isVerified, isVerified) ||
+                other.isVerified == isVerified) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    title,
+    description,
+    imageUrl,
+    creatorId,
+    gameDataId,
+    const DeepCollectionEquality().hash(_gameIds),
+    isVerified,
+    const DeepCollectionEquality().hash(_tags),
+    createdAt,
+    updatedAt,
+  );
+
+  /// Create a copy of GameModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GameModelImplCopyWith<_$GameModelImpl> get copyWith =>
+      __$$GameModelImplCopyWithImpl<_$GameModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GameModelImplToJson(this);
+  }
 }
 
-@override@JsonKey() final  bool isVerified;
- final  List<String> _tags;
-@override@JsonKey() List<String> get tags {
-  if (_tags is EqualUnmodifiableListView) return _tags;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_tags);
+abstract class _GameModel implements GameModel {
+  const factory _GameModel({
+    required final String id,
+    required final String title,
+    required final String description,
+    required final String imageUrl,
+    final String? creatorId,
+    final String? gameDataId,
+    final List<String> gameIds,
+    final bool isVerified,
+    final List<String> tags,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+  }) = _$GameModelImpl;
+
+  factory _GameModel.fromJson(Map<String, dynamic> json) =
+      _$GameModelImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get title; //
+  @override
+  String get description; //
+  @override
+  String get imageUrl;
+  @override
+  String? get creatorId;
+  @override
+  String? get gameDataId; // reference to the ai generated data
+  @override
+  List<String> get gameIds;
+  @override
+  bool get isVerified;
+  @override
+  List<String> get tags;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
+
+  /// Create a copy of GameModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GameModelImplCopyWith<_$GameModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-@override final  DateTime? createdAt;
-@override final  DateTime? updatedAt;
-
-/// Create a copy of GameModel
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$GameModelCopyWith<_GameModel> get copyWith => __$GameModelCopyWithImpl<_GameModel>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$GameModelToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GameModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.creatorId, creatorId) || other.creatorId == creatorId)&&(identical(other.gameDataId, gameDataId) || other.gameDataId == gameDataId)&&const DeepCollectionEquality().equals(other._gameIds, _gameIds)&&(identical(other.isVerified, isVerified) || other.isVerified == isVerified)&&const DeepCollectionEquality().equals(other._tags, _tags)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode => Object.hash(runtimeType,id,title,description,imageUrl,creatorId,gameDataId,const DeepCollectionEquality().hash(_gameIds),isVerified,const DeepCollectionEquality().hash(_tags),createdAt,updatedAt);
-
-@override
-String toString() {
-  return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, createdAt: $createdAt, updatedAt: $updatedAt)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$GameModelCopyWith<$Res> implements $GameModelCopyWith<$Res> {
-  factory _$GameModelCopyWith(_GameModel value, $Res Function(_GameModel) _then) = __$GameModelCopyWithImpl;
-@override @useResult
-$Res call({
- String id, String title, String description, String imageUrl, String? creatorId, String? gameDataId, List<String> gameIds, bool isVerified, List<String> tags, DateTime? createdAt, DateTime? updatedAt
-});
-
-
-
-
-}
-/// @nodoc
-class __$GameModelCopyWithImpl<$Res>
-    implements _$GameModelCopyWith<$Res> {
-  __$GameModelCopyWithImpl(this._self, this._then);
-
-  final _GameModel _self;
-  final $Res Function(_GameModel) _then;
-
-/// Create a copy of GameModel
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? imageUrl = null,Object? creatorId = freezed,Object? gameDataId = freezed,Object? gameIds = null,Object? isVerified = null,Object? tags = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_GameModel(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
-as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,creatorId: freezed == creatorId ? _self.creatorId : creatorId // ignore: cast_nullable_to_non_nullable
-as String?,gameDataId: freezed == gameDataId ? _self.gameDataId : gameDataId // ignore: cast_nullable_to_non_nullable
-as String?,gameIds: null == gameIds ? _self._gameIds : gameIds // ignore: cast_nullable_to_non_nullable
-as List<String>,isVerified: null == isVerified ? _self.isVerified : isVerified // ignore: cast_nullable_to_non_nullable
-as bool,tags: null == tags ? _self._tags : tags // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
-  ));
-}
-
-
-}
-
-// dart format on

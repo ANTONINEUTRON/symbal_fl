@@ -17,21 +17,45 @@ class PinInputDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
+      backgroundColor: const Color(0xFF1A1A2E),
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(subtitle),
-          SizedBox(height: 20),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
           PinInputField(
             onChanged: (pin) {
               if (pin.length == 6) {
+                Navigator.of(context).pop();
                 onPinEntered(pin);
               }
             },
           ),
         ],
       ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: Colors.white54),
+          ),
+        ),
+      ],
     );
   }
 }

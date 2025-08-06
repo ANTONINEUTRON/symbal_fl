@@ -6,8 +6,8 @@ part of 'game_data_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_GameDataModel _$GameDataModelFromJson(Map<String, dynamic> json) =>
-    _GameDataModel(
+_$GameDataModelImpl _$$GameDataModelImplFromJson(Map<String, dynamic> json) =>
+    _$GameDataModelImpl(
       id: json['id'] as String,
       assets:
           (json['assets'] as List<dynamic>?)
@@ -20,7 +20,7 @@ _GameDataModel _$GameDataModelFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$GameDataModelToJson(_GameDataModel instance) =>
+Map<String, dynamic> _$$GameDataModelImplToJson(_$GameDataModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'assets': instance.assets,
