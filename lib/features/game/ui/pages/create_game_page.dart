@@ -104,19 +104,16 @@ class _CreateGamePageState extends State<CreateGamePage> {
       return;
     }
 
-    // Get current state to access available games
-    final currentState = context.read<GameCubit>().state;
-    List<GameModel> availableGames = [];
+    // Get all games from chat history - this includes all generated games
+    final gameCubit = context.read<GameCubit>();
+    List<GameModel> availableGames = gameCubit.getAllGeneratedGames();
     
-    // Add draft games
-    availableGames.addAll(currentState.draftGames);
-    
-    // Add generated game if not already in drafts
-    if (currentState.generatedGame != null) {
-      bool alreadyInDrafts = currentState.draftGames.any((game) => game.id == currentState.generatedGame!.id);
-      if (!alreadyInDrafts) {
-        availableGames.add(currentState.generatedGame!);
-      }
+    // If no games available, show error
+    if (availableGames.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No games available for deployment')),
+      );
+      return;
     }
 
     // Show deployment dialog for version selection
