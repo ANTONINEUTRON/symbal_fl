@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
+import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.dart';
 import 'package:symbal_fl/features/game/domain/entities/message_model.dart';
 import 'package:symbal_fl/features/game/domain/repositories/game_repository.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_state.dart';
@@ -101,40 +102,62 @@ class GameCubit extends HydratedCubit<CreateGameState> {
 
   /// Enhanced deployment with token URL and game modifications
   Future<void> deployGame({
-    GameModel? gameToDeploy,
+    required GameModel gameToDeploy,
     String? tokenUrl,
     String? updatedTitle,
     String? updatedDescription,
     List<String>? updatedTags,
   }) async {
-    final gameModel = gameToDeploy ?? state.generatedGame;
-    
-    if (gameModel == null) {
-      emit(state.copyWith(error: 'No game to deploy'));
-      return;
-    }
-
     emit(state.copyWith(isDeploying: true, error: null));
 
     try {
-      // Create enhanced game model with updates
-      final enhancedGame = gameModel.copyWith(
-        title: updatedTitle ?? gameModel.title,
-        description: updatedDescription ?? gameModel.description,
-        tags: updatedTags ?? gameModel.tags,
-        // Add token URL if GameModel supports it, otherwise handle in metadata
+      // Find the corresponding GameDataModel from chat messages
+      GameDataModel? gameData;
+      
+      // Search through chat messages to find matching game data
+      for (final message in state.chatList) {
+        if (message.gameData != null && message.gameData!.id == gameToDeploy.gameDataId) {
+          gameData = message.gameData!;
+          break;
+        }
+        // Also check if gameModel ID matches
+        if (message.gameModel?.id == gameToDeploy.id && message.gameData != null) {
+          gameData = message.gameData!;
+          break;
+        }
+      }
+
+      if (gameData == null) {
+        throw Exception('No game data found for deployment');
+      }
+
+      // Create updated game data with enhancements
+      final updatedGameData = gameData.copyWith(
+        title: updatedTitle ?? gameData.title,
+        description: updatedDescription ?? gameData.description,
+        tags: updatedTags ?? gameData.tags,
+        userId: await _getCurrentUserId(),
       );
 
-      // Save to remote database
-      await gameGenerationRepository.saveGameModel(enhancedGame);
+      // Update the local GameModel with the token URL and other changes
+      final updatedGameModel = gameToDeploy.copyWith(
+        tokenUrl: tokenUrl,
+        title: updatedTitle ?? gameToDeploy.title,
+        description: updatedDescription ?? gameToDeploy.description,
+        tags: updatedTags ?? gameToDeploy.tags,
+        updatedAt: DateTime.now(),
+      );
+      
+      // Save the updated game model to the games table
+      await gameGenerationRepository.saveGameModel(updatedGameModel);
       
       emit(state.copyWith(
         isDeploying: false,
         isDeployed: true,
         selectedGameId: null, // Clear selection after deployment
-      ),);
+      ));
       
-      print("Game deployed successfully: ${enhancedGame.title}");
+      print("Game deployed successfully: ${updatedGameData.title}");
       if (tokenUrl != null) {
         print("Token URL associated: $tokenUrl");
       }
@@ -149,6 +172,13 @@ class GameCubit extends HydratedCubit<CreateGameState> {
         print('Error deploying game: $e');
       }
     }
+  }
+
+  /// Get current user ID (you'll need to implement this based on your auth system)
+  Future<String?> _getCurrentUserId() async {
+    // TODO: Implement based on your authentication system
+    // For example: return supabase.auth.currentUser?.id;
+    return null;
   }
 
   void addToDrafts(GameModel gameModel) {

@@ -11,16 +11,9 @@ import 'package:symbal_fl/features/game/data/models/game_data/game_data_model.da
 abstract class GameRepository {
   Future<MessageModel> generateGame(MessageModel message);
   
-  // Game deployment
-  Future<void> deployGame({
-    required String prompt,
-    required GameDataModel gameData,
-    String? tokenUrl,
-  });
   Future<List<GameDataModel>> getDeployedGames({String? userId});
   
   Future<void> saveGameModel(GameModel gameData);
-  Future<void> saveGame(GameDataModel gameData);
   Future<List<String>> uploadFiles(List<File> files);
 
   // Game Management with GameDetails

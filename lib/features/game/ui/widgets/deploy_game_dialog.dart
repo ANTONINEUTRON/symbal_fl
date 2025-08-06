@@ -23,14 +23,17 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
   late TextEditingController tokenUrlController;
   GameModel? selectedGame;
   List<String> updatedTags = [];
+  String? tokenUrlError;
 
   @override
   void initState() {
     super.initState();
     selectedGame = widget.selectedGame ?? widget.availableGames.lastOrNull;
-    
+
     titleController = TextEditingController(text: selectedGame?.title ?? '');
-    descriptionController = TextEditingController(text: selectedGame?.description ?? '');
+    descriptionController = TextEditingController(
+      text: selectedGame?.description ?? '',
+    );
     tokenUrlController = TextEditingController();
     updatedTags = List.from(selectedGame?.tags ?? []);
   }
@@ -56,7 +59,7 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
     if (timestamp == null) return 'Unknown time';
     final now = DateTime.now();
     final difference = now.difference(timestamp);
-    
+
     if (difference.inMinutes < 1) return 'Just now';
     if (difference.inHours < 1) return '${difference.inMinutes}m ago';
     if (difference.inDays < 1) return '${difference.inHours}h ago';
@@ -77,12 +80,32 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
     });
   }
 
+  bool _isValidLetsBonkUrl(String url) {
+    if (url.trim().isEmpty) return true; // Optional field
+    
+    // Check if it matches the pattern: https://letsbonk.fun/token/<token_address>
+    // Token addresses are typically 32-44 characters long and contain alphanumeric chars
+    final regex = RegExp(r'^https:\/\/letsbonk\.fun\/token\/[a-zA-Z0-9]{32,44}$');
+    return regex.hasMatch(url.trim());
+  }
+
+  void _validateTokenUrl(String value) {
+    setState(() {
+      if (value.trim().isEmpty) {
+        tokenUrlError = null;
+      } else if (!_isValidLetsBonkUrl(value)) {
+        tokenUrlError = 'Please enter a valid LetsBonk.fun token URL format:\nhttps://letsbonk.fun/token/<token_address>';
+      } else {
+        tokenUrlError = null;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: const Color(0xFF16213E),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.8,
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,11 +118,12 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close),
+                  icon: const Icon(Icons.close, color: Colors.white),
                 ),
               ],
             ),
@@ -112,40 +136,50 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: Colors.white24),
                   borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xFF1A1A2E),
                 ),
                 child: DropdownButton<GameModel>(
                   value: selectedGame,
                   isExpanded: true,
                   underline: const SizedBox(),
-                  items: widget.availableGames.map((game) => 
-                    DropdownMenuItem(
-                      value: game,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            game.title.isNotEmpty ? game.title : 'Untitled Game',
-                            style: const TextStyle(fontWeight: FontWeight.w500),
+                  dropdownColor: const Color(0xFF1A1A2E),
+                  items: widget.availableGames
+                      .map(
+                        (game) => DropdownMenuItem(
+                          value: game,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                game.title.isNotEmpty
+                                    ? game.title
+                                    : 'Untitled Game',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                _formatGameTime(game.createdAt),
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white54,
+                                ),
+                              ),
+                            ],
                           ),
-                          Text(
-                            _formatGameTime(game.createdAt),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ).toList(),
+                        ),
+                      )
+                      .toList(),
                   onChanged: _updateSelectedGame,
                 ),
               ),
@@ -159,19 +193,35 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
                   children: [
                     // Title Editor
                     const Text(
-                      'Game Title:',
+                      'Game Title',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: titleController,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         hintText: 'Enter game title',
+                        hintStyle: const TextStyle(color: Colors.white54),
+                        filled: true,
+                        fillColor: const Color(0xFF1A1A2E),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.white24),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.white24),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ),
                     ),
@@ -179,20 +229,36 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
 
                     // Description Editor
                     const Text(
-                      'Description:',
+                      'Description',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: descriptionController,
                       maxLines: 3,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         hintText: 'Enter game description',
+                        hintStyle: const TextStyle(color: Colors.white54),
+                        filled: true,
+                        fillColor: const Color(0xFF1A1A2E),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.white24),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.white24),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                       ),
                     ),
@@ -200,31 +266,60 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
 
                     // Token URL Input
                     const Text(
-                      'LetsGoBonk Token URL (Optional):',
+                      'LetsBonk.fun token link (Optional)',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: tokenUrlController,
+                      style: const TextStyle(color: Colors.white),
+                      onChanged: _validateTokenUrl,
                       decoration: InputDecoration(
-                        hintText: 'https://letsgobonk.com/token/...',
+                        hintText: 'https://letsbonk.fun/token/...',
+                        hintStyle: const TextStyle(color: Colors.white54),
+                        errorText: tokenUrlError,
+                        errorStyle: const TextStyle(color: Colors.redAccent),
+                        filled: true,
+                        fillColor: const Color(0xFF1A1A2E),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: tokenUrlError != null ? Colors.redAccent : Colors.white24,
+                          ),
                         ),
-                        prefixIcon: const Icon(Icons.link),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: tokenUrlError != null ? Colors.redAccent : Colors.white24,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(
+                            color: tokenUrlError != null 
+                                ? Colors.redAccent 
+                                : Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.link,
+                          color: Colors.white54,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
 
                     // Tags Editor
                     const Text(
-                      'Tags:',
+                      'Tags',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -232,13 +327,31 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
                       spacing: 8,
                       runSpacing: 8,
                       children: [
-                        ...updatedTags.map((tag) => Chip(
-                          label: Text(tag),
-                          onDeleted: () => _removeTag(tag),
-                          deleteIcon: const Icon(Icons.close, size: 16),
-                        )),
+                        ...updatedTags.map(
+                          (tag) => Chip(
+                            label: Text(
+                              tag,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor: Theme.of(
+                              context,
+                            ).primaryColor.withOpacity(0.7),
+                            onDeleted: () => _removeTag(tag),
+                            deleteIcon: const Icon(
+                              Icons.close,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                         ActionChip(
-                          label: const Text('+ Add Tag'),
+                          label: const Text(
+                            '+ Add Tag',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Theme.of(
+                            context,
+                          ).primaryColor.withOpacity(0.3),
                           onPressed: () => _showAddTagDialog(),
                         ),
                       ],
@@ -254,8 +367,10 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: selectedGame != null ? _deployGame : null,
+                onPressed: (selectedGame != null && tokenUrlError == null) ? _deployGame : null,
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -263,10 +378,7 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
                 ),
                 child: const Text(
                   'Deploy Game',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -278,15 +390,26 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
 
   void _showAddTagDialog() {
     final tagController = TextEditingController();
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Tag'),
+        backgroundColor: const Color(0xFF16213E),
+        title: const Text('Add Tag', style: TextStyle(color: Colors.white)),
         content: TextField(
           controller: tagController,
+          style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
             hintText: 'Enter tag name',
+            hintStyle: TextStyle(color: Colors.white54),
+            filled: true,
+            fillColor: Color(0xFF1A1A2E),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white24),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.white24),
+            ),
           ),
           onSubmitted: (value) {
             _addTag(value);
@@ -296,13 +419,20 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Colors.white70),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               _addTag(tagController.text);
               Navigator.of(context).pop();
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Colors.white,
+            ),
             child: const Text('Add'),
           ),
         ],
@@ -315,8 +445,14 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
 
     final trimmedTokenUrl = tokenUrlController.text.trim();
     
+    // Final validation check
+    if (trimmedTokenUrl.isNotEmpty && !_isValidLetsBonkUrl(trimmedTokenUrl)) {
+      _validateTokenUrl(trimmedTokenUrl);
+      return;
+    }
+
     context.read<GameCubit>().deployGame(
-      gameToDeploy: selectedGame,
+      gameToDeploy: selectedGame!,
       tokenUrl: trimmedTokenUrl.isEmpty ? null : trimmedTokenUrl,
       updatedTitle: titleController.text.trim(),
       updatedDescription: descriptionController.text.trim(),

@@ -35,8 +35,9 @@ mixin _$GameModel {
   @JsonKey(name: "is_verified")
   bool get isVerified => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
-  List<String> get assets =>
-      throw _privateConstructorUsedError; // Version for local game management
+  List<String> get assets => throw _privateConstructorUsedError;
+  @JsonKey(name: "token_url")
+  String? get tokenUrl => throw _privateConstructorUsedError; // Version for local game management
   int get version => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -69,6 +70,7 @@ abstract class $GameModelCopyWith<$Res> {
     @JsonKey(name: "is_verified") bool isVerified,
     List<String> tags,
     List<String> assets,
+    @JsonKey(name: "token_url") String? tokenUrl,
     int version,
     @JsonKey(name: "created_at") DateTime? createdAt,
     @JsonKey(name: "updated_at") DateTime? updatedAt,
@@ -100,6 +102,7 @@ class _$GameModelCopyWithImpl<$Res, $Val extends GameModel>
     Object? isVerified = null,
     Object? tags = null,
     Object? assets = null,
+    Object? tokenUrl = freezed,
     Object? version = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -146,6 +149,10 @@ class _$GameModelCopyWithImpl<$Res, $Val extends GameModel>
                 ? _value.assets
                 : assets // ignore: cast_nullable_to_non_nullable
                       as List<String>,
+            tokenUrl: freezed == tokenUrl
+                ? _value.tokenUrl
+                : tokenUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
             version: null == version
                 ? _value.version
                 : version // ignore: cast_nullable_to_non_nullable
@@ -184,6 +191,7 @@ abstract class _$$GameModelImplCopyWith<$Res>
     @JsonKey(name: "is_verified") bool isVerified,
     List<String> tags,
     List<String> assets,
+    @JsonKey(name: "token_url") String? tokenUrl,
     int version,
     @JsonKey(name: "created_at") DateTime? createdAt,
     @JsonKey(name: "updated_at") DateTime? updatedAt,
@@ -214,6 +222,7 @@ class __$$GameModelImplCopyWithImpl<$Res>
     Object? isVerified = null,
     Object? tags = null,
     Object? assets = null,
+    Object? tokenUrl = freezed,
     Object? version = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -260,6 +269,10 @@ class __$$GameModelImplCopyWithImpl<$Res>
             ? _value._assets
             : assets // ignore: cast_nullable_to_non_nullable
                   as List<String>,
+        tokenUrl: freezed == tokenUrl
+            ? _value.tokenUrl
+            : tokenUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
         version: null == version
             ? _value.version
             : version // ignore: cast_nullable_to_non_nullable
@@ -291,6 +304,7 @@ class _$GameModelImpl implements _GameModel {
     @JsonKey(name: "is_verified") this.isVerified = false,
     final List<String> tags = const [],
     final List<String> assets = const [],
+    @JsonKey(name: "token_url") this.tokenUrl,
     this.version = 1,
     @JsonKey(name: "created_at") this.createdAt,
     @JsonKey(name: "updated_at") this.updatedAt,
@@ -348,6 +362,9 @@ class _$GameModelImpl implements _GameModel {
     return EqualUnmodifiableListView(_assets);
   }
 
+  @override
+  @JsonKey(name: "token_url")
+  final String? tokenUrl;
   // Version for local game management
   @override
   @JsonKey()
@@ -361,7 +378,7 @@ class _$GameModelImpl implements _GameModel {
 
   @override
   String toString() {
-    return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, assets: $assets, version: $version, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'GameModel(id: $id, title: $title, description: $description, imageUrl: $imageUrl, creatorId: $creatorId, gameDataId: $gameDataId, gameIds: $gameIds, isVerified: $isVerified, tags: $tags, assets: $assets, tokenUrl: $tokenUrl, version: $version, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -384,6 +401,8 @@ class _$GameModelImpl implements _GameModel {
                 other.isVerified == isVerified) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             const DeepCollectionEquality().equals(other._assets, _assets) &&
+            (identical(other.tokenUrl, tokenUrl) ||
+                other.tokenUrl == tokenUrl) &&
             (identical(other.version, version) || other.version == version) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -405,6 +424,7 @@ class _$GameModelImpl implements _GameModel {
     isVerified,
     const DeepCollectionEquality().hash(_tags),
     const DeepCollectionEquality().hash(_assets),
+    tokenUrl,
     version,
     createdAt,
     updatedAt,
@@ -436,6 +456,7 @@ abstract class _GameModel implements GameModel {
     @JsonKey(name: "is_verified") final bool isVerified,
     final List<String> tags,
     final List<String> assets,
+    @JsonKey(name: "token_url") final String? tokenUrl,
     final int version,
     @JsonKey(name: "created_at") final DateTime? createdAt,
     @JsonKey(name: "updated_at") final DateTime? updatedAt,
@@ -468,7 +489,10 @@ abstract class _GameModel implements GameModel {
   @override
   List<String> get tags;
   @override
-  List<String> get assets; // Version for local game management
+  List<String> get assets;
+  @override
+  @JsonKey(name: "token_url")
+  String? get tokenUrl; // Version for local game management
   @override
   int get version;
   @override

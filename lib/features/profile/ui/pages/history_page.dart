@@ -5,6 +5,7 @@ import 'package:symbal_fl/core/extensions/widget_helpers.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_state.dart';
 import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
+import 'package:symbal_fl/features/game/ui/widgets/deploy_game_dialog.dart';
 
 @RoutePage()
 class HistoryPage extends StatefulWidget {
@@ -175,6 +176,7 @@ class DeployedGamesTab extends StatelessWidget {
         imageUrl: 'assets/images/space_game.jpg',
         isVerified: true,
         tags: ['adventure', 'space'],
+        tokenUrl: null,
         createdAt: DateTime.now().subtract(Duration(days: 5)),
       ),
       GameModel(
@@ -184,6 +186,7 @@ class DeployedGamesTab extends StatelessWidget {
         imageUrl: 'assets/images/puzzle_game.jpg',
         isVerified: true,
         tags: ['puzzle', 'logic'],
+        tokenUrl: null,
         createdAt: DateTime.now().subtract(Duration(days: 10)),
       ),
     ];
@@ -480,29 +483,27 @@ class GameCard extends StatelessWidget {
   }
 
   void _showDeployDialog(BuildContext context) {
+    // Get current state to access available games
+    final currentState = context.read<GameCubit>().state;
+    List<GameModel> availableGames = [];
+    
+    // Add draft games
+    availableGames.addAll(currentState.draftGames);
+    
+    // Add generated game if not already in drafts
+    if (currentState.generatedGame != null) {
+      bool alreadyInDrafts = currentState.draftGames.any((g) => g.id == currentState.generatedGame!.id);
+      if (!alreadyInDrafts) {
+        availableGames.add(currentState.generatedGame!);
+      }
+    }
+
+    // Show deployment dialog for version selection
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Deploy Game'),
-        content: Text(
-          'Are you sure you want to deploy "${game.title}" to production?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.read<GameCubit>().deployGame(gameToDeploy: game);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${game.title} deployed successfully!')),
-              );
-            },
-            child: Text('Deploy'),
-          ),
-        ],
+      builder: (context) => DeployGameDialog(
+        availableGames: availableGames,
+        selectedGame: game,
       ),
     );
   }

@@ -43,16 +43,14 @@ class GameRemoteDatasource {
         '${Env.dbUrl}/functions/v1/generate-game-gemini',
         data: requestBody,
         options: Options(
-          headers: {
-            'Authorization': 'Bearer ${session?.accessToken}',
-          },
+          headers: {'Authorization': 'Bearer ${session?.accessToken}'},
         ),
       );
 
       if (response.statusCode == 200) {
         final responseData = response.data;
         final generatedGame = responseData['game'];
-        
+
         // Create GameDataModel from AI response
         final gameData = GameDataModel.fromAIResponse(
           id: responseData['gameId'],
@@ -71,12 +69,15 @@ class GameRemoteDatasource {
           id: const Uuid().v4(),
           title: gameData.title,
           description: gameData.description,
-          imageUrl: message.attachedFiles.isNotEmpty ? message.attachedFiles.first : '',
+          imageUrl: message.attachedFiles.isNotEmpty
+              ? message.attachedFiles.first
+              : '',
           creatorId: gameData.userId,
           gameDataId: gameData.id,
           gameIds: [gameData.id],
           tags: gameData.tags,
           assets: gameData.assets,
+          tokenUrl: null,
           version: 1,
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
@@ -96,7 +97,8 @@ class GameRemoteDatasource {
         throw DioException(
           requestOptions: response.requestOptions,
           response: response,
-          message: 'Failed to generate game: ${response.data['error'] ?? 'Unknown error'}',
+          message:
+              'Failed to generate game: ${response.data['error'] ?? 'Unknown error'}',
         );
       }
     } on DioException catch (e) {
@@ -138,55 +140,6 @@ class GameRemoteDatasource {
         timestamp: DateTime.now(),
         attachedFiles: message.attachedFiles,
       );
-    }
-  }
-
-  // Deploy a game to the database
-  Future<void> deployGame({
-    required String prompt,
-    required GameDataModel gameData,
-    String? tokenUrl,
-  }) async {
-    try {
-      final supabase = Supabase.instance.client;
-      final session = supabase.auth.currentSession;
-
-      // Prepare the deployment payload
-      final requestBody = {
-        'action': 'deploy',
-        'prompt': prompt,
-        'generatedGame': gameData.toDatabasePayload(),
-        'tokenUrl': tokenUrl,
-      };
-
-      // Call the edge function to deploy
-      final response = await _dio.post(
-        '${Env.dbUrl}/functions/v1/generate_game',
-        data: requestBody,
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${session?.accessToken}',
-          },
-        ),
-      );
-
-      if (response.statusCode != 200) {
-        throw DioException(
-          requestOptions: response.requestOptions,
-          response: response,
-          message: 'Failed to deploy game: ${response.data['error'] ?? 'Unknown error'}',
-        );
-      }
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print('Deployment DioException: ${e}');
-      }
-      throw Exception('Failed to deploy game: ${e.message}');
-    } catch (e) {
-      if (kDebugMode) {
-        print('Deployment Error: ${e}');
-      }
-      throw Exception('Failed to deploy game: ${e.toString()}');
     }
   }
 
@@ -257,22 +210,10 @@ class GameRemoteDatasource {
     }
   }
 
-  Future<void> saveGame(GameDataModel gameData) async {
-    try {
-      final supabase = Supabase.instance.client;
-
-      // Save to the correct table based on schema
-      await supabase.from('generated_games').insert(gameData.toJson());
-    } catch (e) {
-      throw Exception('Failed to save game: ${e.toString()}');
-    }
-  }
-
   Future<void> upsertGameModel(GameModel gameModel) async {
     try {
       final supabase = Supabase.instance.client;
 
-print(gameModel);
       // Convert GameModel to JSON for Supabase
       final gameJson = gameModel.toJson();
 

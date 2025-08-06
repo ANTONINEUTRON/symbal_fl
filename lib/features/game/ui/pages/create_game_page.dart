@@ -12,6 +12,7 @@ import 'package:symbal_fl/features/game/ui/widgets/chat_input_field.dart';
 import 'package:symbal_fl/features/game/ui/widgets/chat_view.dart';
 import 'package:symbal_fl/features/game/ui/widgets/retries_counter.dart';
 import 'package:symbal_fl/features/game/ui/widgets/welcome_view.dart';
+import 'package:symbal_fl/features/game/ui/widgets/deploy_game_dialog.dart';
 import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 
 @RoutePage()
@@ -103,237 +104,27 @@ class _CreateGamePageState extends State<CreateGamePage> {
       return;
     }
 
-    final titleController = TextEditingController(text: gameModel.title);
-    final descriptionController = TextEditingController(text: gameModel.description);
-    List<String> tags = List.from(gameModel.tags);
-    final tagController = TextEditingController();
+    // Get current state to access available games
+    final currentState = context.read<GameCubit>().state;
+    List<GameModel> availableGames = [];
+    
+    // Add draft games
+    availableGames.addAll(currentState.draftGames);
+    
+    // Add generated game if not already in drafts
+    if (currentState.generatedGame != null) {
+      bool alreadyInDrafts = currentState.draftGames.any((game) => game.id == currentState.generatedGame!.id);
+      if (!alreadyInDrafts) {
+        availableGames.add(currentState.generatedGame!);
+      }
+    }
 
+    // Show deployment dialog for version selection
     showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: Text(
-            'Deploy Game',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Color(0xFF16213E),
-          content: Container(
-            width: double.maxFinite,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Review and update your game details before deploying:',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  SizedBox(height: 20),
-                  
-                  // Title Field
-                  Text(
-                    'Game Title',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  TextField(
-                    controller: titleController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: 'Enter game title',
-                      hintStyle: TextStyle(color: Colors.white54),
-                      filled: true,
-                      fillColor: Color(0xFF1A1A2E),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white24),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white24),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  
-                  // Description Field
-                  Text(
-                    'Description',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  TextField(
-                    controller: descriptionController,
-                    style: TextStyle(color: Colors.white),
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      hintText: 'Enter game description',
-                      hintStyle: TextStyle(color: Colors.white54),
-                      filled: true,
-                      fillColor: Color(0xFF1A1A2E),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white24),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.white24),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  
-                  // Tags Section
-                  Text(
-                    'Tags',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  
-                  // Current Tags
-                  if (tags.isNotEmpty)
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: tags.map((tag) => Chip(
-                        label: Text(
-                          tag,
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        ),
-                        backgroundColor: Theme.of(context).primaryColor.withOpacity(0.7),
-                        deleteIcon: Icon(Icons.close, size: 16, color: Colors.white),
-                        onDeleted: () {
-                          setState(() {
-                            tags.remove(tag);
-                          });
-                        },
-                      )).toList(),
-                    ),
-                  
-                  SizedBox(height: 8),
-                  
-                  // Add Tag Field
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: tagController,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            hintText: 'Add a tag',
-                            hintStyle: TextStyle(color: Colors.white54),
-                            filled: true,
-                            fillColor: Color(0xFF1A1A2E),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.white24),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.white24),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                            ),
-                          ),
-                          onSubmitted: (value) {
-                            if (value.trim().isNotEmpty && !tags.contains(value.trim())) {
-                              setState(() {
-                                tags.add(value.trim());
-                                tagController.clear();
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      IconButton(
-                        onPressed: () {
-                          final value = tagController.text.trim();
-                          if (value.isNotEmpty && !tags.contains(value)) {
-                            setState(() {
-                              tags.add(value);
-                              tagController.clear();
-                            });
-                          }
-                        },
-                        icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
-                        style: IconButton.styleFrom(
-                          backgroundColor: Theme.of(context).primaryColor.withOpacity(0.2),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.white70),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: ()async {
-                // Navigator.pop(context);
-
-                // connect to pay
-                // await context.read<WalletCubit>().connectWallet();
-                
-                // Create updated game model
-                final updatedGame = gameModel.copyWith(
-                  title: titleController.text.trim(),
-                  description: descriptionController.text.trim(),
-                  tags: tags,
-                );
-                
-                // Deploy with updated data
-                context.read<GameCubit>().deployGame(
-                  gameToDeploy: updatedGame,
-                  updatedTitle: titleController.text.trim(),
-                  updatedDescription: descriptionController.text.trim(),
-                  updatedTags: tags,
-                );
-                
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${updatedGame.title} deployed successfully!'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-                foregroundColor: Colors.white,
-              ),
-              child: Text('Deploy'),
-            ),
-          ],
-        ),
+      builder: (context) => DeployGameDialog(
+        availableGames: availableGames,
+        selectedGame: gameModel,
       ),
     );
   }

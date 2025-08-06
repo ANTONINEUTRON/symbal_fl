@@ -30,6 +30,9 @@ abstract class GameModel with _$GameModel {
 
     @Default([]) List<String> assets,
 
+    @JsonKey(name: "token_url")
+    String? tokenUrl,
+
     // Version for local game management
     @Default(1) int version,
 

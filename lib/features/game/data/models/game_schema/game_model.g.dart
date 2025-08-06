@@ -25,6 +25,7 @@ _$GameModelImpl _$$GameModelImplFromJson(
   assets:
       (json['assets'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
+  tokenUrl: json['token_url'] as String?,
   version: (json['version'] as num?)?.toInt() ?? 1,
   createdAt: json['created_at'] == null
       ? null
@@ -46,6 +47,7 @@ Map<String, dynamic> _$$GameModelImplToJson(_$GameModelImpl instance) =>
       'is_verified': instance.isVerified,
       'tags': instance.tags,
       'assets': instance.assets,
+      'token_url': instance.tokenUrl,
       'version': instance.version,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
