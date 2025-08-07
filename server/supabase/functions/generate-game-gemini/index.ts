@@ -219,7 +219,7 @@ Response format:
   "title": "Game Title",
   "description": "Brief description of the game",
   "html": "Complete HTML5 document with inline CSS and JavaScript. Must be a fully playable game.",
-  "messageToUser": "Short, encouraging message about the generation or suggestion targetted at the creator (max 300 characters)",
+  "messageToUser": "Short, encouraging message about the game creation or suggestion targeted at the creator (max 300 characters). DO NOT mention technical details like HTML, CSS, JavaScript, or web technologies - focus on the game experience and creativity.",
   "tags": ["tag1", "tag2", "tag3"]
 }
 
