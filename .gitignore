@@ -46,3 +46,4 @@ app.*.map.json
 
 .env
 /lib/env/env.g.dart
+SYMBAL_PITCH.md

@@ -1,66 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
-import 'package:symbal_fl/features/game/data/models/game_schema/game_model.dart';
 import 'package:symbal_fl/features/game/ui/cubits/game_cubit.dart';
 
-enum PaymentType { gameDeployment, retriesPurchase }
-
-class PaymentBottomSheet extends StatefulWidget {
-  final PaymentType paymentType;
+class RetriesPaymentBottomSheet extends StatefulWidget {
   final VoidCallback onPaymentSuccess;
-  
-  // For game deployment
-  final GameModel? gameModel;
-  final String? tokenUrl;
-  final String? updatedTitle;
-  final String? updatedDescription;
-  final List<String>? updatedTags;
 
-  const PaymentBottomSheet.gameDeployment({
-    super.key,
-    required this.gameModel,
-    this.tokenUrl,
-    this.updatedTitle,
-    this.updatedDescription,
-    this.updatedTags,
-    required this.onPaymentSuccess,
-  }) : paymentType = PaymentType.gameDeployment;
-
-  const PaymentBottomSheet.retriesPurchase({
+  const RetriesPaymentBottomSheet({
     super.key,
     required this.onPaymentSuccess,
-  }) : paymentType = PaymentType.retriesPurchase,
-       gameModel = null,
-       tokenUrl = null,
-       updatedTitle = null,
-       updatedDescription = null,
-       updatedTags = null;
+  });
 
   @override
-  State<PaymentBottomSheet> createState() => _PaymentBottomSheetState();
+  State<RetriesPaymentBottomSheet> createState() => _RetriesPaymentBottomSheetState();
 }
 
-class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
+class _RetriesPaymentBottomSheetState extends State<RetriesPaymentBottomSheet> {
   String selectedPaymentMethod = 'SOL';
-  bool isProcessingPayment = false;
-
-  // Deployment costs
-  static const double gameDeploymentSolCost = 0.01; // 0.01 SOL
-  static const double gameDeploymentBonkCost = 1000.0; // 1000 BONK
 
   // Retries purchase costs
-  static const double retriesSolCost = 0.005; // 0.005 SOL for 5 retries
-  static const double retriesBonkCost = 500.0; // 500 BONK for 5 retries
-  static const int retriesAmount = 5; // Number of retries
-
-  double get solCost => widget.paymentType == PaymentType.gameDeployment 
-      ? gameDeploymentSolCost 
-      : retriesSolCost;
-  
-  double get bonkCost => widget.paymentType == PaymentType.gameDeployment 
-      ? gameDeploymentBonkCost 
-      : retriesBonkCost; 
+  static const double solCost = 0.005; // 0.005 SOL for 5 retries
+  static const double bonkCost = 500.0; // 500 BONK for 5 retries
+  static const int retriesAmount = 5; // Number of retries to add
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +34,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     final canPayWithBonk = bonkBalance >= bonkCost;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
         color: Color(0xFF16213E),
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -85,19 +46,11 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
           // Header
           Row(
             children: [
-              Icon(
-                widget.paymentType == PaymentType.gameDeployment 
-                    ? Icons.payment 
-                    : Icons.refresh,
-                color: Colors.white, 
-                size: 24,
-              ),
+              const Icon(Icons.payment, color: Colors.white, size: 24),
               const SizedBox(width: 12),
-              Text(
-                widget.paymentType == PaymentType.gameDeployment
-                    ? 'Deploy Game Payment'
-                    : 'Buy Game Retries',
-                style: const TextStyle(
+              const Text(
+                'Buy Game Retries',
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -111,15 +64,13 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
             ],
           ),
           const SizedBox(height: 8),
-          Text(
-            widget.paymentType == PaymentType.gameDeployment
-                ? 'Deploy your game to the blockchain'
-                : 'Purchase more game generation attempts',
-            style: const TextStyle(color: Colors.white70, fontSize: 14),
+          const Text(
+            'Purchase more game generation attempts',
+            style: TextStyle(color: Colors.white70, fontSize: 14),
           ),
           const SizedBox(height: 24),
 
-          // Game Info / Retries Info
+          // Retries Info
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -133,17 +84,10 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: widget.paymentType == PaymentType.gameDeployment
-                        ? Theme.of(context).primaryColor
-                        : Colors.orange,
+                    color: Colors.orange,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(
-                    widget.paymentType == PaymentType.gameDeployment
-                        ? Icons.games
-                        : Icons.refresh,
-                    color: Colors.white,
-                  ),
+                  child: const Icon(Icons.refresh, color: Colors.white),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -151,28 +95,20 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.paymentType == PaymentType.gameDeployment
-                            ? widget.updatedTitle ?? widget.gameModel?.title ?? 'Game'
-                            : '+$retriesAmount Game Retries',
+                        '+$retriesAmount Game Retries',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        widget.paymentType == PaymentType.gameDeployment
-                            ? widget.updatedDescription ?? widget.gameModel?.description ?? 'Game deployment'
-                            : 'Generate more AI games with additional attempts',
-                        style: const TextStyle(
+                      const Text(
+                        'Generate more AI games with additional attempts',
+                        style: TextStyle(
                           color: Colors.white70,
                           fontSize: 12,
                         ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -227,11 +163,9 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.paymentType == PaymentType.gameDeployment
-                          ? 'Deployment Cost:'
-                          : 'Purchase Cost:',
-                      style: const TextStyle(color: Colors.white70),
+                    const Text(
+                      'Purchase Cost:',
+                      style: TextStyle(color: Colors.white70),
                     ),
                     Text(
                       selectedPaymentMethod == 'SOL' 
@@ -263,28 +197,25 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     ),
                   ],
                 ),
-                // Show what user will receive for retries
-                if (widget.paymentType == PaymentType.retriesPurchase) ...[
-                  const SizedBox(height: 8),
-                  const Divider(color: Colors.white24),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'You will receive:',
-                        style: TextStyle(color: Colors.white70),
+                const SizedBox(height: 8),
+                const Divider(color: Colors.white24),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'You will receive:',
+                      style: TextStyle(color: Colors.white70),
+                    ),
+                    Text(
+                      '+$retriesAmount Retries',
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.w600,
                       ),
-                      Text(
-                        '+$retriesAmount Retries',
-                        style: const TextStyle(
-                          color: Colors.orange,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -315,7 +246,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
             const SizedBox(height: 16),
           ],
 
-          // Deploy Button
+          // Purchase Button
           SizedBox(
             width: double.infinity,
             height: 56,
@@ -325,7 +256,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                   : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: _canPayWithSelected() 
-                    ? Theme.of(context).primaryColor
+                    ? Colors.orange
                     : Colors.grey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -356,9 +287,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     )
                   : Text(
                       _canPayWithSelected() 
-                          ? (widget.paymentType == PaymentType.gameDeployment
-                              ? 'Deploy Game'
-                              : 'Purchase +$retriesAmount Retries')
+                          ? 'Purchase +$retriesAmount Retries'
                           : 'Insufficient Balance',
                       style: const TextStyle(
                         color: Colors.white,
@@ -394,12 +323,12 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: isSelected 
-              ? Theme.of(context).primaryColor.withOpacity(0.2)
+              ? Colors.orange.withOpacity(0.2)
               : Colors.white.withOpacity(0.05),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected 
-                ? Theme.of(context).primaryColor
+                ? Colors.orange
                 : Colors.white.withOpacity(0.1),
             width: isSelected ? 2 : 1,
           ),
@@ -453,21 +382,22 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Wrap(
+                  Row(
                     children: [
+                      Text(
+                        'Cost: ${currency == 'SOL' ? cost.toString() : cost.toStringAsFixed(0)} $currency',
+                        style: TextStyle(
+                          color: canPay ? Colors.white70 : Colors.white38,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const Spacer(),
                       Text(
                         'Balance: ${currency == 'SOL' ? balance.toStringAsFixed(4) : balance.toStringAsFixed(0)}',
                         style: TextStyle(
                           color: canPay ? Colors.green : Colors.red,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        'Cost: ${currency == 'SOL' ? cost.toString() : cost.toStringAsFixed(0)} $currency',
-                        style: TextStyle(
-                          color: canPay ? Colors.white70 : Colors.white38,
-                          fontSize: 12,
                         ),
                       ),
                     ],
@@ -482,7 +412,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.orange,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -507,64 +437,38 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
 
   void _processPayment() async {
     final walletCubit = context.read<WalletCubit>();
+    final gameCubit = context.read<GameCubit>();
     
     try {
-      if (widget.paymentType == PaymentType.gameDeployment) {
-        // Game deployment payment
-        final transactionData = {
-          'gameId': widget.gameModel?.id,
-          'gameTitle': widget.updatedTitle ?? widget.gameModel?.title ?? 'Game',
-          'amount': selectedPaymentMethod == 'SOL' ? solCost : bonkCost,
-          'currency': selectedPaymentMethod,
-          'type': 'game_deployment',
-          'tokenUrl': widget.tokenUrl,
-        };
+      // Prepare transaction data
+      final transactionData = {
+        'retriesAmount': retriesAmount,
+        'amount': selectedPaymentMethod == 'SOL' ? solCost : bonkCost,
+        'currency': selectedPaymentMethod,
+        'type': 'retries_purchase',
+      };
 
-        await walletCubit.processPayment(
-          amount: selectedPaymentMethod == 'SOL' ? solCost : bonkCost,
-          currency: selectedPaymentMethod,
-          description: 'Game Deployment: ${widget.updatedTitle ?? widget.gameModel?.title ?? 'Game'}',
-          transactionData: transactionData,
-        );
+      // Call WalletCubit to process the payment
+      await walletCubit.processPayment(
+        amount: selectedPaymentMethod == 'SOL' ? solCost : bonkCost,
+        currency: selectedPaymentMethod,
+        description: 'Retries Purchase: +$retriesAmount attempts',
+        transactionData: transactionData,
+      );
 
-        Navigator.pop(context);
-        widget.onPaymentSuccess();
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ Payment successful! Game deployed.'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      } else {
-        // Retries purchase payment
-        final transactionData = {
-          'retriesAmount': retriesAmount,
-          'amount': selectedPaymentMethod == 'SOL' ? solCost : bonkCost,
-          'currency': selectedPaymentMethod,
-          'type': 'retries_purchase',
-        };
+      // If payment is successful, add retries to game cubit
+      gameCubit.addRetries(retriesAmount);
 
-        await walletCubit.processPayment(
-          amount: selectedPaymentMethod == 'SOL' ? solCost : bonkCost,
-          currency: selectedPaymentMethod,
-          description: 'Retries Purchase: +$retriesAmount attempts',
-          transactionData: transactionData,
-        );
-
-        // Add retries to game cubit
-        context.read<GameCubit>().addRetries(retriesAmount);
-
-        Navigator.pop(context);
-        widget.onPaymentSuccess();
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('✅ Payment successful! +$retriesAmount retries added.'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
+      // Close dialog and call success callback
+      Navigator.pop(context);
+      widget.onPaymentSuccess();
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('✅ Payment successful! +$retriesAmount retries added.'),
+          backgroundColor: Colors.green,
+        ),
+      );
     } catch (e) {
       // Error is already handled by the cubit, just show in snackbar
       ScaffoldMessenger.of(context).showSnackBar(

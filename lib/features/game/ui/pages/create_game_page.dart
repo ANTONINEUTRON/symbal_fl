@@ -13,6 +13,7 @@ import 'package:symbal_fl/features/game/ui/widgets/chat_view.dart';
 import 'package:symbal_fl/features/game/ui/widgets/retries_counter.dart';
 import 'package:symbal_fl/features/game/ui/widgets/welcome_view.dart';
 import 'package:symbal_fl/features/game/ui/widgets/deploy_game_dialog.dart';
+import 'package:symbal_fl/features/game/ui/widgets/payment_bottom_sheet.dart';
 import 'package:symbal_fl/features/wallet/ui/cubits/wallet_cubit.dart';
 
 @RoutePage()
@@ -76,17 +77,36 @@ class _CreateGamePageState extends State<CreateGamePage> {
     });
   }
 
-  void _addRetries()async {
-    // call cubit method to add retries
-    await context.read<WalletCubit>().connectWallet();
+  void _addRetries() async {
+    // Check wallet connection first
+    final walletState = context.read<WalletCubit>().state;
+    if (!walletState.isConnected) {
+      // Connect wallet first if not connected
+      await context.read<WalletCubit>().connectWallet();
+      
+      // Check again after connection attempt
+      final updatedWalletState = context.read<WalletCubit>().state;
+      if (!updatedWalletState.isConnected) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please connect your wallet to purchase retries'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+        return;
+      }
+    }
 
-    context.read<GameCubit>().addRetries(5);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('🎉 +5 retries added!'),
-        backgroundColor: Colors.green,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    // Show payment bottom sheet for retries purchase
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PaymentBottomSheet.retriesPurchase(
+        onPaymentSuccess: () {
+          // Success message is already shown in the payment sheet
+          // Additional success actions can be added here if needed
+        },
       ),
     );
   }

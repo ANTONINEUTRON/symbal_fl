@@ -511,7 +511,7 @@ class _DeployGameDialogState extends State<DeployGameDialog> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => PaymentBottomSheet(
+      builder: (context) => PaymentBottomSheet.gameDeployment(
         gameModel: selectedGame!,
         tokenUrl: trimmedTokenUrl.isEmpty ? null : trimmedTokenUrl,
         updatedTitle: titleController.text.trim().isEmpty 
